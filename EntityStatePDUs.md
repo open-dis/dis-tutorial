@@ -35,6 +35,9 @@ public class SimpleSender
     /** Port we send to */
     public static final int DIS_DESTINATION_PORT = 3000;
     
+    /** Broadcast Address. THIS IS SITE-SPECIFIC.  */
+    public static final String BROADCAST_ADDRESS = "172.20.159.255";
+    
 /** Entry point */
 public static void main(String args[])
 {
@@ -155,7 +158,7 @@ public static void main(String args[])
             // The byte array here is the packet in DIS format. We put that into a 
             // datagram and send it.
             byte[] data = baos.toByteArray();
-            DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName("255.255.255.255"), 3000);
+            DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(BROADCAST_ADDRESS), 3000);
             socket.send(packet);
             
             // Send every 1 sec. Otherwise this will be all over in a fraction of a second.
@@ -248,7 +251,7 @@ The "data" object is an array of bytes that is in the DIS message format.
 One problem with all this is that programmers never remember to set the timestamp. There's an alternative method for marhsalling with the timestamp automatically set:
 
 ~~~~
-byte[] data = espdu.marshalWithDisAbsoluteTimestamp()
+byte[] data = espdu.marshalWithDisAbsoluteTimestamp();
 ~~~~
 
 This automatically sets the timestamp and converts the Java object into an IEEE DIS messaage. It replaces the two steps shown above: determining and setting the timestamp, and marshalling the ESPDU object to a byte array.
