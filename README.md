@@ -1,5 +1,7 @@
 #Distributed Interactive Simulation: The Missing Handbook
 
+A work in progress. Feel free to contribute.
+
 1. <a href="DIS_Background.md">Intro</a>
    - DIS Background
    - DIS History
