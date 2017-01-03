@@ -28,7 +28,7 @@ As mentioned, HLA standardizes the API, not the format of messages exchanged. Ve
 
 Very often the simulations are using variants of RPR-FOM, which was designed from the start to mimic DIS semantics. A common solution to the HLA interoperability problem is to gateway the HLA simulations to DIS. DIS serves as a common communications backbone and simulation data exchange format.
 
-<img src="images/InteropBlockDiagram.tiff">
+<img src="images/InteropBlockDiagram.jpg">
 
 HLA-to-DIS gateways are common and fairly easy to deploy. It's often easier to get HLA RPR-FOM simulations to communicate with each other via DIS than it is with HLA, particularly as the number of simulations to be connected increases. 
 
