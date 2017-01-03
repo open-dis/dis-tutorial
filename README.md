@@ -34,7 +34,10 @@
    - Combat: Fire and Detonation PDUs
    - Intercom: Voice Communications
    - Electronic Warfare
-6. Technology
+6. A Minimal DIS Networking Example
+7. Technology
    - Web
       - Websockets
+      - X3D
+      - Unity
       - WebRTC
