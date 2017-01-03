@@ -64,7 +64,9 @@ Finally, altitude:<br>
 #### Orientation
 If we can place an entity in the world, how do we know which way it's facing? In the case of DIS, the convention is to express entity location in terms of sequential rotations about coordinate axes. 
 
-The record expressing orientation has fields for psi, theta, and phi. These represent angles, expressed in radians, in the entity's coordinate system. First, rotate psi radians around the z-axis, then theta radians around the y-axis, and finally phi radians around the x-axis.
+The record expressing orientation has fields for psi, theta, and phi. These represent angles, expressed in radians, in the entity's coordinate system. First, rotate psi radians around the z-axis, then theta radians around the y-axis, and finally phi radians around the x-axis. The final state, after three rotations, is shown in the image below:
+
+<img src="images/EulerAngles.jpg"/>
 
 The Austalian Defense Force has published a fine paper on the mathemtatics involved, including the use of quaternions to aid in computation. See the Kok paper below in "further readings."
 
