@@ -29,7 +29,7 @@ In this example the position of a tank entity is described in several different 
 
 DIS simulations usually do all their local physics calculations in the local coordinate system. When the ESPDU is being prepared to be sent the position of the entity in the local coordinate system is transformed to the DIS global coordinate system, and then set in the ESPDU. When received by the simulation on the other side, that simulation translates from the global coordinate system to whatever its local coordinate system is.
 
-There are a few wrinkles in this. While the geocentric coordinate system is placed at the center of the earth, it does not by itself define where the surface of the earth is. The earth is not a sphere, but rather a somewhat flattened egg-shaped surface. There are several mathematical models used in geodesy for the shape of the earth. The most popular one is called WGS-84, which is also used in GPS, but there are a annoying number of other models in use that may crop up in older maps. 
+There are a few wrinkles in this. While the geocentric coordinate system origin is placed at the center of the earth, it does not by itself define where the surface of the earth is. The earth is not a sphere, but rather a somewhat flattened egg-shaped surface. There are several mathematical models used in geodesy used to describe the shape of the earth. The most popular one is called WGS-84, which is also used in GPS, but there are an annoying number of other models in use that may crop up in older maps. 
 
 WGS-84 defines an oblate spheroid. The earth is not smooth, and terrain can rise above or below the geoid, as with Mount Everest or the Dead Sea or the bottom of the Atlantic Ocean.
 
