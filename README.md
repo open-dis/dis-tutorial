@@ -30,7 +30,7 @@
 5. <a href="ExchangingStateInformation.md">PDUs: Exchanging State Information</a>
 	- <A href="UDPSockets.md">UDP Socket Programming</a>
 	- <a href="EntityStatePDUs.md">Sending State Updates with Entity State PDUs</a>
-	- Receiving PDUs
+	- <a href="ReceivingPDUs.md">Receiving PDUs</a>
    - Combat: Fire and Detonation PDUs
    - Intercom: Voice Communications
    - Electronic Warfare
