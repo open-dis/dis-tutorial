@@ -263,5 +263,36 @@ DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByN
 socket.send(packet);
 ~~~~
 
-We create a datagram packet that contains the DIS message, then send it on port 3000 to address "255.255.255.255". This is a somewhat dodgy network programming technique, and it may fail in some environments. The problem is that the broadcast address varies from location to location, and in fact a single host may have multiple network interfaces, each with a different broadcast address. A better way to do this is to walk the interfaces in java, and find the actual broadcast address for each interface.
+We create a datagram packet that contains the DIS message, then send it on port 3000 to address "255.255.255.255". This is a somewhat dodgy network programming technique, and it may fail in some environments. See the UDP Socket programming section for details.
+
+###Local Coordinate System
+
+This is all fine and good--at this point we're publishing an entity that has a postion expressed in latitude/longitude/altitude to DIS coordinates. It's common, though, to set up a local coordinate system that is co-extensive with the graphics coordinate system.
+
+The edu.nps.moves.spatial package has a RangeCoordinates class that does this. RangeCoordinates makes use of the SEDRIS package to create a local coordinate system.
+
+Create a tangent plane coordinate system at the specified latitude, longitude, and altitude:
+
+~~~~
+import edu.nps.moves.spatial.*
+...
+RangeCoordinates rangeCoordinates = new RangeCoordinates(33.6, -121.89, 10.0);
+~~~~
+
+The rangeCoordinates object expresses the position of entities in the local coordinate system, with x pointing east, y pointing north, and z pointing up. We can do local physics and graphics in this coordinate system. When we want to send an ESPDU update, we can convert an entity's position from the local coordinate system to the global coordinate system that DIS uses:
+
+~~~~
+Vector3Double globalCoordinates = rangeCoordinates.DISCoordFromLocalFlat(10.0, 15.0, 0);
+~~~~
+
+This converts from the local coordinate system at (10, 15, 0) with an origin at (33.6, -121.89, 10.0) (near Monterey, California) to the global DIS coordinate system with its origin at the center of the earth.
+
+Likewise, if we receive a PDU from the network and wish to express its position in the local coordinate system:
+
+~~~~
+Vector3Double localPosition = rangeCoordinates.localCoordFromDis(x, y, z);
+~~~~
+
+Pass in the DIS location coordinates and get back the position in the local coordinate system. 
+
 
