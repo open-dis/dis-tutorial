@@ -58,7 +58,7 @@ Next, latitude. This can be done iteratively for better precision but one iterat
 
 <img src="images/LatitudeFromXYZ.jpg"/>
 
-Finally, altitude:
+Finally, altitude:<br>
 <img src="images/AltitudeFromXYZ.jpg"/>
 
 #### Orientation
