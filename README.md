@@ -34,6 +34,7 @@
    - Combat: Fire and Detonation PDUs
    - Intercom: Voice Communications
    - Electronic Warfare
+   - <a ref="PDUBundling.md">Bundled PDUs</a>
 6. A Minimal DIS Networking Example
 7. Technology
    - Web
