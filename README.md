@@ -19,7 +19,7 @@
    		- <a href="CoordinateSystems.md">Coordinate Systems</a>
    		- <A href="EntityIdentifiers.md">Identifiers</a>
    		- <a href="Networks.md">Networks</a>
-   		- Timestamps
+   		- <a href="Timestamps.md">Timestamps</a>
    		- Latency
    		- <A href="EntityType.md">Semantics (Entity Type, etc)</a>
    		- Entity Discovery
