@@ -4,6 +4,10 @@ An entity state PDU (ESPDU) represents the state of an object at one point in ti
 
 I'll use Java in these examples, and try to keep them as stripped down as possible.
 
+#### Entity State PDUs 
+
+The Javadoc for the <a href="javadoc/edu/nps/moves/dis/EntityStatePdu.html">Entity State PDU class</a>. This is a useful reference when reading the code below. Other language implementations are quite similar, and almost always have the same instance variable field names and structure.
+
 #### Sending ESPDUs
 
 First of all, a complete program that sends DIS entity state PDUs.
@@ -184,7 +188,7 @@ OK, some of the details:
  EntityStatePdu espdu = new EntityStatePdu();
 ~~~~
 
-This creates a new Entity State PDU object. It includes all the default fields of an ESPDU, including the PDU header fields, entity position field, orientation field, entity type fields, and so on. It has the logic to marshal itself to IEEE 1278.1 DIS binary format, and to convert from the DIS standard array of bytes back to a Java object.
+This creates a new Entity State PDU object. It includes all the default objects contained in an ESPDU, including the PDU header fields, entity position field, orientation field, entity type fields, and so on. It has the logic to marshal itself to IEEE 1278.1 DIS binary format, and to convert from the DIS standard array of bytes back to a Java object.
 
 ~~~~
 // The EID is the unique identifier for objects in the world. This 
@@ -204,9 +208,9 @@ espdu.getEntityID().setApplication(1);
 espdu.getEntityID().setEntity(2);
 ~~~~
 
-Whichever you prefer. 
+Either technique works. You can use whichever you prefer. 
 
-We set the type of entity that this refers to. The ESPDU is updating the other simulation participants about the state of an object, and part of that state information is what type of object this is. The values we set this to come from the SISO EBV document, in this case for an M1A2 tank.
+Below, we set the type of entity that this refers to. The ESPDU is updating the other simulation participants about the state of an object, and part of that state information is what type of object this is. The values we set this to come from the SISO EBV document. In this case we are publishing state information for a M1A2 tank.
 
 ~~~~
 EntityType entityType = espdu.getEntityType();
@@ -221,23 +225,28 @@ entityType.setSpec((short)3);            // M1A2 Abrams
 Next we'll set the position. In this case, we'll specify that the location of the tank is just outside my office in Monterey, CA.
 
 ~~~~
- double disCoordinates[] = CoordinateConversions.getXYZfromLatLonDegrees(lat, lon, 1.0);
+double disCoordinates[] = CoordinateConversions.getXYZfromLatLonDegrees(lat, lon, 1.0);
 Vector3Double location = espdu.getEntityLocation();
 location.setX(disCoordinates[0]);
 location.setY(disCoordinates[1]);
 location.setZ(disCoordinates[2]);
 ~~~~
 
-I'm using a utility class called CoordinateConversions here. It uses the formulas discussed earlier to convert from a latitude, longitude, and altitude to the DIS geocentric coordinate system. The array returned contains the geocentric coordinate system equivalent of my office's position. We set the values as before.
+I'm using a utility class called CoordinateConversions here, from the edu.nps.moves.disutils package. It uses the formulas discussed earlier in this handbook to convert from a latitude, longitude, and altitude to the DIS geocentric coordinate system. The array returned contains the location of my office expressed in the geocentric coordinate system. We set the values as before.
 
-Since one UDP packet may be duplicated or arrive out of order on the receiving side, DIS includes a timestamp field in the PDU. This is used to detect duplicate or out of order packets. DIS chose to use an odd system of timestamps: time since the top of the hour, in an arbitrary unit defined as 2^31-1 units per hour. Setting the timestamp is important. If you don't set it, receiviers will assume that they're getting duplicate packets, and discard them. Since DIS time is somewhat unusual, I've created a utility class that works with DIS time. In this case, it determines the DIS time (time since top of the hour) and then we set the appropriate field in the ESPDU.
+Since one UDP packet may be duplicated or arrive out of order on the receiving side, DIS includes a timestamp field in the PDU header. This is used to detect duplicate or out of order packets. DIS chose to use an odd system time units for the timestamp: time since the top of the hour, in an arbitrary unit defined as 2^31-1 ticks per hour. 
+
+Setting the timestamp is important. If you don't set it, receiviers will see the same timestamp value over and over again, and assume that they're getting duplicate packets. As a result they will discard them. Since DIS time is somewhat unusual, I've created a utility class that works with DIS time. In this case, it determines the DIS time (time since top of the hour) and then we set the appropriate field in the ESPDU. The utility class uses the singleton pattern to retrieve a single, shared instance of the class.
 
 ~~~~
+// Utility class for working with DIS concepts of timestamps
+DisTime disTime = DisTime.getInstance();
+    ....
 int timestamp = disTime.getDisAbsoluteTimestamp();
 espdu.setTimestamp(timestamp);
 ~~~~
 
-At this point we have a mostly-filled out ESPDU, but it's a Java object, while the standard demands that it be an array of bytes in a very specific format. The Java EntityStatePdu object is smart enough to convert itself into that format:
+At this point we have a mostly-filled out ESPDU, but it's a Java object, while the standard demands that it be an array of bytes in a very specific binary format. The Java EntityStatePdu object is smart enough to convert itself into that format:
 
 ~~~~
 ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -246,15 +255,15 @@ espdu.marshal(dos);
 byte[] data = baos.toByteArray();
 ~~~~
 
-The "data" object is an array of bytes that is in the DIS message format.
+The "data" object is an array of bytes that is in the DIS message format specified by the IEEE.
 
-One problem with all this is that programmers never remember to set the timestamp. There's an alternative method for marhsalling with the timestamp automatically set:
+One problem with this code is that programmers never remember to set the timestamp. There's an alternative method for marhsalling with the timestamp automatically set:
 
 ~~~~
 byte[] data = espdu.marshalWithDisAbsoluteTimestamp();
 ~~~~
 
-This automatically sets the timestamp and converts the Java object into an IEEE DIS messaage. It replaces the two steps shown above: determining and setting the timestamp, and marshalling the ESPDU object to a byte array.
+This automatically sets the timestamp and converts the Java object into an IEEE DIS messaage. It replaces the two steps shown above: determining and setting the timestamp, and marshalling the ESPDU object to a byte array. It's the preferred method to marshal a PDU.
 
 At this point we can send the message on broadcast port 3000:
 
@@ -293,6 +302,6 @@ Likewise, if we receive a PDU from the network and wish to express its position 
 Vector3Double localPosition = rangeCoordinates.localCoordFromDis(x, y, z);
 ~~~~
 
-Pass in the DIS location coordinates and get back the position in the local coordinate system. 
+Pass in the DIS global location (geocentric) coordinates and get back the position in the local coordinate system. 
 
 
