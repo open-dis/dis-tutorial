@@ -22,7 +22,7 @@
    	- <a href="Timestamps.md">Timestamps</a>
    	- Latency
    	- <A href="EntityType.md">Semantics (Entity Type, etc)</a>
-   	- Entity Discovery
+   	- <a href="EntityDiscovery.md">Entity Discovery</a>
    	- Scalability
    	- Dead Reckoning
    	- <A href="Gateways.md">Gateways</a>
