@@ -20,7 +20,7 @@
    	- <A href="EntityIdentifiers.md">Identifiers</a>
    	- <a href="Networks.md">Networks</a>
    	- <a href="Timestamps.md">Timestamps</a>
-   	- Latency
+   	- <a href="Latency.md">Latency</a>
    	- <A href="EntityType.md">Semantics (Entity Type, etc)</a>
    	- <a href="EntityDiscovery.md">Entity Discovery</a>
    	- Scalability
