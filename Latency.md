@@ -98,7 +98,7 @@ If the simulation is configured to use absolute time stamps this can be used to 
 
 ###Solutions
 
-That's a lot of problems, and not a lot of solutions. That's the nature of the beast. Do what you can to keep latency low. Conventional wisdom in the commercial gaming world is that FPS games should have under 100ms of latency. Human reaction time is around 250ms; if your simulation is trying to do human-in-the-loop, twitch reaction training it can't be much higher than that, and that's very much pushing it. High latencies can be gotten away with for certain types of applications, such as non-virtual simulations. In a high latency environment simulation designs can try to de-emphasize the reaction time component of training, and emphasize things like teamwork or procedures that rely less on reaction time.
+That's a lot of problems, and not a lot of solutions. That's the nature of the beast. Do what you can to keep latency low. Conventional wisdom in the commercial gaming world is that FPS games should have under 100ms of latency. Human reaction time is around 250ms; if your simulation is trying to do human-in-the-loop, twitch reaction training it can't be much higher than that, and that's very much pushing it. High latencies can be gotten away with for certain types of applications, such as non-virtual simulations. In a high latency environment simulation designs can try to de-emphasize the reaction time component of training, and emphasize things like teamwork or training for procedures that rely less on reaction time.
 
 FURTHER READING
 
