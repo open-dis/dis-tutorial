@@ -2,7 +2,7 @@
 
 DIS was designed for use in the military, and one of the military's core competencies is shooting at people. DIS has to enable training for this.
 
-Shooting in DIS is represented by fire and detonation PDUs. The fire PDU carries the information associated with a weapon firing. DIS is typiclly broadcast-oriented, and every other simulation participant will receive the fire PDU. They can use this to model visual effects associated with the firing, such as muzzle flash, dust clouds, or smoke. 
+Shooting in DIS is represented by a sequence of a fire PDU and a detonation PDU. The fire PDU carries the information associated with a weapon firing. DIS is typiclly broadcast-oriented, and every other simulation participant will receive the fire PDU. They can use this to model visual effects associated with the firing, such as muzzle flash, dust clouds, or smoke. 
 
 The detonation PDU is tied to a preceding fire PDU. It contains information about the munition that impacts. Like the fire PDU, the detonation PDU is typcially received by all simulation particpants. Any participant, including a specifically targeted particpant, can assess damage to itself that results from the detonation. 
 
