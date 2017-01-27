@@ -86,6 +86,10 @@ TENA is often used in a range environment. It has considerable technical merits,
 
 **Python as a Glue Language:** <a href="https://www.python.org/doc/essays/omg-darpa-mcc-position/">href="https://www.python.org/doc/essays/omg-darpa-mcc-position/</a><br>
 
+**Combat Modeling** <a href="https://www.amazon.com/Engineering-Principles-Modeling-Distributed-Simulation/dp/0470874295/ref=asap_bc?ie=UTF8">Andreas Tolk's book on combat modeling</a>
+
+**Networked Graphics** <a href="https://www.amazon.com/Networked-Graphics-Building-Virtual-Environments/dp/0123744237/ref=sr_1_sc_2?s=books&ie=UTF8&qid=1485502973&sr=1-2-spell&keywords=networked+virutal+environments"> Steed & Olivera's book on networked virtual environments</a>.
+
 **DIS/RPR-FOM Protocol support group at SISO:** <a href="https://www.sisostds.org/StandardsActivities/SupportGroups/DISRPRFOMPSG.aspx">https://www.sisostds.org/StandardsActivities/SupportGroups/DISRPRFOMPSG.aspx</a><br>
 
 **Discussion of the 2015 IITSEC "Blended Warrior" exercise, which tied together 40-some simulations on the show floor.** <a href="http://www.iitsecdocs.com/">http://www.iitsecdocs.com/</a>, search for paper titled "Washington, We Have a Problem."

@@ -61,6 +61,12 @@ Next, latitude. This can be done iteratively for better precision but one iterat
 Finally, altitude:<br>
 <img src="images/AltitudeFromXYZ.jpg"/>
 
+####By "Give Me the Equation" I Meant "Give Me the Code"
+
+A Javascript implementation of coordinate conversion is <a href="https://github.com/open-dis/open-dis-javascript/blob/master/javascript/disSupporting/CoordinateConversion.js">here</a>
+
+The Javascript code to set up a local tangent plane coordinate system is <a href="https://github.com/open-dis/open-dis-javascript/blob/master/javascript/disSupporting/RangeCoordinates.js">here</a>
+
 #### Orientation
 We can place an entity in the world, but how do we know which way it's facing? In the case of DIS, the convention is to express entity location in terms of sequential rotations about coordinate axes. 
 
@@ -69,6 +75,13 @@ The record expressing orientation has fields for psi, theta, and phi. These repr
 <img src="images/EulerAngles.jpg"/>
 
 The Austalian Defense Force has published a fine paper on the mathemtatics involved, including the use of quaternions to aid in computation. See the Kok paper below in "further readings."
+
+###Local Coordinate Systems
+In addition to the global coordinate system, which are used to position entities in the real world, DIS sometimes uses a local coordinate system to describe items relative to the entity in question. A local coordinate system has its origin at the center of the entity's _bounding volume_. A bounding volume is a closed volume that completely contains the entity. If there's a tank with a complex shape, then a bounding volume might be a box large enough to completely contain the tank. It's useful for creating a computationally efficient algorithms that discover things like entity collisions, and for certain graphics calculations relating to view frustums. In the context of DIS the local coordinate system can be used to describe where, specificaly, a munition impacted on an entity.
+
+The local coordinate systems x-axis points out the front of the entity, the y-axis out the right hand side, and the z-axis points down, in a conventional right-handed arrangement.
+
+
 
 ### Further Reading
 
