@@ -24,7 +24,7 @@
    	- <A href="EntityType.md">Semantics (Entity Type, etc)</a>
    	- <a href="EntityDiscovery.md">Entity Discovery</a>
    	- Scalability
-   	- Dead Reckoning
+   	- <A href="DeadReckoning.md">Dead Reckoning</a>
    	- <A href="Gateways.md">Gateways</a>
 4. <a href="DISImplementations.md">DIS Implementations</a>
 5. <a href="ExchangingStateInformation.md">PDUs: Exchanging State Information</a>
