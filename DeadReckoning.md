@@ -27,9 +27,23 @@ An alternative approach for our hypothetical entity moving in a straight line is
 
 We receive an update at t=0 for an entity moving north at 10 m/s (a little over 20 mph). At a frequency we choose--perhaps 30 per second--we can run our dead reckoning algorithm to guess where the location of the entity is. In our case, we will move the entity 0.3 m north, about a foot, at every tick of the algorithm. The math in the DR algorithm is fairly efficient, at least more so than receiving and processing UDP packets.
 
-This is all fine and good. But this all assumes that the location and velocity alone provides a pretty good guess for where the entity is located between receiving state updates. What if that's not such a good guess?
+This is all fine and good. But this all assumes that the location and velocity alone provides a pretty good guess for where the entity is located between receiving state updates. What if that's not such a good guess? What we want is several different algorithms that can provide different guesses depending on the nature of the entity's behavior. 
 
-DIS entity state PDUs address this allowing the owner of the entity to specify what algorithm the receiver should use.
+DIS entity state PDUs address this allowing the owner of the entity--the applicaiton sending updates--to specify what algorithm the receiver should use. The DeadReckoningParameters record of the Entity State PDU contains an "deadReckoningAlgorithm" enumeration field. The values in the table below map to the alogrithm to be used.
+
+<img src="images/DeadReckoningAlgorithms.jpg">DeadReckoningAlgorithms.jpg</img>
+
+The algorithms are mostly straight forward descriptions of Newtonian mechanics. 
+
+If the value "1" is seen in the field, the entity should not be dead reckoned at all. Dead reckoning is not computationally free, and if the entity is not moving at all it makes sense to tell the receiver to not perform the computations at all. 
+
+DR algorithm 2 uses only velocity to guess the location of the entity. DR algorithm 3 expands the kinematic information used in DR to angular velocity, which allows the receiver to guess the entity's orientation as well. DR algorithm 4 expands this further to linear accleration. DR algorithm 5 uses linear velocity and acceleration, with no angular components. 
+
+DR algorithms 6 through nine are similar to the above, but use the local, body-centered coordinate system rather than the global coordinate system.
+
+###Dead Reckoning Thresholds
+
+One of the interesting insights of DIS is that the owner of the entity can change the DR algorithm used, and is not limited to sending out updates only at fixed intervals. If the owner of the entity realizes that the receivers will be out of sync with the owner it can immediately send an entity state PDU with the current entity state information. Let's say our tank makes a left turn. The owner knows that all the receivers at DR'ing the entity and expect it to continue in a straight line. Rather than waiting for the next heartbeat message to send out a state update, the owning application can send a new ESPDU immediately when the turn is made. 
 
 
 ###Dead Reckoning to Mitigate Latency Effects
@@ -48,3 +62,5 @@ UDP internals: https://www.codeproject.com/articles/275715/real-time-communicati
 UDP Linux internals: https://blog.packagecloud.io/eng/2016/06/22/monitoring-tuning-linux-networking-stack-receiving-data/#data-arrives
 
 Performance tuning: https://blog.cloudflare.com/how-to-receive-a-million-packets/
+
+Dead Reckoning performance: <a href="documents/DeadReckoning_Ryan.pdf">documents/DeadReckoning_Ryan.pdf</a>
