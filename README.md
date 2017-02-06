@@ -33,7 +33,7 @@ Work in progress. Full of typos, not yet to first draft status, footnotes are a 
 	- <A href="UDPSockets.md">UDP Socket Programming</a>
 	- <a href="EntityStatePDUs.md">Sending State Updates with Entity State PDUs</a>
 	- <a href="ReceivingPDUs.md">Receiving PDUs</a>
-   - <a href="Combat.md">Combat: Fire and Detonation PDUs<a/>
+   - <a href="Combat.md">Combat: Fire and Detonation PDUs</a>
    - Intercom: Voice Communications
    - Electronic Warfare
    - <a ref="PDUBundling.md">Bundled PDUs</a>
