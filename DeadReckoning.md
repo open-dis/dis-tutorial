@@ -43,17 +43,32 @@ DR algorithms 6 through nine are similar to the above, but use the local, body-c
 
 ###Dead Reckoning Thresholds
 
-One of the interesting insights of DIS is that the owner of the entity can change the DR algorithm used, and is not limited to sending out updates only at fixed intervals. If the owner of the entity realizes that the receivers will be out of sync with the owner it can immediately send an entity state PDU with the current entity state information. Let's say our tank makes a left turn. The owner knows that all the receivers at DR'ing the entity and expect it to continue in a straight line. Rather than waiting for the next heartbeat message to send out a state update, the owning application can send a new ESPDU immediately when the turn is made. 
+One of the interesting insights of DIS is that the owner of the entity can change the DR algorithm used, and is not limited to sending out updates only at fixed intervals. If the owner of the entity realizes that the receivers will be out of sync with the owner it can immediately send an entity state PDU with the current entity state information. Let's say our tank makes a left turn. The owner knows that all the receivers at DR'ing the entity and expect it to continue in a straight line. Rather than waiting for the next heartbeat message to send out a state update, the owning application can send a new ESPDU at the time the turn is made. 
+
+The idea of sending out updates when we know the simulations listening to our updates will be out of sync can be generalized. We know what DR algorithms other participants are using--our simulation told them what to use. We also know what data we sent them, so we have a strong idea of where they think we are. So the approach is to run the dead reckoning algorithm on our host as well--we'll do exactly the same computations as the other participating simulations. When we discover that the dead reckoned position exceeds some specified threshold, we send out an immediate state update.
 
 
 ###Dead Reckoning to Mitigate Latency Effects
 
+Suppose we write a "Fast and Furious" themed simulator for training Humvee drivers. Two drivers are in a head-to-head drag race in lanes next to each other, driving virtual Humvees. There's 200 ms of latency between the simulators. What views do the simulators have of the other vehicle?
+
+If we relied solely on dead reckoning used as above to reduce the number of update packets sent, all the updates we received would describe the state of the other Humvee 200 ms ago. At 100 mph (and highly optimistically assuming a Humvee could get up to 100 mph) that translates into a discrepancy about 9 meters in the position of the other vehicle. The other simulator would have a similary mistaken view of us. When the crossed the finish line each might think it won the race. We need another technique to reduce the effects of latency.
+
+In DIS this can be done by using the timestamp field in combination with the dead reckoning algorithms. Every PDU contains a timestamp field that, if the standard is being followed, includes a measure of time since the top of the hour. When we receive the entity state PDU update we can perform a relatively simple operation: based on the specified DR algorithm, extrapolate the position of the entity. If the time is synchronized between hosts using a service such as Network Time Protocol (NPT) as discussed in the <a href="Timestamps.md">Timestamps</a> section, we can compare this to our own view of the current time. This will give us an estimate of the total latency for updates. We'll then run the DR algorithm and get an estimate of the true position of the other Humvee. DIS DR algorithm five is probably a good choice; it includes both velocity and acceleration in the DR computations, and ignores angular velocity. 
+
+Note that we are now using DR for a reason distinct from decreasing bandwidth use. It's being used to descrease the effects of latency. This isn't cost free; running the DR algorithms for both the entities being received and the entities we publish can consume some computational resources. But in the end, most modern CPUs have several cores, and these tasks can often be parallelized. Simulations are often not restrained by their ability to do computations, but rather by graphics or I/O.
+
+
+
 ###What If the Dead Reckoning is Wrong?
 
+Obviously, the DR algorithm could fail. One participant could let off the gas. This will likely trip the DR threshold and cause an update message to be sent, but it will still take 200 ms before it arrives at the other host. During this period the other host will continue to DR and update the screen position of the Humvee, which will show us a false position.
+
+So what do we do in this case? Basically, we lie to the user. A key part of virutal worlds is keeping the user immersed and providing him a sense of presence. When we discover the local DR algorithm has incorrectly placed an entity the usual approach is to gently correct the position of the entity to the latest reported position. The key is to make the movement look realistic. 
  
 
 
-Further Reading:
+###Further Reading:
 
 Bandwidth benchmarking: http://wiki.networksecuritytoolkit.org/index.php/LAN_Ethernet_Maximum_Rates,_Generation,_Capturing_%26_Monitoring
 

@@ -1,5 +1,7 @@
 #Distributed Interactive Simulation: The Missing Handbook
 
+Work in progress. Full of typos, not yet to first draft status, footnotes are a mess, prose is lousy, etc. 
+
 1. <a href="DIS_Background.md">Intro</a>
    - DIS Background
    - DIS History
@@ -23,7 +25,7 @@
    	- <a href="Latency.md">Latency</a>
    	- <A href="EntityType.md">Semantics (Entity Type, etc)</a>
    	- <a href="EntityDiscovery.md">Entity Discovery</a>
-   	- Scalability
+   	- <a href="Scalability.md">Scalablity</a>
    	- <A href="DeadReckoning.md">Dead Reckoning</a>
    	- <A href="Gateways.md">Gateways</a>
 4. <a href="DISImplementations.md">DIS Implementations</a>
