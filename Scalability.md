@@ -20,7 +20,7 @@ See the "Further Reading" section for some details on the technologies the enter
 
 ####Networking
 
-One of the central problems to solve in a large NVE is keeping state updates down to a reasonable level. If too many state updates are sent we'll either flood the network or overwhelm the ability of a host to receive, parse, and process state updates.
+One of the central problems to solve in a large NVE is keeping state updates down to a reasonable level. If too many state updates are sent we can flood the network or overwhelm the ability of a host to receive, parse, and process state updates.
 
 ####Unicast
 
@@ -40,15 +40,15 @@ Broadcast is the most widely used method to send DIS PDUs. It's traditional to u
 
 ####Multicast
 
-Multicast is a more sophisticated extension of broadcast. Broadcast sends a single message to every host on the network. Multicast can send a message to only those hosts that have subscribed to a "multicast group."
+Multicast is a more sophisticated extension of broadcast. Like broadcast, it can send a single message to every host on a network. Multicast can also send a message to only those hosts that have subscribed to a "multicast group." 
 
-There's something else multicast gives us: the ability to traverse routers. Broadcast is limited to a single network. Multicast can traverse networks if the routers connecting networks are configured to allow this. Multicast configuration is not a given. 
-
-This document is trying to avoid becoming a network programming tutorial. You can read more about multicat at <a href="http://www.cisco.com/c/dam/en/us/products/collateral/ios-nx-os-software/ip-multicast/prod_presentation0900aecd80310883.pdf">http://www.cisco.com/c/dam/en/us/products/collateral/ios-nx-os-software/ip-multicast/prod_presentation0900aecd80310883.pdf</a> 
-
-Multicast is a superior option to broadcast. The research into and implementation of multicast was done in the mid-90's, a little after DIS was standardized, and as a result DIS has for historical and installed base reasons settled on broadcast, despite its inferiority. Multicast is better, and if you have a choice you should always pick it. The only reason to continue using broadcast is historical inertia and interoperability with applications that are pre-configured to use broadcast.
+Multicast is a superior option to broadcast. The research into and implementation of multicast was done in the mid-90's, a little after DIS was standardized, and as a result DIS has for historical and installed base reasons usually settled for broadcast, despite its inferiority. If you have a choice you should always pick multicat over broadcast. The only reason to continue using broadcast is historical inertia and interoperability with applications that are pre-configured to use broadcast.
 
 Why is it better? Several reasons.
+
+One thing multicast gives us is the ability to traverse routers. Broadcast is limited to a single network, while multicast can traverse network boundaries if the routers connecting networks are configured to allow this. Multicast configuration of the routers is not a given. 
+
+This document is trying to avoid becoming a networking tutorial.  You can read more about multicast at <a href="http://www.cisco.com/c/dam/en/us/products/collateral/ios-nx-os-software/ip-multicast/prod_presentation0900aecd80310883.pdf">http://www.cisco.com/c/dam/en/us/products/collateral/ios-nx-os-software/ip-multicast/prod_presentation0900aecd80310883.pdf</a> But understanding some of the multicast implementation details helps you understand its usefulness in NVE scalability.
 
 You don't have to configure anything to use multicast within a single network. There is no extra configuration above and beyond that of broadcast. If the design requires that state updates traverse networks then the network can be configured to do multicast routing. This realistically cannot be done with broadcast. Multicast does everything broadcast does, and has the capacity to be more capable. TCP/IP stacks nearly universally support multicast, even severely limited devices such as cell phones (Android and IOS), Raspberry Pi, and many Arduino devices. 
 
@@ -60,13 +60,13 @@ When the IGMP message hits the switch on the way to the router the switch can li
 
 This is beneficial to NVE performance, as we'll see later in the section on Distributed Data Management (DDM). In a NVE with heavy state update traffic we will lose the performance battle if all UDP state update packets arrive at the network interface, travel up the TCP/IP stack, are delivered to the application and parsed,  only to be thrown away. It is much more efficient to limit traffic as early in the process as possible. Not even delivering updates to the network interface card of the host if we know the host is not interested is an optimal solution to this problem.
 
-Another way that multicast can improve performance is the algorithms the network interface card (NIC) uses to receive Ethernet traffic. Ethernet frames contain the information in a UDP packet, nesting Russian doll-style. The network interface card can have knowledge of what multicast groups the host has subscribed to, to the way that IGMP snooping works. Good NICs can imperfectly filter out UDP multicast messages in hardware and completely avoid passing irrelevant traffic up the TCP/IP stack. Actual implementation of this technique can be spotty. A good implementation depends on a sharp author for the ethernet card driver. But avoiding tasking the higher layers of the TCP/IP stack can be a significant win in environments with a lot of traffic from several multicast groups.
+Another way that multicast can improve performance is the algorithms the network interface card (NIC) uses to receive Ethernet traffic. Ethernet frames contain the information in a UDP packet, nested Russian doll-style. The network interface card has knowledge of what multicast groups the host has subscribed to, similar to the way IGMP snooping works. Good NICs can imperfectly filter out UDP multicast messages in hardware and completely avoid passing irrelevant traffic up the TCP/IP stack. Actual implementation of this technique can be spotty. A good implementation depends on a sharp author for the ethernet card driver. But avoiding tasking the higher layers of the TCP/IP stack can be a significant win in environments with a lot of traffic from several multicast groups.
 
 All this means, again, that multicast performs at least as well as broadcast, has the ability to exploit multicast routing to be more capable, can exploit L3 switches to be more efficient, and has no downside. The only reason to choose broadcast over multicast is compatiblity with the installed base.
 
 ### Distributed Data Management
 
-Distributed Data Management (DDM) is a term that's been retro-introduced to DIS. It originated in HLA, which came after DIS. An alternative term is Area of Interest Management (AOIM). Mike Macedonia's 1995 PhD thesis was an early description of the problem in NVEs. See "Further Reading" for details.
+Distributed Data Management (DDM) is a term that I'm retro-applying to DIS. It originated in HLA, as near as I can tell. An alternative term is Area of Interest Management (AOIM), the name given to the concept in Mike Macedonia's 1995 PhD thesis. See "Further Reading" for details.
 
 The problem DDM is trying to solve is filtering out state updates that are irrelevant to a participant. Consider a theater-level combat simulation of the Persian Gulf. A Burke class destroyer is conducting anti-air operations, while 50 miles inland a dismounted infantryman with an AK-47 is moving. Meanwhile a red force aircraft is a further 50 miles inland. All the entities involved are sending state updates.
 
@@ -78,7 +78,7 @@ Two entities of the same type may not be interested in each other. Our AK-47 arm
 
 There's another case that's somewhat more subtle: if the state update is so old, due to latency or some other reason, it may no longer be of use to us. If we received it an parsed it we would throw it away once we realized how old it was.
 
-In Macedonia's telling, NVEs can do DDM based on spatial, temporal, and functional criteria. In the example above the Burke simulator can use functional DDM to filter out all the dismounted infantry and tanks while still receiving state updates from aircraft. Or we could use spatial DDM to ensure that infantry more than 5K apart don't receive state updates from each other, or that we will ignore state updates if they are more than 500 ms old. 
+In Macedonia's telling, NVEs can do DDM based on spatial, temporal, and functional criteria. The Burke simulator in the example above can use functional DDM to filter out all the dismounted infantry and tanks while still receiving state updates from aircraft. Or we could use spatial DDM to ensure that infantry more than 5K apart don't receive state updates from each other, or ignore state updates if they are more than 500 ms old. 
 
 The central concept of DDM is to segregate and limit the dynamic state updates to only those hosts to which it would be of value. A key requirement is that the traffic be filtered _before_ it arrives at the simulation application. It's impractical to receive, parse, and process all the traffic in a large NVE if we then discard all but the small quantity of state updates we are interested in.
 
