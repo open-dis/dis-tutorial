@@ -61,7 +61,7 @@ DIS is frequently used as "glue" to enable applications that use HLA or TENA to 
 
 ## Parting Thoughts
 
-The inventors of DIS were visionary given the technology of the era. Even twenty-five years after it was standardized it still holds up quite well. The research it prompted was trailblazing, and served as the starting point for many military simulations and entertainment industry game applications. The ideas worked out in DIS are still widely used today.
+Given the technology of the era, the developers of DIS were visionary. Even decades after it was developed and standardized it still holds up quite well. The research it prompted was trailblazing, and served as the starting point for many military simulations and entertainment industry game applications. The ideas worked out in DIS are still widely used today.
 
 
 
