@@ -1,8 +1,12 @@
 #Department of Defense Modeling and Simlation Standards
 
-There are three major network standards in DoD modeling and simulation: Distributed Interactive Simulation (DIS), High Level Architecture (HLA) and Test and Training Enabling Architecture (TENA). Each has evolved to serve different niches in M&S. While this document focuses on explaining DIS, the reader should also understand the place of DIS in  the DOD modeling and simulation world.
+There are three major network standards in DoD modeling and simulation: Distributed Interactive Simulation (DIS), High Level Architecture (HLA) and Test and Training Enabling Architecture (TENA). Each has evolved to serve different niches in M&S. While this document focuses on explaining DIS, the reader should also understand the overall role of DIS in the DoD modeling and simulation world.
 
-Distributed simulations are, ultimately, exchanging state information, usually about *entities*--vehicles, persons, ships, or aircraft. If a simulation wants to display a tank from another simulation it needs to know something about that tank--its position, which direction it's facing, how fast it's traveling, and other information. The data needs to be sent across the network from one host to any other hosts that may need to know about the tank. DIS, HLA, and TENA have solved this problem in different ways.
+Distributed simulations are, ultimately, exchanging state information, usually about *entities*--vehicles, persons, ships, or aircraft. If a simulation wants to display a tank from another simulation it needs to know something about that tank--its position, which direction it's facing, how fast it's traveling, and other information. The data needs to be sent across the network from one host to any other hosts that may need to know about the tank. 
+
+DIS, TENA, and HLA have been used in other roles as well. DIS can encapsulate voice data, which can simulate the function of radios. They can also be used to simulate electromagnetic emissions.
+
+DIS, along with TENA and HLA, are traditionally thought of as ways to describe the motion of entities in the world. 
 
 ## DIS
 
