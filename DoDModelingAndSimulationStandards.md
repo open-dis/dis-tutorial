@@ -2,11 +2,9 @@
 
 There are three major network standards in DoD modeling and simulation: Distributed Interactive Simulation (DIS), High Level Architecture (HLA) and Test and Training Enabling Architecture (TENA). Each has evolved to serve different niches in M&S. While this document focuses on explaining DIS, the reader should also understand the overall role of DIS in the DoD modeling and simulation world.
 
-Distributed simulations are, ultimately, exchanging state information, usually about *entities*--vehicles, persons, ships, or aircraft. If a simulation wants to display a tank from another simulation it needs to know something about that tank--its position, which direction it's facing, how fast it's traveling, and other information. The data needs to be sent across the network from one host to any other hosts that may need to know about the tank. 
+Distributed simulations are, ultimately, exchanging state information, usually about *entities*--vehicles, persons, ships, or aircraft. If a simulation wants to display a tank from another simulation it needs to know something about that tank--its position, which direction it's facing, how fast it's traveling, and other information. The data needs to be sent across the network from one host to any other hosts that may need to know about the tank. The receiving host must know how to decode the message, called the message's *syntax* and must also know what the meaning of the data in the message is, called the *semantics*. The syntax may specify that so many bytes into the data sent across the network there are three floating point numbers. If we know the syntax, we can retrieve and decode those numbers. But the semantics of those numbers are a tricker business. Do they describe a position in the world? An entity's orientation? The direction in which a tank's turret is pointing? Participating hosts must know both how to decode messages and what they mean.
 
-DIS, TENA, and HLA have been used in other roles as well. DIS can encapsulate voice data, which can simulate the function of radios. They can also be used to simulate electromagnetic emissions.
-
-DIS, along with TENA and HLA, are traditionally thought of as ways to describe the motion of entities in the world. 
+DIS, TENA, and HLA have been used in other roles as well. DIS can be used to carry voice data, which allows simulated radio traffic can be passed over the network. All three protocols can be used to describe other phenomena,  such as electromagnetic emissions, but many military training applications are primarily focused on describing the position of things in the world and their interactions. 
 
 ## DIS
 
@@ -14,15 +12,33 @@ DIS was the original standard for modeling and simulation. It consists of
 
 * A set of standardized messages for exchanging state information
 * Agreements about semantics. This includes what coordinate system to use, units of measurement, and enumerated values that provide a compact way to describe agreed-upon meaning
-* Standard agreements for handling information, entity discovery, and other procedures
+* Standard agreements for handling information, the sequence in which messages are exchanged, discovery of simulation entities as they appear, and other procedures
 
-There are dozens of DIS messages, called Protocol Data Units (PDUs). Each PDU exactly describes the position and format of data in the message. For example, one PDU, called the entity state PDU, transmits the position of an entity, along with other information. The entity's position is 48 bytes from the start of the PDU, and consists of three double precision floating point numbers for the X, Y, and Z values. A simulation that wants to transmit the position of an entity needs to construct the entity state PDU message in exactly the format specified by the standard. 
+There are dozens of individual DIS messages, called Protocol Data Units (PDUs). Each PDU exactly describes the position and format of data in the message. For example, one PDU, called the Entity State PDU (ESPDU), transmits the position and orientation of an entity along with other information. The entity's position is 48 bytes from the start of the PDU, and consists of three double precision floating point numbers for the X, Y, and Z values. A simulation that wants to transmit the position of an entity needs to construct the entity state PDU message in exactly the format specified by the standard. The format of the message is the message's syntax.
 
-What's implicit in this message is that both the sender and receiver are using the same coordinate system, and the same units of measurement. These agreements about the semantics of those three floating point numbers are specified by the standard as well.
+The receiving host can decode the ESPDU according to the message's syntax and get three double precision floating point numbers. What's implicit in this message is that both the sender and receiver are using the same coordinate system and the same units of measurement. Are the three floating point numbers a latitude, longitude, and altitude? Military Grid Reference System coordinates? Is the altitude in meters or feet? Is the altitude measured from sea level or ground level? Agreements about the semantics of the three floating point numbers are specified by the standard, but not in the message being transmitted itself. 
 
-Not all message exchanges consist of simple state updates. For example simulating shooting requires that multiple messages be exchanged between the shooter and target. The sequence in which the messages must be exchanged to accomplish this are also specified by the DIS standard.
+Not all message exchanges consist of simple and atomic state updates. For example simulating shooting in DIS requires that multiple messages be transmitted about the shooter, target, and the weapon being used. The sequence in which the messages must be exchanged is also specified by the DIS standard.
 
-Many simulations using DIS only partially implement the standard. If a simulation makes no use of electromagnetic warfare PDUs then many applications will simply not implement them. This means that they will be deaf to any of these PDUs sent by other simulations.
+Many simulations using DIS only partially implement the standard. If a simulation makes no use of electromagnetic warfare PDUs then the implementation of DIS used in that application may well not implement them. This means that they will be deaf to any of the PDUs with information about electromagnetic operations that were sent by other simulation participants.
+
+### What is Standardized?
+
+What DIS standardizes is straightforward: the format of PDUs, and the semantics of their meanings. This is a classic standardization approach, and was popular in the 80's and 90's for many Internet Engineering Task Force (IETF) Requests for Comment (RFCs). 
+
+###Versions of DIS
+
+DIS has been through several revisions. The proto-DIS version was SIMNET, a DARPA research project from prior to the standardization of DIS. In 1995 the SIMNET protocol was updated and standardized with a major standards group, IEEE, as version 5. The standardization process is painstaking and painful. The desired result is the ability of two different programmers, both of whom have read the standard and implemented it independently and without communicating with each other, to write an implementation that is completely interoperable. This is a tall order--getting all the syntax and semantics right is difficult. 
+
+In 1998 the DIS standard was updated in a backwards-compatible way to version 6. The 1998 standard added a few new PDUs and clarified some semantics, so that DIS version 5 traffic can mostly be handled by DIS version 6 implemtations. The reverse is not necessarily true--if a DIS 6 application sends messages to a DIS version 5 application then it is possible to send messages that will not be recognized. 
+
+In 2012 version 7 of DIS was approved. The text of the standard was significantly expanded to clarify the semantic meaning of messages, and a few new messages were added, primarily related to directed energy weapons. Version 7 of DIS is again mostly backward-compatibile with earlier versions.
+
+DIS can be broadly classified into generations. Generation 1, from before DIS was standardized, can be thought of as SIMNET messages. Generation 2 covers the IEEE-standardized DIS versions 5, 6, and 7. Generation 2 is not terribly compatible with the syntax and semantics of generation 1. Work on DIS continues. DIS version 8 is being mooted as this is written. It may well choose to break backwards binary compatibility in order to take advantage of new designs, in which case it could be described as generation 3.
+
+Generation 1 applications are almost entirely dead and gone. (Though you never know about these things. Some bozo has doubtless backed up an application from 1991 on his 5-1/4" floppy disk and will start sending PDUs on your network using his PC-XT without your knowledge.) Generation 2 applications predominate, mostly DIS version 6.
+
+While generation 3 applications (the mooted DIS version 8 and beyond) may not be binary-compatible, any realistic implementation will be able to operate with the aid of gateways or bridges that act as translators. The gateway would be able to receive a DIS version 6 PDU and translate it to a DIS version 8 format.
 
 ##HLA
 
