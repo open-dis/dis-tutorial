@@ -24,7 +24,7 @@ Many simulations using DIS only partially implement the standard. If a simulatio
 
 ### What is Standardized?
 
-What DIS standardizes is straightforward: the format of PDUs, and the semantics of their meanings. This is a classic standardization approach, and was popular in the 80's and 90's for many Internet Engineering Task Force (IETF) Requests for Comment (RFCs). 
+What DIS standardizes is straightforward: the format of PDUs, and the semantics of their contents. This is a classic standardization approach, and was popular in the 80's and 90's for the many Internet Engineering Task Force (IETF) Requests for Comment (RFCs) that form the backbone of the internet today. The Domain Name Service (DNS) protocol, the HTTP protocol, and the TCP protocol are defined in similar ways. As we'll see, HLA and TENA made different choices about what to standardize.
 
 ###Versions of DIS
 
@@ -42,9 +42,13 @@ While generation 3 applications (the mooted DIS version 8 and beyond) may not be
 
 ##HLA
 
-DIS was intended to address a particular problem domain: real-time virtual environments. However the DoD has broader simulation problems to solve that DIS can't address. The M&S leadership wanted a single standard that could be used across a wider range of simulation applications. As a result, starting in 1995, the DoD started the process of creating a new standard for modeling and simulation, an effort which eventually evolved into the HLA standard.
+DIS was intended to address a particular problem domain: real-time virtual environments. However the DoD has broader simulation problems to solve that DIS can't address. The M&S leadership wanted a single standard that could be used across a wider range of simulation applications. As a result, starting in 1995, the DoD started the process of creating a new standard for modeling and simulation protocols, an effort which eventually evolved into the HLA standard. Reality didn't quite work out the way the DoD leadership would have liked, but HLA does bring a broader set of tools that can be brought to bear on M&S applications.
 
-HLA brings a broader set of tools that can be applied to M&S applications. DIS works in real time, AKA wall clock time. This works well for DIS simulations, where it is usually expected that there will be humans in the simulation loop, and a simulation should move no faster or slower than what a human would experience in real time. But some simulations may need to diverge from real time. HLA may optionally make use of a simulation clock that can differ from real time. Also, the DIS PDUs define a collection of state information. In addition state information not included in the DIS standard is more difficult to exchange. HLA applications can specify the  state information that the interoperating applications exchange. 
+
+
+DIS applications are assumed to run in real time, AKA wall clock time. This works well for DIS simulations, where it is usually expected that there will be humans in the simulation loop, and a simulation should move no faster or slower than what a human would experience in real time.
+
+Some simulations may need to diverge from real time. HLA may optionally make use of a simulation clock that can differ from real time. Also, the DIS PDUs define a collection of state information. In addition state information not included in the DIS standard is more difficult to exchange. HLA applications can specify the  state information that the interoperating applications exchange. 
 
 While DIS specifies the format of data on the wire, HLA is an API standard. The standard specifies a set of function calls that simulations can use, along with a set of ten "HLA rules" that compliant applications must follow. The state information to be exchanged is outside of the standard and defined by each application in something called a "Federation Object Model" (FOM).  For two simulations to interact they must share a FOM. 
 
