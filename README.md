@@ -1,4 +1,4 @@
-#Distributed Interactive Simulation: The Missing Handbook
+# Distributed Interactive Simulation: The Missing Handbook
 
 Work in progress. Full of typos, not yet to first draft status, footnotes are a mess, prose is lousy, etc. 
 
