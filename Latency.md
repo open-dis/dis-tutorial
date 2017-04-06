@@ -1,4 +1,4 @@
-##Latency
+## Latency
 
 Latency is the time it takes for a message to travel from one system to another. Latency is distinct from bandwidth, a measure of the amount of data that can be sent in one time period. It's possible to have a high bandwidth, high latency connection, for example a connection over a satellite in geosynchronus orbit over which we can send 100 MB/sec. That's high bandwidth, but at the same time it takes 250ms for a message to get from the sender to the receiver.  This latency has a hard lower limit established by the speed of light; any message has to travel up 72,000 KM and then back down. There can also be low bandwidth, low latency connection, over which we can't send very much data, but what data we send arrives quickly. 
 
@@ -14,17 +14,19 @@ Suppose the simulation user is looking at the display of a virtual world applica
 
 The host publishing the entity sends out state updates with the entity's position, but it takes time for the state update to get to our host. The application that publishes the entity prepares the update message, set the timestamp field, and then send the message out over the local operating system's network stack. The message must travel across the network, be delivered up our local host's network stack, and be handed off to our application, where our application parses the message, does any local processing or computations, and updates the graphics display. That time delay, the latency, between the publisher preparing the message and the message updating the display in the receiving application can cause problems when attempting to maintain the illusion of a shared world. Even if two applications are running on the same host the we can still see the effects of latency, because eliminating the time necessary for a message to traverse the network in the above list of latency components does not reduce latency to zero; the application still must deal with the inherent latency of creating, copying, and parsing messages between applications on the same host. 
 
-Latency can be a problem in many aspects of a simulation. Broadly speaking, latency can impact any _shared, dynamic_ state in virtual worlds.  The entity's location is one example of this phenomenon. For example, consider looking at the display of a simulator, such as Close Combat Tactical Trainer, with multiple avatars controlled from several hosts. We look at our display and see an enemy solider.
+Latency can be a problem in many aspects of a simulation. Broadly speaking, latency can impact any _shared, dynamic_ state in virtual worlds. The entity's location is an example of this phenomenon. Someone looking at the display of a simulator, such as Close Combat Tactical Trainer, sees multiple soldier avatars each controlled by a different host. He looks at a particular enemy solider on the display.
 
-Is the enemy soldier where our display says it is? It could be. For example if the entity hasn't moved for the last 30 minutes it's likely that the shared, dynamic state information for the simulaiton is consistent between the cooperating applications.  The state updates have been sent and received long ago, adn the state hasn't changed. Both applications see the entity at the same location. In contrast, what if the solier entity is moving? The position of the solider we see on our screen differs from what the host controlling the soldier entity has, by the distance Velocity * Latency. See figure x for an illustration of this principle.
+Is the enemy soldier where our display says it is? It could be. For example if the entity hasn't moved for the last 30 minutes it's likely that the shared, dynamic state information for the simulaiton is consistent between the cooperating applications.  The state updates have been sent and received long ago, and the state hasn't changed. Both applications see the entity at the same location. In contrast, what if the solier entity is moving? The position of the avatar we see on our screen differs from what the host controlling the soldier's avatar has, by the distance Velocity * Latency. The two hosts see the same entity is slightly different positions. See figure x for an illustration of this principle.
 
-For some applications it might not matter if the shared entity position data is not completely consistent. Even if all of them are not exactly where we think they are, the entity positions may be close enough for the purposes of our simulation. A map-based display for an artillery fire simulator may only care if the entities are within a few meters of their displayed location. On the other hand a virtual or augmented reality application may need the hosts to agree on the location of entities within a few centimers of what other applications believe the entity's position to be. In the end, it depends on what the simulation is trying to accomplish.
+Figure X
+
+For some applications it might not matter if the data about entity positions is not completely consistent between hosts. Even if all of them are not exactly where we think they are, the entity positions may be close enough for the purposes of the simulation. A map-based display for an artillery fires training simulator may only care if the entities are within a few meters of their displayed location. On the other hand, a virtual or augmented reality application may need the hosts to agree on the location of entities to within a few centimers of what other applications believe the entity's position to be. In the end, it depends on what the simulation is trying to accomplish.
 
 With dead reckoning (sometimes called extrapolation) of the entity's position our application uses an algorithm to guess about the entity's location. If the entity is traveling in a straight line at a constant velocity and our application is using a dead reckoning algorithm that models that behavior, our application may have correctly estimated the location.  Displays on both hosts show the entity in the essentially the same position. But it may not. If the entity in the publishing application suddenly changes course our application can't discover that fact until a state update with the new direction and state actually arrives. That won't happen, at a minimum, for the full period of the latency between the applications. The two applications will not have completely consistent state information.
 
 It's important to note that the application can make use of the timestamp field in combination with dead reckoning to reduce preceived latency. The timestamp field (if an absolute time format) gives the receiving application an estimate of where the entity was at a specific point it time. We can use that information, along with the time as perceived on the local application, to dead reckon an estimate of where the entity should be at the current time. See the dead reckoning section of this document for details. 
 
-###Consistency vs. Throughput
+### Consistency vs. Throughput
 
 There's a fundamental tradeoff between the consistency of the shared state information and how responsive the applications are. 
 
@@ -40,17 +42,19 @@ Yet another option is to keep the authoritative game state on a central server. 
 
 In practice, applications accept the reality that the shared states of the applications can be a little out of sync with each other in order to get acceptable responsiveness, or even a real time simulation that works at all. The lack of synchronized game state creates other problems we'll discuss later.
 
-###How Bad is Latency?
+### How Bad is Latency?
 
-If our application is a map display that receives DIS ESPDUs and plots their position on a map then latency might not matter. A battlefield map may not be adverely affected at all if the entities are one second out of sync with the publishing application because the inconsistencies in the map display are trivial compared to the accuracy the application needs. Virtual simulations are much more sensitive to latency issues, and are the most challenging application to get right. 
+Suppose our application is an interactive map that receives DIS ESPDUs and plots their position. A battlefield map may not be adverely affected at all if the entities are one second out of sync with the publishing application because the inconsistencies in the map display are trivial compared to the accuracy the application needs. Virtual simulations are much more sensitive to latency issues, and are the most challenging application to get right. 
 
-The entertainment industry has many first person shooter (FPS) games that demand attention to latency details. FPS games like DOOM, Call of Duty, or Counterstrike are very popular, and players may be scattered across a continent. They have very tight, "twitch" interactions between entities, usually involving avatars shooting at each other with low latency and high precision. Simulations with slower-moving entities and user participation that allows slower reaction times lessen the gameplay effects of latency.  The latency-induced position errors are smaller and not as relevant to the user experience. While some military simulations can require twitch reaction times, the military often focuses on training for teamwork and combat drills rather than fast reaction time physical tasks.
+The entertainment industry has many first person shooter (FPS) games that demand attention to latency details. FPS games like DOOM, Call of Duty, and Counterstrike are very popular, and players may be scattered across a continent. They have very tight, "twitch" interactions between entities, usually involving player avatars shooting at each other, and this requires low latency and high precision. Simulations with entities that move in a more stately manner, perhaps a naval ship simulator, may have game play that allows slower reaction times because the latency-induced position errors are smaller and not as relevant to the user experience. The military often focuses on training for teamwork and procedures, even in virtual worlds, rather than tasks that require fast reaction time.
 
-Many military simulations are run in one room at a single site, which reduces network latency to the mimimum, often less than 5 ms between hosts that are on the same network, though wireless networks can have slightly latency.  The latency grows as the network "distance" between the applications increases, with "distance" defined very casually. Every time a network packet crosses a switch or makes a router hop some latency is introduced. Home cable modems can add around 5-40ms, and DSL modems around 10-70ms. A  dial-up modem can add 100-200ms. (Go be poor somewhere else.) In a military environment there are other sources of latency. In an LVC environment it's not uncommon for the state update messages to undergo multiple format changes. A live update from Automatic Information System (AIS) commerical ship position reports may have to have its format changed from the native AIS format to DIS, and then to XML as it transits a security guard between the unclassified and classified networks. From there it may need to be ingested into an HLA simulation or handed off to a C4I system, and each of those has their own message format. Some military network links go over satellites in geosynchronus orbit 25,000 miles above earth. The message may be encrypted and decrypted.  Each of these steps introduces more latency in addition to the network latency.
+How bad is latency, anyway?
 
-The speed of light provides a lower bound on network latency. A rough rule of thumb is that crossing one time zone has a minimum of around 10ms of latency. This can only increase depending on the network hops taken and the efficiency of the routers on the path between the hosts.
+Many military simulations are run in one room at a single site and this reduces network latency to the mimimum. It's often less than 5 ms between hosts that are on the same ethernet network in the same room. If running on a wireless network  instead of a conventional ethernet network media then latency can be a bit higher.  The latency grows as the network "distance" between the applications increases, with "distance" defined very casually. Every time a network packet crosses a switch or makes a router hop some latency is introduced. Home cable modems can add around 5-40ms, and DSL modems around 10-70ms. A  dial-up modem can add 100-200ms. (Go use stone-age technology somewhere else.) In some military applications there are other sources of latency. In an LVC environment it's not uncommon for the state update messages to undergo multiple format changes. A live update from Automatic Information System (AIS) commerical ship position reports may have to have its format changed from the native AIS format to DIS, and then perhaps be converted again to XML so it can transit a security guard that sits between the unclassified and classified networks. From there it may need to be ingested into an HLA simulation or handed off to a C4I system, and each of those has their own message format. Some military network links go over satellites in geosynchronus orbit 25,000 miles above earth. The message may be encrypted and decrypted.  Each of these steps introduces more latency in addition to the network latency.
 
-In addition to network latency there are other sources of lag. A display frame rate of 60 frames per second is pretty good--that's how frequently the display is updating the presentation of game state to the user. That translates into 17 ms of lag between frame refresh operations. The virutal world or other type of simulation application also performs a loop the involves receiving data, performing computations, and sending any updates required, which obviously takes time. That may be a significant factor if complicated physics, AI, or I/O such as database lookups is involved.
+The speed of light provides a lower bound on network latency. A rough rule of thumb is that crossing one time zone has a minimum of around 10ms of latency. This can only increase from there, depending on the network hops taken and the efficiency of the routers on the path between the hosts.
+
+In addition to network latency there are other sources of lag. A display frame rate of 60 frames per second is pretty good--that's how frequently the display is updating the presentation of game state to the user. That translates into 17 ms of lag between frame refresh operations. The virutal world or other type of simulation application also performs a loop the involves receiving data, performing computations, and sending any updates required, and this obviously takes time. It may be a significant factor in latency if complicated physics, AI, or I/O such as database lookups is involved before the message can be used to update the screen.
 
 The table below shows the observed network latency from the Naval Postgraduate School in Monterey, California (not far from San Francisco and Silicon Valley) to several Amazon Web Services (AWS) regions where Amazon cloud servers are hosted. NPS has a good connection to high speed research networks. Non-academic sites are likely to be worse.
 
@@ -70,7 +74,7 @@ The table below shows the observed network latency from the Naval Postgraduate S
 | South America (Brazil) | 266 |
 | China (Beijing) | 422 |
 
-A graph displaying observed latency distribution between California and Texas (circa 2010) is shown below. The network was operating under "normal" production load, shared with production system network traffic and with no attempts to optimize via quality of service measures. This gives an idea of typical variance in the latency. 
+A graph displaying observed latency distribution between California and Texas (circa 2010) is shown below. The network was operating under "normal" production load, shared with production system network traffic and with no attempts to optimize via quality of service measures. This gives an idea of typical variance in the latency, and how the latency of messages is distributed. 
 
 <img src="images/LatencyGraph.jpg">
 
@@ -86,9 +90,16 @@ How much does latency affect a simulation? Some estimates for the position error
 
 As you can see, slower-moving entities are less senstitive to latency errors, and fast-moving entities more sensitive. Are the position errors big enough to worry about? That depends on the simulation, but the answer can easily be "yes." In practice, whether a DIS virtual world simulation is "true" is often subjective. The objective of the simulation is often training rather than a Platonic ideal of absolute truth. If it's convincing--if it creates a sense of presence and reality good enough for training, and if the results aren't so far off from ground truth that negative training occurs, it can still be useful. In the end, the users are being trained to the correct standard, even if some white lies are being told to the users. Whether this assumption about the harmless effects of simulation latency remains true  may not hold for other applications, such as combat analysis or procurement decisions.
 
-###Latency and Causation
+### Latency and Causation
 
-Latency can also affect perceived cause-and-effect in simulations. Suppose we have an artillery simulator, a tank simulator and a UAV simulator with differing latencies. The latency between the artillery and tank simulator is 10 ms, tank-UAV latency is 20 ms, and artillery-UAV latency is 100 ms. This may be caused by any number of real world network architecture issues.
+Latency can also affect perceived cause-and-effect in simulations. Suppose we have an artillery simulator, a tank simulator and a UAV simulator with inter-application latencies that are not the same. The latency between the artillery and tank simulator is 10 ms, tank-UAV latency is 20 ms, and artillery-UAV latency is 100 ms. This performance may be caused by any number of real world network architecture issues.
+
+| Simulator | Artillery | Tank | UAV |
+|-----------|-----------|------|-----|
+| **Artillery** | -         |10 ms | 100 ms| 
+| **Tank**      | 10 ms     | -    | 20 ms |
+| **UAV**       | 100 ms    | 20 ms | -  |
+
 
 The artillery unit fires on the tank, and destroys it. The tank simulator changes its state to show itself as destroyed, and sends out a state update. From the perspective of the UAV the tank will be destroyed before the artillery fires. The artillery fires at t=0, and the tank simulator is informed at t=10. The tank in the simulator discovers it has been destroyed and sends out an update to its state. The new "destroyed" tank state arrives at the UAV at time t=30 (or 10 + 20). The artillery simulator's shot appears at the UAV simulator only at time t=100. The tanks explodes, and 70ms later we see the artillery that caused the explosion firing. 
 
@@ -96,7 +107,7 @@ This is sometimes called a causality violation. It may arise from other causes i
 
 This can mitigated to an extent, certainly if the messages are being captured and replayed.  The <a href="PDUBundling.md">timestamp</a> field in the DIS PDU header can contain an absolute time hack, the time since the top of the hour.   If the simulation is so configured to use absolute time stamps this can be used to order the PDUs in rough absolute time order for replay and analysis.
 
-###Latency and User Perceptions
+### Latency and User Perceptions
 
 Suppose we have a simulation for a drag race. Two simulated cars in (virtual) adjacent lanes launch from the start line and race to the finish, and the two hosts controlling the cars are separated by a network that has a total of 200ms of latency.
 
@@ -106,9 +117,7 @@ We can avoid some of this with dead reckoning. The entity state PDU can include 
 
 Is this perfect? Nope. If the engine of simulation B's car blows up during that 200 ms of latency the dead reckoning will be wrong, and we'll have a mistaken view of the relative positions. But it's arguably better than the alternative. 
 
-
-
-###Solutions
+### Solutions
 
 One emerging method for coping with latency is to make distributed networked virtual environments less distributed. That sounds contradictory, but isn't, quite. Cloud computing has compelling business advantages over conventional approaches and promises significant cost savings. Virtual machines in the cloud can be run very cheaply. There are also applications like Remote Desktop on Windows, X-Windows or VNC on Unix, or Apple Remote Desktop in the Apple environment that let the user remotely view the desktop of a machine running elsewhere. The conventional approach to distributed simulation is to keep the both the participating hosts and the displays local to the user. If the simulation is geographically distributed this also means the latency can be high between the hosts running the simulation, and therefore the local application physics starts becoming complex. But if the hosts running the simulation are co-located on the cloud the latency-induced location errors are smaller, because latency between hosts is reduced to the bare minimum. This of course is pushing the problem around on the plate rather than actually solving it, but it may rearrange it in a way that's useful. The user is now seeing what is in effect a streaming video of the desktop that's running on the cloud. All his user input--his mouse clicks, his keyboard input, his joystick inputs--is going from his local desktop to the cloud, latency time L away, which means his inputs are less responsive. The video of the desktop running in the cloud has to be sent back to the local desktop, which takes time and makes the display less responsive. We'll also probably need more bandwidth to communicate with the server; we're streaming back the video display instead of sending state updates, and the state updates tend to be smaller.  The tradeoff is that it may make the physics workable in high latency distributed applications.
 
@@ -120,6 +129,8 @@ That's a lot of problems, and not a lot of solutions. It's the nature of the bea
 FURTHER READING
 
 Sandhep Singhal and Michael Zyda, _Networked Virtual Environments_, Addison Wesley 1999. It's a very good book that discusses many of the fundamental problems in virtual worlds.
+
+Andreas Tolk, Combat Modeling for discussion of causation and drag racing
   
 Two-Phased commits: <a href="https://en.wikipedia.org/wiki/Two-phase_commit_protocol">https://en.wikipedia.org/wiki/Two-phase_commit_protocol</a>
 
