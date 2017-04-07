@@ -1,13 +1,18 @@
-##Dead Reckoning
+## Dead Reckoning
 
 Dead reckoning is a technique that makes informed guesses about the location of entities in order to reduce network traffic and mitigate the effects of latency.
 
-Imagine an entity moving in a straight line at a constant velocity. The entity is owned by one particular simulation in a networked virtual environent. Its state--namely, its position--is changing, and we need to inform other participating simulations in the NVE about the change in dynamic state information. 
+Imagine an entity moving in a straight line at a constant velocity. The entity is owned by one particular simulation in a networked virtual environent. Its state--for example, its position--is changing, and we need to inform other participating simulations in the NVE about the change in dynamic state information. In addition it takes time for the state update to be sent from the application that controls the entity to our application.
 
 The entity is experiencing constant changes to its shared, dynamic state. How can we make the other participating simulations closely match the entity's state as it changes? 
 
-###Brute Force & Ignorance
-A simulation participating in a NVE strives to match its visual display to the underlying reality of the simulation's other participants. If the simulation that owns the entity discussed above sends out updates once a second that means the entity will appear to do "hyperspace jumps" from the old position to the new position every second because that is the frequency at which state updates are arriving. This may or may not be significant, depending on the circumstances. Large hyperspace jumps are distracting if the application is a virtual environment, the sine qua non of which is to create a sense of realistic, shared presence. If the entity is moving slowly and the hyperspace jumps are small the user might not even notice them. If the application is a map-based and the scale of the map is large enough the user might not be distracted by position jumps of even hundreds of meters.  In addition users of map applications have more forgiving expectations about display update changes; the hyperspace jumps on a map don't take them out of the sense of presence the way they would if they occurred in a virtual environment. We can also exploit the lower expectations they have for map displays. In the end, the significance of the simulation's display update rate depends on the training objectives of the simulation.
+### Why
+
+Notice that there are two basic problems to address: how frequently we receive state updates, and network latency. The latency aspect is addressed in the latency section.
+
+### State Update Frequency: Brute Force & Ignorance
+
+A simulation participating in a NVE strives to match its visual display to the underlying reality of the simulation's other participants. The simulation that owns the entity discussed above sends out updates, but those updates occur at discrete time intervals. If they are sent once a second and we use no other measures to hide this fact on the receiving side, that means the entity's position in other applications will appear to do "hyperspace jumps" from the old position to the new position every second. This may or may not be significant, depending on the circumstances. Large hyperspace jumps are distracting if the application is a virtual environment, where the sine qua non is the creation of a sense of realistic, shared presence. If the entity is moving slowly and the hyperspace jumps are small the user might not even notice them. If the application is a map-based and the scale of the map is large enough the user might not be distracted by position jumps of even hundreds of meters.  In addition users of map applications have more forgiving expectations about display update changes; the hyperspace jumps on a map don't take them out of the sense of presence in the way they would if they occurred in a virtual environment. As programmers we can exploit the lower expectations they have for map displays. In the end, the significance of the simulation's display update rate depends on the training objectives of the simulation.
 
 Still, in many applications, particularly virtual environments, we want to limit the update frequency artifacts apparent to the user. For our entity moving in a straight line at a constant velocity one possiblity is for the simulation that owns the entity to just send out more frequent updates. Instead of sending out a update for the entity's position once a second, we can send out updates once every 30th of a second, and the entity will be animated more smoothly. There are some obvious drawbacks to this approach. First of all, bandwidth. We have just increased the bandwidth used for updates for each entity by a factor of 30. This might not be terrible in some instances. In DIS an entity state PDU has a minimum payload of 144 bytes plus 28 bytes of network overhead, so our bandwidth use increased from 172 bytes/second to over 5K bytes/sec. This isn't so bad in a typical wired network that has 100 mbit/sec ethernet, but if a NVE has a thousand entities it starts to become a factor.
 
@@ -19,7 +24,7 @@ The brute force approach also means we have to decode more packets and do the pr
 
 For all these reasons a pure brute force approach is not realistic for anything other than small virtual environments. It can have its place, but in larger NVEs it's not a practical approach. 
 
-###Dead Reckoning to Reduce Traffic
+### Dead Reckoning to Reduce Traffic
 
 An alternative approach for our hypothetical entity moving in a straight line is to use dead reckoning to make guesses about the location of entities. If we send state updates once a second we can, on the receiving side, interprolate the position of the entity based on its velocity. The DIS entity state PDU includes a field for entity velocity, so the most recent ESPDU received has enough information to allow us to calculate this. 
 
