@@ -1,4 +1,4 @@
-## Dead Reckoning
+## Dead Reckoning: State Update Frequency
 
 Dead reckoning is a technique that makes informed guesses about the location of entities in order to reduce network traffic and mitigate the effects of latency.
 
@@ -8,7 +8,7 @@ The entity is experiencing constant changes to its shared, dynamic state. How ca
 
 ### Why
 
-Notice that there are two basic problems to address: how frequently we receive state updates, and network latency. The latency aspect is addressed in the latency section.
+Notice that there are two basic problems that are addressed by dead reckoning: how frequently we receive state updates, and network latency. The latency aspect is addressed in the latency section, while this section addresses state update frequency.
 
 ### State Update Frequency: Brute Force & Ignorance
 
@@ -16,9 +16,9 @@ A simulation participating in a NVE strives to match its visual display to the u
 
 Still, in many applications, particularly virtual environments, we want to limit the update frequency artifacts apparent to the user. For our entity moving in a straight line at a constant velocity one possiblity is for the simulation that owns the entity to just send out more frequent updates. Instead of sending out a update for the entity's position once a second, we can send out updates once every 30th of a second, and the entity will be animated more smoothly. There are some obvious drawbacks to this approach. First of all, bandwidth. We have just increased the bandwidth used for updates for each entity by a factor of 30. This might not be terrible in some instances. In DIS an entity state PDU has a minimum payload of 144 bytes plus 28 bytes of network overhead, so our bandwidth use increased from 172 bytes/second to over 5K bytes/sec. This isn't so bad in a typical wired network that has 100 mbit/sec ethernet, but if a NVE has a thousand entities it starts to become a factor.
 
-There are more serious and subtle problems with the brute force approach than just bandwidth use. Network performance is a multi-dimensional optimization problem. NVE state updates are often in a corner case for network performance that causes significant issues. NVE state updates conveyed via UDP are often small and frequent, and that's a worst case situation when updates are sent over UDP sockets. Receiving many small UDP messages often runs into practical limits well before the theoretical maximum bandwidth is reached.
+There are more serious and subtle problems with the brute force approach than just bandwidth use. A network's performance is a multi-dimensional optimization problem, and NVE state updates are often in a format that are by their nature problem-causing for the network as a whole. State updates are often conveyed via UDP, and are small and frequent. That's about a worst case situation for UDP socket clients and isn't that great for the network's performance. An application receiving many small UDP messages often reaches practical limits well before the network's theoretical maximum bandwidth is reached.
 
-Receiving a UDP packets at a high rate is a computationally time-consuming affair. Deep in the operating system the network interface card will raise interrupts that need to be handled by the CPU and operating system, and as of this writing a realistic maximum is about 50,000 UDP packets per CPU core. Our 30,000 updates per second outlined above is starting to bump up against that and as a result we'll probably see some dropped UDP packets. We can get better throughput if we bundle several PDUs into one UDP packet to send fewer, larger UDP messages (see the section on PDU bundling) but this also means the average latency of the updates is increased.  The bundling approach requires that we wait for several update messages to fill an outgoing queue before we have enough to bundle and send.
+Receiving a UDP packets at a high rate is a computationally time-consuming affair. Deep in the operating system the network interface card will raise interrupts that need to be handled by the CPU and operating system, and as of this writing a realistic maximum is about 50,000 UDP packets per CPU core. Our 30,000 updates per second outlined above is starting to bump up against that, and as a result we'll probably see some dropped UDP packets. We can get better throughput if we bundle several PDUs into one UDP packet to send fewer, larger UDP messages (see the section on PDU bundling) but this also means the average latency of the updates is increased.  The bundling approach requires that we wait for several update messages to fill an outgoing queue before we have enough to bundle and send.
 
 The brute force approach also means we have to decode more packets and do the processing associated with applying the updates to the system, and this increases CPU load. When going from one update message per second to 30 per second we now have to decode an extra 29 messages per second, which usually involves memory copies and other operations. In production virtual environments the designers often have CPU budget allocations for different aspects of the system--so much for AI, so much for graphics and physics, and a much smaller amount for network operations.  Networking will almost always get the short end of the stick in budget allocation debates because designers would rather spend the cycles on spiffy in-game physics rather than parsing network messages.
 
@@ -51,15 +51,7 @@ One of the interesting insights of DIS is that the owner of the entity can chang
 The idea of sending out updates when we know the simulations listening to our updates will become out of sync can be generalized. We know what DR algorithms other participants are using--our simulation told them what to use. We also know what data we sent them, so we know enough to compute where they think we are. So a technique is to run the dead reckoning algorithm on our host as well--we'll do exactly the same computations as the other participating simulations. When we discover that the dead reckoned position exceeds some specified threshold from where we know the entity is, we send out an immediate state update.
 
 
-###Dead Reckoning to Mitigate Latency Effects
 
-Suppose we write a "Fast and Furious" themed simulator for training reprobate Humvee drivers. Two drivers are in a head-to-head drag race in lanes next to each other, driving virtual Humvees. There's 200 ms of latency between the simulators. What views do the simulators have of the other vehicle?
-
-If we relied solely on dead reckoning used as above to reduce the number of update packets sent, all the updates we received would describe the state of the other Humvee 200 ms ago. At 100 mph (and highly optimistically assuming a Humvee could get up to 100 mph) that translates into a discrepancy about 9 meters in the position of the other vehicle. The other simulator would have a similary mistaken view of us. When the crossed the finish line each might think it won the race. We need another technique to reduce the effects of latency.
-
-In DIS this can be done by using the timestamp field in combination with the dead reckoning algorithms. Every PDU contains a timestamp field that, if the standard is being followed, includes a measure of time since the top of the hour. When we receive the entity state PDU update we can perform a relatively simple operation: based on the specified DR algorithm, extrapolate the position of the entity. If the time is synchronized between hosts using a service such as Network Time Protocol (NPT) as discussed in the <a href="Timestamps.md">Timestamps</a> section, we can compare this to our own view of the current time. This will give us an estimate of the total latency for updates. We'll then run the DR algorithm and get an estimate of the true position of the other Humvee. DIS DR algorithm five is probably a good choice; it includes both velocity and acceleration in the DR computations, and ignores angular velocity. 
-
-Note that we are now using DR for a reason distinct from decreasing bandwidth use. It's being used to descrease the effects of latency. This isn't cost free; running the DR algorithms for both the entities being received and the entities we publish can consume some computational resources. But in the end, most modern CPUs have several cores, and these tasks can often be parallelized. Simulations are often not restrained by their ability to do computations, but rather by graphics or I/O.
 
 
 

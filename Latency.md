@@ -26,6 +26,16 @@ If we know what direction the entity controlled by the remote host is moving and
 
 It's important to note that the application can make use of the timestamp field in combination with dead reckoning to reduce preceived latency. The timestamp field (if an absolute time format) gives the receiving application an estimate of where the entity was at a specific point it time. We can use that information, along with the time as perceived on the local application, to dead reckon an estimate of where the entity should be at the current time. See the dead reckoning section of this document for details. 
 
+### Dead Reckoning to Mitigate Latency Effects
+
+Suppose we write a "Fast and Furious" themed simulator for training Humvee drivers. Two drivers are in a head-to-head drag race in lanes next to each other, driving virtual Humvees. There's 200 ms of latency between the simulators. What views do the simulators have of the other vehicle?
+
+If we relied solely on dead reckoning used as above to reduce the number of update packets sent, all the updates we received would describe the state of the other Humvee 200 ms ago. At 100 mph (and highly optimistically assuming a Humvee could get up to 100 mph) that translates into a discrepancy about 9 meters in the position of the other vehicle. The other simulator would have a similary mistaken view of us. When the crossed the finish line each might think it won the race. We need another technique to reduce the effects of latency.
+
+In DIS this can be done by using the timestamp field in combination with the dead reckoning algorithms. Every PDU contains a timestamp field that, if the standard is being followed, includes a measure of time since the top of the hour. When we receive the entity state PDU update we can perform a relatively simple operation: based on the specified DR algorithm, extrapolate the position of the entity. If the time is synchronized between hosts using a service such as Network Time Protocol (NPT) as discussed in the <a href="Timestamps.md">Timestamps</a> section, we can compare this to our own view of the current time. This will give us an estimate of the total latency for updates. We'll then run the DR algorithm and get an estimate of the true position of the other Humvee. DIS DR algorithm five is probably a good choice; it includes both velocity and acceleration in the DR computations, and ignores angular velocity. 
+
+Note that we are now using DR for a reason distinct from decreasing bandwidth use. It's being used to descrease the effects of latency. This isn't cost free; running the DR algorithms for both the entities being received and the entities we publish can consume some computational resources. But in the end, most modern CPUs have several cores, and these tasks can often be parallelized. Simulations are often not restrained by their ability to do computations, but rather by graphics or I/O.
+
 ### Consistency vs. Throughput
 
 There's a fundamental tradeoff between the consistency of the shared state information and how responsive the applications are. 
@@ -116,6 +126,8 @@ Simulation A has a good idea of where it is, but we also want to show where the 
 We can avoid some of this with dead reckoning. The entity state PDU can include fields for the velocity, acceleration, and, critically, an absolute timestamp. The simulations can use this information to better depict an estimated position for its counterpart's car. When simulation A receives the state update it notes the reported position of the entity and when the update was sent. We can then apply a dead reckoning alogrithm to estimate where the entity is at the current time, based on its velocity, acceleration, and the time that has elapsed since the update was sent. 
 
 Is this perfect? Nope. If the engine of simulation B's car blows up during that 200 ms of latency the dead reckoning will be wrong, and we'll have a mistaken view of the relative positions. But it's arguably better than the alternative. 
+
+
 
 ### Solutions
 

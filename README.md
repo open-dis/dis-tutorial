@@ -22,11 +22,11 @@ Work in progress. Full of typos, not yet to first draft status, footnotes are a 
    	- <A href="EntityIdentifiers.md">Identifiers</a>
    	- <a href="Networks.md">Networks</a>
    	- <a href="Timestamps.md">Timestamps</a>
-   	- <a href="Latency.md">Latency</a>
+   	- <A href="DeadReckoning.md">Dead Reckoning: State Update Frequency</a>
+   	- <a href="Latency.md">Dead Reckoning: Latency</a>
    	- <A href="EntityType.md">Semantics (Entity Type, etc)</a>
    	- <a href="EntityDiscovery.md">Entity Discovery</a>
-   	- <a href="Scalability.md">Scalablity</a>
-   	- <A href="DeadReckoning.md">Dead Reckoning</a>
+   	- <a href="Scalability.md">Scalablity</a>  
    	- <A href="Gateways.md">Gateways</a>
 4. <a href="DISImplementations.md">DIS Implementations</a>
 5. <a href="ExchangingStateInformation.md">PDUs: Exchanging State Information</a>
