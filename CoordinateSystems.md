@@ -21,7 +21,7 @@ Imagine a live ship position feed like Automatic Information System (AIS) that t
 
 So what coordinate system should be used? DIS has been used in many domains, including sea, subsurface, air, land, and space.  If the simulation's geographic extent is large enough the curvature of the earth can't be ignored. A simulation limted to land operations might choose MGRS. This does not work well for aircraft simulations, where the altitude of an entity is not restricted to the surface of the earth. Naval operations might choose latitude/longitude, but this does not work well for air operations or space operations.  Also, for reasons of convienence we'd like to use a coordinate system that makes local physics calculations easy, or easier. We should also settle on either metric or English units. These goals are in conflict with each other, and some tradeoffs must be made.
 
-DIS versions 5, 6, and 7 chose to use a Cartesian coordinate system with its origin at the center of the earth, and to use meters as the unit of measurement.  The X-axis of this coordinate system points out from the center of the earth and intersects the surface of the earth at the equator and prime meridian. The Y-axis likewise intersects the earth's surface at the equator, but at 90 degrees east longitude. The Z-axis points up through the north pole.
+DIS versions 5, 6, and 7 chose to use a Cartesian coordinate system with its origin at the center of the earth, and to use meters as the unit of measurement.  The X-axis of this coordinate system points out from the center of the earth and intersects the surface of the earth at the equator and prime meridian. The Y-axis likewise intersects the earth's surface at the equator, but at 90 degrees east longitude. The Z-axis points up through the north pole. This coordinate system rotates wtih the earth; it is sometimes called "Earth-Centered, Earth-Fixed" (ECEF). 
 
 <img src="images/coordinateSystem/DISCoordinateSystem.jpg"/>
 
@@ -113,6 +113,12 @@ The record expressing orientation has fields for psi, theta, and phi. These repr
 The Austalian Defense Force has published a fine paper on the mathemtatics involved, including the use of quaternions to aid in computation. See the Kok paper below in "further readings."
 
 https://discussions.sisostds.org/index.htm?A3=ind0210&L=Z-ARCHIVE-SISO-ENUM-2002&E=quoted-printable&P=7277&B=--&T=text%2Fhtml;%20charset=UTF-8&pending=
+
+Consider two cases: we want convert a position and orientation of a vehicle at the Naval Postgraduate School in Monterey to the standard used by DIS, and convert the values we get from DIS in a state update to position, with roll, pitch, and heading. It's at 36.5973° N, 121.8731° W, altitude 5 m, and it's pointing +20 degrees from north, with a 5° roll and a 10° pitch.
+
+First of all, we need the postion of the entity as expressed in DIS (aka ECEF) geocentric coordinates. The equation for this is above. There's also an online calculator at <a href="http://www.apsalin.com/convert-geodetic-to-cartesian.aspx">an online source</a>.  The ECEF coordinates are (-2707135.985, -4353750.737, 3781611.558) for that latitude, longitude, and altitude. Next we need to find a coordinate base system rotated to the same orientation as the vehicle (using the NED convention, North=x, East=y, Down=z.)
+
+
 
 ### Entity Local Coordinate Systems
 In addition to the global coordinate system, which are used to position entities in the real world, DIS sometimes uses a local coordinate system to describe items relative to the entity in question. A local coordinate system has its origin at the center of the entity's _bounding volume_. A bounding volume is a closed volume that completely contains the entity. If there's a tank with a complex shape, then a bounding volume might be a box large enough to completely contain the tank. It's useful for creating a computationally efficient algorithms that discover things like entity collisions, and for certain graphics calculations relating to view frustums. In the context of DIS the local coordinate system can be used to describe where, specificaly, a munition impacted on an entity.
