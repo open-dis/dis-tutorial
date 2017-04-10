@@ -33,7 +33,7 @@ There are a few wrinkles in this. While the geocentric coordinate system origin 
 
 In addition some maps use datums other than WGS-84 for the shape of the earth. The Australians use a datum called GDA-94 on their maps because that works well for modeling the layout of land in Australia; it replaced an earlier datum called AGD-84. Historically the Japanese and Indians have also used their own datums for mapping, as have many nations, and states within the US, because they predate the creation of WGS-84 and GPS, and because they tend to work well for the region of the earth that the map describes. Datums have been argued about for centuries, and it's quite easy to come across a map that does not use WGS-84. Even though the US government has a National Geospatial Intelligence Agency responsible for mapping, the fact is that LVC simulations often use maps or geo-referenced entities from many non-government sources that use different map datums.  
 
-The problem is that using different datums also causes the models for the shape of the earth to differ. Imagine a single entity that has its position described as being 36.5973° N, 121.8731° W. The latitude and longitude lines are clamped to the surface of the earth, and two maps are using different datums. See figure X. There are two different 3D surfaces that the datums describe. An entity described with the same latitude and longitude will be in two different places. Their locations depend on the datum the map uses in addition to the latitude and longitude.
+The problem is that using different datums also causes the models for the shape of the earth to differ. Imagine a single entity that has its position described as being 36.5973° N, 121.8731° W. The latitude and longitude lines are clamped to the surface of the earth, and two maps are using different datums. See figure X. The datums describe two different 3D surfaces. An entity described with the same latitude and longitude will be in two different locations in 3D space. Their locations depend on the datum the map uses in addition to the latitude and longitude.
 
 Figure X. (two curves, describe a surface. same lat/lon, different 3D positions.)
 
@@ -43,7 +43,7 @@ How big of a deal is this? Some of the datums described above could result in a 
 
 Figure x
 
-It's quite easy to come across a map that does not use WGS-84. Even though the US governent has a National Geospatial Intelligence Agency responsible for mapping, the fact is that LVC simulations often use maps or geo-referenced entities from who knows what source. This often manifests itself in LVC simulations when entities are shown driving down a road, but with a 20 meter offset. 
+It's quite easy to come across a map that does not use WGS-84. Even though the US governent has a National Geospatial Intelligence Agency responsible for mapping, the reality is that LVC simulations often use maps or geo-referenced entities from who knows what source. This may manifest itself in LVC simulations when a convoy is shown on a map driving near a road, but with a 20 meter offset. The position of the vehicles is a live component, reported using GPS, which uses WGS-84. The map the entities are displayed on uses a different datum. When GPS reports latitude and longitude it winds up being in a different 3D location than the map's concept of the road's location.
 
 ### Terrain
 
