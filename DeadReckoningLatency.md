@@ -35,9 +35,13 @@ Suppose we write a "Fast and Furious" themed game for drag racing. Two drivers a
 <img src="images/deadReckoningLatency/fastFuriousDragRace.jpg">
 Figure x
 
-But suppose there's a significant amount of latency between the two hosts in the game. Let's say it's 200 ms. Now who's ahead? When Dom looks left he sees this state of the game:
+But suppose there's a significant amount of latency between the two hosts in the game. Let's say it's 100 ms. The player controlling Dom looks left he sees this state of the game:
 
 <img src="images/deadReckoningLatency/domAhead.jpg">
+
+Who's really ahead?
+
+*****
 
 If we relied solely on dead reckoning used as above to reduce the number of update packets sent, all the updates we received would describe the state of the other Humvee 200 ms ago. At 100 mph (and highly optimistically assuming a Humvee could get up to 100 mph) that translates into a discrepancy about 9 meters in the position of the other vehicle. The other simulator would have a similary mistaken view of us. When the crossed the finish line each might think it won the race. We need another technique to reduce the effects of latency.
 
