@@ -10,7 +10,7 @@ Figure x
 When doing graphics programming we describe the position of the cube (or tank) using the graphics package coordinate system.  Simplicity is a virtue in programming, so we can describe the game world with a coordinate system that assumes the world is infinitely flat in all directions. World of Warcraft can lay out cities and roads for their world on a surface that's infintely flat. This makes the math involved in all this simple. We can use a local coordinate system, but it's a simple transformation to switch between our local coordinate system and that of the game world's.
 
 We don't have as pleasant of a situation when trying to describe the position of entities in the real world. 
-Entities are usually positioned on the earth's ellipsoid-shaped surface. If we're trying to realistically model naval warfare, we won't be able to see a ship 100 km away from our ship; it's below the horizon. Using a single, flat coordinate system is not realisitic and can't provide good training when simulations are conducted on that large of a geographic scale. This is shown by a tangent plane touching the surface of the earth in figure x:
+Entities are usually positioned on the earth's ellipsoid-shaped surface. If we're trying to realistically model naval warfare then we won't be able to see a ship 100 km away from our ship; it's below the horizon. Using a single, unified, flat coordinate system. It would not be realisitic and it can't provide good training when simulations are conducted on that large of a geographic scale. This is shown by a tangent plane touching the surface of the earth in figure x:
 
 <img src="images/coordinateSystem/earthTangentPlane.jpg"/>
 Figure x.
@@ -21,43 +21,13 @@ Imagine a live ship position feed like Automatic Information System (AIS) that t
 
 So what coordinate system should be used? DIS has been used in many domains, including sea, subsurface, air, land, and space.  If the simulation's geographic extent is large enough the curvature of the earth can't be ignored. A simulation limted to land operations might choose MGRS. This does not work well for aircraft simulations, where the altitude of an entity is not restricted to the surface of the earth. Naval operations might choose latitude/longitude, but this does not work well for air operations or space operations.  Also, for reasons of convienence we'd like to use a coordinate system that makes local physics calculations easy, or easier. We should also settle on either metric or English units. These goals are in conflict with each other, and some tradeoffs must be made.
 
-DIS versions 5, 6, and 7 chose to use a Cartesian coordinate system with its origin at the center of the earth, and to use meters as the unit of measurement.  The X-axis of this coordinate system points out from the center of the earth and intersects the surface of the earth at the equator and prime meridian. The Y-axis likewise intersects the earth's surface at the equator, but at 90 degrees east longitude. The Z-axis points up through the north pole. This coordinate system rotates wtih the earth; it is sometimes called "Earth-Centered, Earth-Fixed" (ECEF). 
+DIS versions 5, 6, and 7 chose to use a Cartesian coordinate system with its origin at the center of the earth, and to use meters as the unit of measurement.  The X-axis of this coordinate system points out from the center of the earth and intersects the surface of the earth at the equator and prime meridian. The Y-axis likewise intersects the earth's surface at the equator, but at 90 degrees east longitude. The Z-axis points up through the north pole. This coordinate system rotates wtih the earth; it is sometimes called "Earth-Centered, Earth-Fixed" (ECEF). There's another element to this, a mathematical model for the shape of the surface of the earth. A popular model for the shape of the earth is called WGS-84; that's what Global Positioning System (GPS) uses.
 
 <img src="images/coordinateSystem/DISCoordinateSystem.jpg"/>
 
-This seems like an odd choice at first glance. The geocentric coordinate system is, in isolation, not very convenient. Suppose we want to move an entity one meter northwest. How much do we change the values of the X, Y, and Z axes in the geocentric coordinate system to accomplish this? That's not intuitively obvious.  The key caveat is that the position of entities described in this DIS coordinate system are only needed when a state update is *sent on the network*. Our simulation can use whatever coordinate system it likes internally, but must transmit its entity positions to other simulations using the geocentric coordinate system.
+This seems like an odd choice at first glance. The geocentric coordinate system is, in isolation, not very convenient. Suppose we want to move an entity on the surface of the earth one meter northwest. How much do we change the values of the X, Y, and Z axes in the geocentric coordinate system to accomplish this in our simulation? That's not intuitively obvious.  The key caveat is that the position of entities described in this DIS coordinate system are only needed when a state update is *sent on the network*. Our simulation can use whatever coordinate system it likes internally, but must transmit its entity positions to other simulations using the geocentric coordinate system. We only need a way to convert to and from our internal coordinate system to the geocentric coordinate system.
 
-The advantage of using a geocentric coordinate system is that, with some math, we can convert it to and from other popular coordinate systems. There are equations to convert from a position described with latitude, longitude, and altitude to the geocentric coordinate system, and back again, or example. The same for MGRS. The approach DIS uses to to allow simulations to use any coordinate system they like internally--whatever that simulation feels is convienent--but when transmitting state information on the network, convert from that coordinate system to the DIS geocentric coordinate system. Likewise, when we receive a state update that describes the location of an entity, we have to convert from the geoceentric coordinate system to whatever coordinate system we use internally.
-
-There are a few wrinkles in this. While the geocentric coordinate system origin is placed at the center of the earth, the coordinate system does not by itself define where the surface of the earth is. The earth is not a sphere, but rather a somewhat flattened egg-shaped surface. There are several mathematical models, called "datums," used to describe the shape of the earth. Today the most popular of these is called WGS-84, which is also the model for the shape of the earth used in GPS. It's not exact; the real world's mean sea level can differ from the geoid defined by WGS-84 by 0-5 meters. That may not sound like much when working on a planetary scale, but simulations that are modeling kinetic weapons require high precision for entity locations. A shot by a cannon that's off by two meters may be a clear miss. 
-
-In addition some maps use datums other than WGS-84 for the shape of the earth. The Australians use a datum called GDA-94 on their maps because that works well for modeling the layout of land in Australia; it replaced an earlier datum called AGD-84. Historically the Japanese and Indians have also used their own datums for mapping, as have many nations, and states within the US, because they predate the creation of WGS-84 and GPS, and because they tend to work well for the region of the earth that the map describes. Datums have been argued about for centuries, and it's quite easy to come across a map that does not use WGS-84. Even though the US government has a National Geospatial Intelligence Agency responsible for mapping, the fact is that LVC simulations often use maps or geo-referenced entities from many non-government sources that use different map datums.  
-
-The problem is that using different datums also causes the models for the shape of the earth to differ. Imagine a single entity that has its position described as being 36.5973° N, 121.8731° W. The latitude and longitude lines are clamped to the surface of the earth, and two maps are using different datums. See figure X. The datums describe two different 3D surfaces. An entity described with the same latitude and longitude will be in two different locations in 3D space. Their locations depend on the datum the map uses in addition to the latitude and longitude.
-
-Figure X. (two curves, describe a surface. same lat/lon, different 3D positions.)
-
-How big of a deal is this? Some of the datums described above could result in a difference of up to 200 m from WGS-84. If you place a map that uses one of those datums into an environment that assumes WGS-84 you'll see terrain feature discrepencies even though latitude and longitude for the feature are identical on the two maps.  There may be differences of hundreds of meters. This is illustated in the figure below. The position of the Texas capitol building is described using identical latitude and longitude on all maps, but because the model for the shape of the earth differs between the maps, the position of the capitol building also differs.
-
-<img src="images/coordinateSystem/datumDifferences.png">
-
-Figure x
-
-It's quite easy to come across a map that does not use WGS-84. Even though the US governent has a National Geospatial Intelligence Agency responsible for mapping, the reality is that LVC simulations often use maps or geo-referenced entities from who knows what source. This may manifest itself in LVC simulations when a convoy is shown on a map driving near a road, but with a 20 meter offset. The position of the vehicles is a live component, reported using GPS, which uses WGS-84. The map the entities are displayed on uses a different datum. When GPS reports latitude and longitude it winds up being in a different 3D location than the map's concept of the road's location.
-
-### Terrain
-
-In addition, the earth is not smooth, and terrain can rise above or below the geoid, as Mount Everest, the Dead Sea, or the bottom of the Atlantic Ocean do.
-
-Terrain is a tricky problem in itself and outside the scope (for now) of this document. Simulations need precise placement of objects, often to sub-meter accuracy. Getting agreement on this between simulations that use terrain information from different sources is very difficult. Most simulations hack this lack of accuracy by using *ground clamping*. If an entity such as a tank is described by a companion simulation as being a meter above the ground on the local simulation, the local simulation will simply force it to be drawn as in contact with the ground. This avoids the problem of "hover tanks" that appear to float above the terrain, an artifact that would undermine user confidence in the simulation. But this also means that the position of the entity differs from what the simulation that owns the entity is describing.
-
-### Prefab Packages
-
-There are several packages that convert between the coordinate systems discussed above--geocentric, geodetic, MGRS, and the local coordinate system attached to a manuvering F-16's center of gravity. One popular package is the SEDRIS SRM package. 
-
-<a href="http://www.sedris.org/srm_desc.htm">Sedris SRM site</a>
-
-The SEDRIS site includes tutorials about the theory behind the process and also tutorials about using the Java and C++ packages they provide. If you're doing serious work with position, orientation, and velocity then a prefab package that handles the conversions is highly recommended. You probably shouldn't trust the math I discuss below all that much.
+The advantage of using a geocentric coordinate system is that, with some math, we can convert it to and from other popular coordinate systems. There are equations to convert from a position described with latitude, longitude, and altitude to the geocentric coordinate system, and back again, for example. The same for MGRS. The approach DIS uses to to allow simulations to use any coordinate system they like internally--whatever that simulation feels is convienent--but when transmitting state information on the network, convert from that coordinate system to the DIS geocentric coordinate system. Likewise, when we receive a state update that describes the location of an entity, we have to convert from the geocentric coordinate system to whatever coordinate system we use internally.
 
 ### Position
 
@@ -77,7 +47,46 @@ In this example the position of a tank entity is described in several different 
 
 DIS simulations usually do all their local physics calculations and graphics displays in a local coordinate system which has been picked for the programmer's convenience. When the ESPDU is being prepared to be sent the position of the entity in the local coordinate system is transformed to the DIS global coordinate system, and then set in the ESPDU. When received by the simulation on the other side, that simulation translates from the global coordinate system to whatever its own local coordinate system is.
 
-#### Shut up and give me the equation
+
+### Coordinate System Standards Problems
+
+There are a few wrinkles in this. While the geocentric coordinate system origin is placed at the center of the earth, the coordinate system does not by itself define where the surface of the earth is. The earth is not a sphere, but rather a somewhat flattened egg-shaped surface. There are several mathematical models, called "datums," used to describe what the shape of the earth is, usually in the form of an oblate spheriod. Today the most popular of these is called WGS-84, which is also the model for the shape of the earth used in GPS. It's not exact; the real world's mean sea level can differ from the geoid defined by WGS-84 by 0-5 meters. That may not sound like much when working on a planetary scale, but simulations that are modeling kinetic weapons require high precision for entity locations. A shot by a cannon that's off by two meters may be a clear miss. 
+
+Some maps use datums other than WGS-84 for the shape of the earth. The Australians use a datum called GDA-94 on their maps because that works well for modeling the layout of land in Australia, and that replaced an earlier datum called AGD-84. Historically the Japanese and Indians have also used their own datums for mapping, as have many nations, and even states within the US. The datums they chose often predate the creation of WGS-84 and GPS, and were picked because they tend to work well for the region of the earth that the map describes. Datums have been argued about for centuries, and after many decades of map publishing it's quite easy to come across a map that does not use WGS-84. Even though the US government has a National Geospatial Intelligence Agency responsible for mapping, the fact is that LVC simulations often use maps or geo-referenced entities from many non-government sources that use different map datums.  
+
+The problem is that using different datums also causes the models for the shape of the earth to differ. Imagine a single entity that has its position described as being 36.5973° N, 121.8731° W. The latitude and longitude lines are fixed to the surface of the earth model, and two maps are using different datums. See what can result in figure X. The datums describe two different 3D surfaces. An entity described with the same latitude and longitude will be in two different locations in 3D space. Their locations depend on the datum the map uses in addition to the reported latitude and longitude.
+
+Figure X. (two curves, describe a surface. same lat/lon, different 3D positions.)
+
+How big of a deal is this? Some of the datums described above could result in a difference of up to 200 m from WGS-84. If you place a map that uses one of those datums into an environment that assumes WGS-84 you'll see terrain feature discrepencies even though latitude and longitude for the feature are identical on the two maps.  There may be differences of hundreds of meters. This is illustated in the figure below. The position of the Texas capitol building is described using identical latitude and longitude on all maps, but because the model for the shape of the earth differs between the maps, the position of the capitol building also differs.
+
+<img src="images/coordinateSystem/datumDifferences.png">
+
+Figure x
+
+It's quite easy to come across a map that does not use WGS-84. Even though the US governent has a National Geospatial Intelligence Agency responsible for mapping, the reality is that LVC simulations often use maps or geo-referenced entities from who knows what source. This may manifest itself in LVC simulations when a convoy is shown on a map driving near a road, but with a 20 meter offset. The position of the vehicles is a live component, reported using GPS, which uses WGS-84. The map the entities are displayed on uses a different datum. When GPS reports latitude and longitude it winds up being in a different 3D location than the map's concept of the road's location.
+
+There are also some computational issues. When using units of meters geocentric coordinate system values can be over six million meters, and this can cause some numeric precision problems if using single precision floating point numbers. Doing the math required to convert between coordinate systems discussed below can result in computational roundoff errors. Stick to double precision.
+
+### Terrain
+
+The earth is not smooth, and terrain can rise above or below the geoid, as Mount Everest, the Dead Sea, or the bottom of the Atlantic Ocean do.
+
+Terrain is a tricky problem in itself and outside the scope (for now) of this document. Simulations need precise placement of objects, often to sub-meter accuracy. Getting agreement on this between simulations that use terrain information from different sources is very difficult. Most simulations hack this lack of accuracy by using *ground clamping*. If an entity such as a tank is described by a companion simulation as being a meter above the ground on the local simulation, the local simulation will simply force it to be drawn as in contact with the ground. This avoids the problem of "hover tanks" that appear to float above the terrain, an artifact that would undermine user confidence in the simulation. But this also means that the position of the entity differs from what the simulation that owns the entity is describing.
+
+### Prefab Packages
+
+There are several packages that convert between the coordinate systems discussed above--geocentric, geodetic, MGRS, and the local coordinate system attached to a manuvering F-16's center of gravity. One popular package is the SEDRIS SRM package. 
+
+<a href="http://www.sedris.org/srm_desc.htm">Sedris SRM site</a>
+
+The SEDRIS site includes tutorials about the theory behind the process and also tutorials about using the Java and C++ packages they provide. If you're doing serious work with position, orientation, and velocity then a prefab package that handles the conversions is highly recommended. You probably shouldn't trust the math I discuss below all that much.
+
+### Coordinate System Transformations: Latitude and Longitude to Geocentric
+
+Especially in naval simulations it's popular to describe the position of entities using latitude, longitude, and altitude. We need to convert between latitude and longitude and the geocentric coordinate system.
+
+### Shut up and give me the equation
 
 To convert latitude, longitude, and altitude to the DIS geocentric ("Earth-Centered, Earth Fixed") coordinate system:
 
@@ -97,7 +106,7 @@ Next, latitude. This can be done iteratively for better precision but one iterat
 Finally, altitude:<br>
 <img src="images/AltitudeFromXYZ.jpg"/>
 
-#### By "Give Me the Equation" I Meant "Give Me the Source Code"
+### By "Give Me the Equation" I Meant "Give Me the Source Code"
 
 A Javascript implementation of coordinate conversion is <a href="https://github.com/open-dis/open-dis-javascript/blob/master/javascript/disSupporting/CoordinateConversion.js">here</a>
 
@@ -118,6 +127,9 @@ Consider two cases: we want convert a position and orientation of a vehicle at t
 
 First of all, we need the postion of the entity as expressed in DIS (aka ECEF) geocentric coordinates. The equation for this is above. There's also an online calculator at <a href="http://www.apsalin.com/convert-geodetic-to-cartesian.aspx">an online source</a>.  The ECEF coordinates are (-2707135.985, -4353750.737, 3781611.558) for that latitude, longitude, and altitude. Next we need to find a coordinate base system rotated to the same orientation as the vehicle (using the NED convention, North=x, East=y, Down=z.)
 
+### Tangent Planes
+
+Set up a local tanget plane
 
 
 ### Entity Local Coordinate Systems
