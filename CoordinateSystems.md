@@ -1,6 +1,6 @@
 ### Coordinate Systems
 
-DIS is about transmitting state information about entities in the world, and the most important state information is where the entities are and which direction they're pointing. This brings up an obvious but important question: what coordinate system do we use to describe an entity's location? It's a tricker question than one might think at first. 
+DIS is transmitting state information about entities in the world, and the most important state information is usually where the entities are and which direction they're pointing-their position in the world. This brings up an obvious but important question: what coordinate system do we use to describe an entity's location? It's a tricker question than one might think at first. 
 
 First person shooter games like Call of Duty, World of Warcraft or Skyrim move enties in 3D worlds. The game has to use a 3D graphics library, such as OpenGL, Direct3D, Web3D, or the higher level higher game engine graphics such as OpenSimulator, Lumberyard, or Unreal. That graphics package uses a coordinate system to draw entities. Figure x is a screen capture from the Blender 3D tool that shows a cube that's offset from the graphics coordinate system's origin set at the intersection of the red and green axes.
 
