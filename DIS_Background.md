@@ -57,11 +57,11 @@ DIS was originally intended for virtual environments but existence of a network 
 
 Constructive simulations can control entities with Artificial Intelligence (AI), whether it be simple or complex, and those entities can use DIS to publish their positions. Applications can use this to create brigade, division, or even corps-sized simulated units that manuever on the battlefield. The position of the units can be visualized with 2D maps and that doesn't create a sense of presence for users that is expected in a virtual environment, but that's beside the point. That's not what those simulations are aiming to create.
 
-Less often, DIS can be used to describe the position of live entities--real people or vehicles in the real world. Today GPS receivers and mobile wireless devices are cheap and in everyone's pocket. Live participants can send their position in DIS format and this information can be ingested into existing simulations. Live participants can be elements in existing computational or virtual simulations.
+Less often, DIS can be used to describe the position of live entities--real people or vehicles in the real world. Today GPS receivers and mobile wireless devices are cheap and in everyone's pocket, often with a wireless transmitter. Live participants can send their position in DIS format and this information can be ingested into existing simulations. Live participants can be elements in existing computational or virtual simulations.
 
-This can work in the other direction as well. Augmented reality is an emerging technology and has received enormous investments from large technology companies such as Microsoft, Google, and Facebook. It's probable that augmented reality applications will receive updates from constructive simulations running on mobile devices.
+This can work in the other direction as well. Augmented reality is an emerging technology and has received enormous investments from technology companies such as Microsoft, Google, and Facebook. It's probable that augmented reality applications will receive updates from constructive simulations running on mobile devices. Augmented reality googles worn by a soldier may receive constructive (imaginary) entity updates in DIS format and display them to the user.
 
-DIS is frequently used as "glue" to enable applications that use HLA or TENA to talk to each other. HLA has some virtues, but interoperablity between HLA applications is a challenge. It's usually easier to get two HLA applications that use RPR-FOM variants to talk to each other using DIS than via directly via HLA.
+DIS is frequently used as "glue" or act as a "shim" to enable applications that use HLA or TENA to talk to each other. HLA has virtues, but interoperablity between HLA applications is a challenge. It's often easier to get two HLA applications that are RPR-FOM variants to talk to each other using DIS rather than directly over HLA.
 
 ## Parting Thoughts
 
