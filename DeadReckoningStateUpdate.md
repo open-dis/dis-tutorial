@@ -38,13 +38,21 @@ The values in the table below map to the alogrithm to be used. For example if th
 
 <img src="images/DeadReckoningAlgorithms.jpg">DeadReckoningAlgorithms.jpg</img>
 
-The algorithms are mostly straight forward applications of Newtonian mechanics. 
-
 If the value "1" is seen in the field, the entity should not be dead reckoned at all. Dead reckoning is not computationally free, and if the entity is not moving it makes sense to tell the receiver to simply not perform the computations. 
+
+Dead Reckoning algorithms 2 through 5 are mostly straight forward applications of Newtonian mechanics. 
 
 DR algorithm two uses only velocity to guess the location of the entity. DR algorithm three expands the kinematic information used in DR to angular velocity, which allows the receiver to guess the entity's orientation as well. DR algorithm four expands this further to linear accleration. DR algorithm five uses linear velocity and acceleration, with no angular components. 
 
-DR algorithms six through nine are similar to the above, but use the local, body-centered coordinate system rather than the global coordinate system.
+### A Perfect Circle
+
+As mentioned in the previous section, Dead Reckoning algorithms 2 through 5 simulate Newtonian mechanics, i.e. an inertial reference frame, and algorithms 4 and 5 include a term allowing for up to constant acceleration.  With this constant acceleration, one can at best simulate a parabolic trajectory, or with repeated Entity State Updates a piecewise parabolic trajectory.  But what if one would like to simulate a coordinated turn where the entity travels in a perfect circle?  That is where DR algorithms 6 through 9, which use the local, body-centered coordinate system rather than the global coordinate system, come in handy.  In particular, DR algorithms 7 and 8, which allow for a rotating entity, can be used to simulate a circular path.
+
+In order to use the Dead Reckoning algorithms to describe a circle, first consider a flat turn (roll = 0).  The body angular velocity omega_z, and also the Euler angle heading rate, for a circle with a given radius traveled at a given speed is omega_z = dheading/dt = speed/radius (radians per second).  In body coordinates, the velocity V_b when traveling in a perfect circle is (speed,0,0).  Furthermore, for the body-centered Dead Reckoning algorithms we choose the "acceleration" A_b to be the derivative of the velocity in body coordinates V_b.  Since V_b is constant for a perfect circle, A_b will be identically zero for this case.  Note that this derivative A_b is not generally equal to the entity acceleration expressed in body coordinates a_b.  See the Towers & Hines paper for further discussion.
+
+Now that we know how to simulate a flat turn, one may think that it is a simple matter to simulate a banked (roll != 0) turn by setting the roll to a constant non-zero value.  In the case of a banked turn the heading and heading rate are still the same as for a flat turn, but now the roll is assigned a constant non-zero value, and the corresponding roll rate is still zero.  However, the angular velocities in the Entity State PDU fields are not the derivatives of the Euler angles heading, pitch, and roll; rather they are angular velocities about the the body x, y, and z axes.  For the case of a constant roll banked turn in a circular trajectory, omega_y and omega_z are related to the heading rate calculated above for a flat turn, by multiplying by the cosine (omega_z) and sine (omega_y) of the bank/roll angle, with the sign of omega_y determined by the direction of the turn (positive for a counter-clockwise turn and negative for a clockwise turn).  The distinction between Euler angle derivatives and body angular velocities is explained in IEEE Std 1278.1.
+
+Note that the derivation of the body-centered Dead Recknoning algorithms involves integrals of matrix exponentials.  Although matrix exponentials can be represented as infinite series or matrix, the specific integrals needed by these DR algorithms can be evaluated exactly by summing only a few matrix terms as specified in IEEE Std 1278.1 and derived in the Towers & Hines paper.  In other words, the simple matrix formulae in in IEEE Std 1278.1 are exact closed-form evaluations of the integrals, and as stated in the Towers & Hines paper: "With either choice of second derivative, a_b or A_b, the appropriate version of Algorithm 8 will propagate a coordinated circular turn indefinitely without error.  With our choice of send order translational derivative, A_b = 0 for a constant speed circular turn (assuming the only orientation changes are due to performing the turn), and so Algorithm 7 can be used."
 
 ### Dead Reckoning Thresholds
 
