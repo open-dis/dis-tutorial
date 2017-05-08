@@ -51,7 +51,7 @@ Just as the EBV document lists all the possible types of vehicles (in principle)
 
 Other muntions have records with analogous values. When we encounter a munition type to assess the results of combat, we can use damage tables (defined outside of DIS--that's the responsiblity of the simulator) to determine the results.
 
-###EBV Document
+### EBV Document
 
 SISO maintains the EBV document in an XML format. Programmers can download it, then transform it to create programming language-friendly enumerations.
 
@@ -59,7 +59,11 @@ SISO maintains the EBV document in an XML format. Programmers can download it, t
 
 In theory, all simulations respect the values listed in the EBV document. Reality falls short of theory.
 
-No simulation implements all the entity types and munitions listed in the EBV document. It is simply impractical for a simulation to implement every one of the thousands of vehicles and munitions listed, so implementors write code to handle only the weapons they are likely to encounter. So what should happen if an ESPDU arrives, and has an entity type field that we do not recognize?
+No simulation implements all the entity types and munitions listed in the EBV document. It is simply impractical for a simulation to implement every one of the thousands of vehicles and munitions listed, so application authors write code to handle only the weapons they are likely to encounter. So what should happen if an ESPDU arrives, and has an entity type field that we do not recognize? 
+
+It's possible that the receiving application will simply discard the ESPDU for an entity that it does not recognize. If the simulation models tanks and we receive an ESPDU that describes a ship, it may be reasonable to simply discard the ESPDU; the authors make no attempt to display ships. 
+
+For other types of applications we may use a gateway. If we receive an ESPDU for a Russian BMP-3 IFV but can only display BMP-1 vehicles, it may make sense to set up a gateway that isolates the application from the direct network traffic of most other simulations, but also converts BMP-3 to BMP-1 ESPDUs before forwarding them to us. Obviously, this will not work unless we recognize the problem exists beforehand and configure the gateway accordingly. This may well be rational and reasonable. There are other potential problems such as when we are puzzled that the weapon we fire at the BMP-1 with has no effect. But it may still be a reasonable solution.
 
 The EBV document has also evolved over time, and military simulations have very long product life cycles. This means that a simulation written in 1998 may interact with a simulation written in 2015, and in the intervening years new weapons have been added to the EBV document. The SISO group responsible for the EBV document tries hard for backwards compatibility, but a 1998 simulation handling 2015 weapons that the newer simulation is referring to is a different matter. 
 
