@@ -1,4 +1,4 @@
-##Combat
+## Combat
 
 DIS was designed for use in the military, and one of the military's core competencies is shooting at people. DIS hast to enable training for combat operations to be useful to the military.
 
@@ -21,7 +21,7 @@ Remember that this is the Open-DIS implementation of the DIS protocol we are dis
 
 The <a href="javadoc/edu/nps/moves/dis/DetonationPdu.html">detonation PDU</a> represents a munition impact event. It includes the location at which the detonation ocurred and the type of muniton used in the shot. The fire and detonation PDUs are linked via a eventID field. Each fire PDU should have a detonation PDU.
 
-###Types of Combat Interactions
+### Types of Combat Interactions
 
 There are several types of combat we can engage in, including direct fire and indirect fire missions. The PDUs are filled out differenty dependig on the type of combat.
 
@@ -80,13 +80,13 @@ Note that in this type of combat we don't have to create an entity for each bull
 
 The DIS specification is intentionally vague on which simulation participants issue the fire and detonation PDUs. Almost always the simulation that owns the entity doing the shooting issues both of these PDUs. If you want to engage in specfication language lawyering a third participant could model the flight and issue the detonation PDU.
 
-####Shooting Missiles
+#### Shooting Missiles
 
 Sometimes
 
-####Indirect Fire
+#### Indirect Fire
 
-####Expendales, such as Chaff
+#### Expendales, such as Chaff
 
 #### 
 

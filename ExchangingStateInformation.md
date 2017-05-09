@@ -1,4 +1,4 @@
-##Exchanging State Information
+## Exchanging State Information
 
 Finally, after all that throat-clearing we can examine the programming required to send DIS PDUs.
 

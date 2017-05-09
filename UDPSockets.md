@@ -1,13 +1,13 @@
-##UDP Sockets
+## UDP Sockets
 
 DIS doesn't hide TCP/IP socket level programming from users. It's up to the programmer to handle these tasks. This is not all that difficult to do, but there are some historical issues that may confuse programmers, in particular on modern hosts with several network interfaces. 
 
-###Broadcast
+### Broadcast
 Many DIS simulation implementations use broadcast UDP sockets. This allows one datagram to be sent, and N other participating simulations on the same network to receive that single message. This avoids having the sender transmit N-1 datagrams addressed to each individual participant. If designed today DIS would have instead used multicast, but multicast didn't exist when DIS was designed. As a result there's a installed base of DIS applications that use UDP broadcast on port 3000. There's nothing that prevents multicast from being used--it's a perfectly valid choice, and in fact preferred. But the reality of the installed base draws people to broadcast. 
 
 Broadcast can create some issues. I'll describe a couple scenarios. The first one is likely to work out of the box, but it's possible that network switch configuration or multiple host network interfaces will cause problems. If that's the case, you can fall back to a slightly more complex option.
 
-####The Default Broadcast Solution
+#### The Default Broadcast Solution
 
 In the old days Unix workstations typically had two IPv4 network interfaces:  the loopback interface, lo0 or the like, that had an IP address of 127.0.0.1 associated with it, and an ethernet interface, often en0, that had a public IP address associated with it, such as 172.20.81.4. When you created a UDP socket it "bound" to both IPs via "INADDRANY" or the special IP address 0.0.0.0, meaning the socket was associated with both the 127.0.0.1 and 172.20.81.4 IP addresses. The socket could *listen* for incoming messages on both IPs. When you *sent* a datagram to the special, reserved address "255.255.255.255" it would be sent on all IPs on which the host is bound. 
 
@@ -42,7 +42,7 @@ catch(Exception e)
 
 This creates a datagram socket (in Java, multicast sockets are subclasses of datagram sockets), then creates an entity state PDU with default field values, marshals it to DIS format. The resulting data is placed into a datagram with a destination address of 255.255.255.255 and a destination port of 3000, then sent.  The hosts' routing tables will pick the network interface the message goes out on; it will be the default route, typically the IP associated with en0. Network programming geeks will frown at the use of 255.255.255.255, and the network switch port the host is plugged into may disallow the packet in some instances, but odds are it will work. The advantage is that you don't have to customize or configure this code to work at a specific site's network configuration settings.
 
-####Pick a Broadcast Address
+#### Pick a Broadcast Address
 
 On modern hosts there are often many interfaces: loopback, a wired interface, a wireless interface, several interfaces associated with VMs running on your host, etc. Each network interface can have several IPs associated with it, and each IP has a different broadcast address. So the question of which IP the message goes out on is tricker, as is the broadcast address to use. Here's a listing of the interfaces on my MacOS laptop with one VMWare VM running:
 
@@ -172,7 +172,7 @@ while(interfaces.hasMoreElements()
 
 Once you have the set of valid broadcast addresses you can pick which one to use, or send out a message on all of them.
 
-###Multicast
+### Multicast
 
 It's more modern to use multicast, which has near-universal support in operating systems these days. The only exceptions might be in some very constrained embedded operating systems. Multicast is the preferred solution if you don't need backward compatibility with existing broadcast DIS applications.
 
@@ -208,7 +208,7 @@ catch(Exception e)
 
 This uses the "scoped multicast range", which should keep traffic site-local. We create a multicast socket, then join the multicast group "239.1.2.3". Then send a single datagram to that destination address.
 
-###Further Reading
+### Further Reading
 
 On using 255.255.255.255: <a href="http://serverfault.com/questions/219764/255-255-255-255-vs-192-168-1-255">http://serverfault.com/questions/219764/255-255-255-255-vs-192-168-1-255</a>
 

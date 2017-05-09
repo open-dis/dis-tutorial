@@ -1,4 +1,4 @@
-###Entity State PDUs
+### Entity State PDUs
 
 An entity state PDU (ESPDU) represents the state of an object at one point in time. It includes its position, orientation, speed, and entity type. Refer to the earlier sections of this handbook for more information on these concepts.
 

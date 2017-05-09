@@ -1,4 +1,4 @@
-##Receiving PDUs
+## Receiving PDUs
 
 As with sending PDUs, receiving PDUs requires a little socket programming. Create a UDP socket, and then receive a datagram. Extract the payload, and then use the PDUFactory object to convert the DIS-formatted data into a Java object.
 
