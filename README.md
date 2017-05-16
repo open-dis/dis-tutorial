@@ -11,7 +11,7 @@ Work in progress. Full of typos, not yet to first draft status, footnotes are a 
 	- TENA
 	- What is standardized?
 	- Philosophy: partial implementations of DIS abound
-3. <a href="LiveVirtualConstructive.md">Live, Virutal, Constructive</a>
+3. <a href="LiveVirtualConstructive.md">Live, Virtual, Constructive (LVC)</a>
    - Example DIS applications
       - Situational awareness: maps
       - Simulation interoperability
