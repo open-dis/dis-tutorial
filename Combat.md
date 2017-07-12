@@ -1,6 +1,6 @@
 ## Combat
 
-DIS was designed for use in the military, and one of the military's core competencies is shooting at people. DIS hast to enable training for combat operations to be useful to the military.
+DIS was designed for use in the military, and one of the military's core competencies is shooting at people. DIS has to enable training for combat operations to be useful to the military.
 
 Shooting is tricky in part because of the latency inherent in a distributed real time simulation. See the <A href="Latency.md">latency</a> section for more detail on why networked virtual environments (NVEs) are usually out of sync with each other to one extent or another. Each participant in the simulation may have a different idea about where an entity "really" is. This can be mitigated but not entirely eliminated.
 
