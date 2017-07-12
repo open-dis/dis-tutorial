@@ -2,6 +2,8 @@
 
 Work in progress. Full of typos, not yet to first draft status, footnotes are a mess, prose is lousy, etc. 
 
+by Don McGregor
+
 1. <a href="DIS_Background.md">Intro</a>
    - DIS Background
    - DIS History
