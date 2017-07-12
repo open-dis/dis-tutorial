@@ -10,6 +10,8 @@ Shooting in DIS is represented by a sequence of a fire PDU and a detonation PDU.
 
 Note the "to itself." Usually the effects of the detonation are determined by the receiving entity, not the shooter. Damage assessed on the honor system, which means that cheating by the person "shot" is possible. Cheating is a problem in the commercial gaming world, but typically not in the military, despite Captain Kirk's Kobyashi Maru exploits.
 
+That is because (note, using worst possible insult here) cheating is BORING!  Military operators usually want to learn what works, what doesn't work, and what might work.
+
 The details of the interaction and how the fire and detonation fields are filled out vary depending on the type of combat, for example direct vs indirect fire. There is considerable room for language lawyering in the DIS standard. The mechanics of shooting are discussed in more detail below. 
 
 
