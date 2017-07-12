@@ -30,8 +30,8 @@ by Don McGregor
    	- <a href="EntityDiscovery.md">Entity Discovery</a>
    	- <a href="Scalability.md">Scalablity</a>  
    	- <A href="Gateways.md">Gateways</a>
-4. <a href="DISImplementations.md">DIS Implementations</a>
-5. <a href="ExchangingStateInformation.md">PDUs: Exchanging State Information</a>
+5. <a href="DISImplementations.md">DIS Implementations</a>
+6. <a href="ExchangingStateInformation.md">PDUs: Exchanging State Information</a>
 	- <A href="UDPSockets.md">UDP Socket Programming</a>
 	- <a href="EntityStatePDUs.md">Sending State Updates with Entity State PDUs</a>
 	- <a href="ReceivingPDUs.md">Receiving PDUs</a>
@@ -39,10 +39,12 @@ by Don McGregor
    - Intercom: Voice Communications
    - Electronic Warfare
    - <a ref="PDUBundling.md">Bundled PDUs</a>
-6. A Minimal DIS Networking Example
-7. Technology
+7. A Minimal DIS Networking Example
+8. Technology
    - Web
       - Websockets
       - X3D
       - Unity
       - WebRTC
+9. TODO
+10. Credits
