@@ -1,8 +1,8 @@
-##Entity Identifiers
+## Entity Identifiers
 
 A simulation may have hundreds or even thousands of entities in one virtual world. As a practical matter we need a way to uniquely identify each entity in the world. Before we can inform an entity that its position has been updated we need a way to uniquely identify the entity.
 
-When DIS was designed a goal was for it to not have a central server. Simulations had to work out identifier issues among themselves, in a distrubted way. The solution hit upon was to use a collection of three unsigned shorts that would, together, uniquely identify an entity. These three numbers are the site ID, application ID, and entity ID. 
+When DIS was designed a goal was for it to not have a central server. Simulations had to work out identifier issues among themselves, in a distributed way. The solution hit upon was to use a collection of three unsigned shorts that would, together, uniquely identify an entity. These three numbers are the site ID, application ID, and entity ID. 
 
 The simulation manager can during the planning phase assign identifiers for the site and application. For example, the simulation manager can specify these values for sites:
 
