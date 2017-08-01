@@ -6,7 +6,7 @@ LVC is a fundamental concept in DoD simulations, and reflect efforts by the mili
 
 *Live* entities represent real entities controlled by real people. An actual physical ship piloted a real person is a live entity, as is a real dismounted soldier. Both entities can transmit position and orientation information that can be ingested into simulations. The simulation consumer can't tell at first glance whether the entity being displayed on the screen is real or simulated.
 
-*Virutal* entities are simulated entities controlled by real people. A simulation user sitting in an aircraft simulator may generate position and orientation updates that are received by other simulations. Those simulations will view the updates as if it were a real aircraft, but it is not. But the person controlling the simulated aircraft is real.
+*Virtual* entities are simulated entities controlled by real people. A simulation user sitting in an aircraft simulator may generate position and orientation updates that are received by other simulations. Those simulations will view the updates as if it were a real aircraft, but it is not. But the person controlling the simulated aircraft is real.
 
 *Constructive* entities are simulated entities controlled by simulated people. Often exercises need large numbers of simulated entities to train users. It's unreasonable to have individuals control each them, so instead they are controlled by Artificial Intelligence (AI) or, to use a less grandiose term, algorithms. A red force rifle regiment may have hundreds of simulated vehicles, each of them controlled by software. 
 
@@ -24,7 +24,7 @@ The map can be implemented as a conventional compiled desktop application writte
 
 ### Simulation Interoperability
 
-As mentioned, HLA standardizes the API, not the format of messages exchanged. Vendors can pick any format they like for messages. This means that an HLA RTI from MaK Technologies cannot directly exchange messages with an HLA RTI from Pitch Technologies--an incoming binary message from one RTI can't be parsed by the other. If the two HLA simulations are to communicate they must use a gateway or bridge to translate messages. Alternatively one of the simulations may be changed to use the other RTI, so all particpants are using RTIs from the same vendor. This can be an impractical approach as the number of participating simulations increases. 
+As mentioned, HLA standardizes the API, not the format of messages exchanged. Vendors can pick any format they like for messages. This means that an HLA RTI from MaK Technologies cannot directly exchange messages with an HLA RTI from Pitch Technologies--an incoming binary message from one RTI can't be parsed by the other. If the two HLA simulations are to communicate they must use a gateway or bridge to translate messages. Alternatively one of the simulations may be changed to use the other RTI, so all participants are using RTIs from the same vendor. This can be an impractical approach as the number of participating simulations increases. 
 
 Very often the simulations are using variants of RPR-FOM, which was designed from the start to mimic DIS semantics. A common solution to the HLA interoperability problem is to gateway the HLA simulations to DIS. DIS serves as a common communications backbone and simulation data exchange format.
 
@@ -32,7 +32,7 @@ Very often the simulations are using variants of RPR-FOM, which was designed fro
 
 HLA-to-DIS gateways are common and fairly easy to deploy. It's often easier to get HLA RPR-FOM simulations to communicate with each other via DIS than it is with HLA, particularly as the number of simulations to be connected increases. 
 
-### Virutal Worlds
+### Virtual Worlds
 
 The original design goal of DIS was to enable the creation of virtual worlds. An example of a virtual world, in this case VBS3 from Bohemia Interactive, is shown below:
 
