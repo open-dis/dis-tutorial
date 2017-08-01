@@ -1,4 +1,4 @@
-## Virutal World Issues in DIS
+## Virtual World Issues in DIS
 
 Implementing a virtual world is a tricky business. There are some basic theoretical problems and some DIS implementation specific issues. We'll discuss some of them here. 
 
