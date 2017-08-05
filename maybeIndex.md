@@ -64,9 +64,15 @@ I Introduction
     	e. Discovery
     	f. Exit of entity
     	g. Cabinet vs single PDU per packet
-    	h. Database commit
-    		(1) SQL database
-    		(2) Java database
+    	
     	
     2. Combat: fire and detonation
+
+    V: Other topics
+    	1. Gateways
+    	2. Database commit
+    		(1) SQL database
+    		(2) Java database
+       3. Augmented reality
+       4. Example application with graphics
 	
