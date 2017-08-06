@@ -1,16 +1,35 @@
 # DIS: The Missing Handbook
 ## Distributed Interactive Simulation
 
+### DIS Background
+
 Distributed Interactive Simulation (DIS) is a software standard used to implement networked simulations. The simulations use multiple hosts that are networked, and DIS helps exchange information about entities modeled in the simulation. It is used in many United States Department of Defense (DoD) applications, and has been for decades. 
 
 As a software standard DIS involves the definition of dozens of network messages that are exchanged between hosts. The syntax and semantics of the messages, which are called Protocol Data Units (PDUs) in DIS, are carefully defined. The PDUs can, with a correct implementation, be exchanged between CPUs of multiple designs, running many types of operating systems, and these operatons can be done in multiple software languages.
 
 To achieve its simulation operation objectives the DIS standard includes more than just message format issues. The syntax of messages is defined, but DIS includes far more information. Indvidual messages also include positions expressed in a particular global coordinate system, for example, and there are many other DIS rules that solve problems such as detecting the presence of netowrked entities, or performing combat operations. The logical operations necessary to complete these operations becomes tricky and non-obvious. DIS simulation users must learn how to make use of the DIS operatioins, and this becomes difficult. There is a standard for DIS defined by the Institute of Electrical and Electronics Engineers (IEEE) standards organization known as IEEE-1278.1. However in any standard the emphasis is placed on achieving unambigous and accurate definitions rather than helpful descriptions of how to make use of the defined features.
 
-That is what this document is intended to achieve. The DIS standard is useful, widely used, and at the same time those using it can find it difficult to implement in real applications due to the complex nature of the features. DIS has a limited 
+That is part of what this document is intended to achieve: effective implementation of the features that DIS can implement. The DIS standard is useful, widely used, and at the same time those using it can find it difficult to implement real application features due to the complex nature involved. It's helpful to have clear explanations. 
+
+That's only part of it. DIS is flexible, and can be used in a range of applications. For example, simply listening to and saving the messages sent on the network from a live exercise can be very useful to analysts. They can later used the saved messages to examine what entities actually did in reality and use it as an element in evaluating the effectiveness of combat tactics. Learning how this works, which involves essentially no graphical display of the entities in the simuation at all, is a change from what's called the Networked Virtual Environment" (NVE) since there is no "virtual" aspect for the user to view. 
+
+The problem space of DIS is common in many ways to those in the commercial game entertainment world. It is very unusual for commercial entertainment games to use DIS, but the implementation problems faced by the games are often similar to those faced by DIS. If you're a commercial game programmer, some of the issues discussed here may help your commercial implementations.
+
+There are several other features of DIS that will be assessed as well. From an practical or even academic stanpoint the number of questions raised throough DIS can be enormous. It's therefore helpful to have specialists cooperate on this tutorial DIS project, if they wish. The tutorial project's structure is, one hopes, helpful in allowing experts on a topic to supply their answers while not causing issues with other sections of the tutorial.
+
+### Example DIS Applications
+
+For new users, there are several examples of DIS working in applications.
+
+### History of DIS
+
+### Bibliography
 
 
 
+
+
+Other
 
 , along with High Level Architecture (HLA) and Test and Training Enabling Architecture (TENA), one of the three main standards for military simulations. This document is intended to help you understand DIS's implementation and how to use it. Many of the concepts used in DIS are re-used in HLA and TENA applications, so understanding how DIS works also helps you understand other simulation applications. It can even be useful if you want to understand what commercial entertainment games do.
 
