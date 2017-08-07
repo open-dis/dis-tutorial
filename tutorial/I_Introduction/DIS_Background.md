@@ -1,7 +1,6 @@
-# DIS: The Missing Handbook
-## Distributed Interactive Simulation
+# Distributed Interactive Simulation
 
-### DIS Background
+## DIS Background
 
 Distributed Interactive Simulation (DIS) is a software standard used to implement networked simulations. The simulations use multiple hosts that are networked, and DIS helps exchange information about entities modeled in the simulation. It is used in many United States Department of Defense (DoD) applications, and has been for decades. 
 
@@ -16,10 +15,6 @@ That's only part of it. DIS is flexible, and can be used in a range of applicati
 The problem space of DIS is common in many ways to those that appear in the commercial game entertainment world. It is very unusual for commercial entertainment games to use DIS, but the implementation problems faced by games are often similar to those faced by DIS. If you're a commercial game programmer, some of the issues discussed here may help your commercial implementations.
 
 There are several other features of DIS that will be assessed as well. From an practical or even academic stanpoint the number of questions raised throough DIS can be enormous. It's therefore helpful to have specialists cooperate on this tutorial DIS project. The tutorial project's structure is, one hopes, helpful in allowing experts on a topic to supply their answers while not causing issues with other sections of the tutorial.
-
-### Example DIS Applications
-
-For new users, there are several examples of DIS working in applications.
 
 ### History of DIS
 

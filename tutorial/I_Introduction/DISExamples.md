@@ -1,11 +1,9 @@
-# DIS: The Missing Handbook
-## Distributed Interactive Simulation
 
-### Example DIS Applications
+# Example DIS Applications
 
 There are a number of example applications of DIS available. This section simply shows a few so the reader can get an idea of what DIS is capable of helping implement. Some of the applicatons shown are commercial.
 
-#### MetaVR and VRSG
+## MetaVR and VRSG
 
 The company MetaVR has created an application that uses DIS called the Virtual Reality Scene Generator (VRSG). The VRSG application can implement views of terrain, with varying weather, and that includes aircraft. 
 
@@ -19,7 +17,7 @@ http://www.metavr.com/products/vrsg/vrsgstandalone.html
 ![Alt text](images/disApplications/IranianAircraftModels.jpg)
 ![Alt text](images/disApplications/Hormuz.jpg)
 
-#### Battlespace Simulations and Modern Air Combat Environment
+## Battlespace Simulations and Modern Air Combat Environment
 
 This application is put out by Battlespace Simulations, Inc. Their web site is at [MASE](https://www.bssim.com/mace/ "Title") According to company Battlespace Simulations, 
 
@@ -27,7 +25,7 @@ This application is put out by Battlespace Simulations, Inc. Their web site is a
 
 ![Alt text](images/disApplications/Mace.jpg)
 
-#### ACM
+## ACM
 
 The ACM project is a free game that can be used in the debian operating system.
 
@@ -47,7 +45,7 @@ According to the site, this is
 
 ![Alt text](images/disApplications/debian.png)
 
-#### DISWebGateway
+## DISWebGateway
 
 [DISWebGateway](https://github.com/open-dis/DISWebGateway "Title") 
 
