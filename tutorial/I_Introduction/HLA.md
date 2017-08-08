@@ -2,9 +2,9 @@
 
 ## High Level Architecture
 
-DIS was the first standard for distributed simulations. Some time later it was believed that it could be improved upon by using different approaches than had been used in the 80's, when DIS was created. This resulted in High Level Architecture (HLA).
+DIS was the first standard for distributed simulations. Some time later it was believed that it could be improved upon by using different approaches than those of the 80's, when DIS was created. This resulted in High Level Architecture (HLA).
 
-There are some important differences between DIS and HLA, but they sometimes share important features as well, particularly when describing combat operations. The HLA architecture can cover a wider range of problems in addition to that addressed by DIS.
+There are some important differences between DIS and HLA, but they often share important features as well, particularly when describing combat operations. The HLA architecture can cover a wider range of problems in addition to those addressed by DIS.
 
 ### Off-Site Tutorials
 
@@ -25,23 +25,29 @@ Here's a list of some online HLA tutorials:
 [How to become an HLA
 guru in a short(er) time](http://www.cit.dk/COT/reports/reports/Case6/06/cot-6-06.pdf)
 
-### Compatibility and DIS
+#### Georgia Institute of Technology, Computational Science and Engineering Division, Richard M. Fujimoto
 
-#### Capacity
+[The High Level Architecture: Introduction](http://www.acm-sigsim-mskr.org/Courseware/Fujimoto/Slides/FujimotoSlides-20-HighLevelArchitectureIntro.pdf)
 
-HLA can almost always create simulations that handle more entities than DIS-based applications.
+### HLA and DIS
 
-Distributed simulations are transmitting attribute values between hosts. For example, this may include position, orientation, describe the entity type, and the entity's speed. As we shall see later in descriptions of DIS's entity state PDU, DIS will transmit all of these attribute values every few seconds even if they do not change. This drives up the simulation's bandwidth and frequency of use on the network, and tends to drive down the number of entities that can be supported in a simulation.
+#### Simulation Size
 
-In contrast HLA can update the same attrbutes only when they change. This drives down network
+HLA can almost always create simulations that can include more entities than DIS-based applications.
 
-#### Network Formats
+Distributed simulations transmit simulation entity attribute values between hosts. This may include information such as position and orientation, and also describe the entity's speed and acceleration. As we shall see later in descriptions of DIS's entity state PDU, DIS will transmit all of these attribute values every few seconds even if they do not change. This increases the network use for every entity in the simulation. A simulated truck parked next to a road will send updates every few seconds for all of the attributes mentioned above, even though they did not change. The increased use of the network, which has a limited capacity, can reduce the number of entities the simulation can support.
 
-HLA took some fundamentally different technical approaches when compared to those of DIS. DIS made the choice to standardize the syntax and semantics of a few dozen messages sent on the network. All programming languages that can address binary data issues are capable of decoding the messages. This includes C, C++, Java, Javascript, Objective-C, Python, and dozens of others. For some devotees of particular languages or those developing in a language-specific framework that used a somewhat rare language, this could be a useful feature. 
+In contrast HLA can send updates oof the same attributes to other hosts only when they are changed. A parked truck does not change its position or orientation, and its speed and acceleration remain at zero while parked. HLA can send no updates at all to the other participants in the simulation. This drives down network use by letting HLA applications use less bandwidth. In the end, HLA can suppport more simulated entities because it reduces network use for each simulated entites.
 
-HLA took a different approach. Rather than define the format of messages, it standardized an Application Protocol Interface (API). The API is, by definition, specific to a programming language. The API defines a set of function calls, and those function calls are language-specific. The primary APIs for HLA are C++ and Java. (There's also a very rarely used API for web services; it seems not very usable due to the high latency rates of web services, which do not line up with the performance of more modern web technology techniques.)
+#### Network Message Formats
 
-The APIs defined are available at SISO. For example, functions in the API for a Java version of the [HLA API](https://www.sisostds.org/DesktopModules/Bring2mind/DMX/Download.aspx?Command=Core_Download&EntryId=42469&PortalId=0&TabId=105) looks like this:
+HLA took some fundamentally different technical approaches when compared to those of DIS. DIS made the choice to standardize the syntax and semantics of a few dozen messages sent on the network. All programming languages that can read and send binary data messages are capable of decoding and sending DIS messages. This includes C, C++, Java, Javascript, Objective-C, Python, and dozens of others. Sometimes simulation application programmers like to use specific languages for various reasons. Python and Javascript have been interesting and powerful programming languages of late. 
+
+HLA took a different approach. Rather than define the format of messages, it uses standardized Application Protocol Interface (API) for a limited set of languages. The list of APIs for HLA is at [SISO](https://www.sisostds.org/APIs.aspx). Every API is, by definition, specific to a programming language. 
+
+The API defines a set of function calls, and the function calls must be language-specific. The primary APIs for HLA are C++ and Java. (There's also a rarely used API called "Web Services." Web services refers to a technology that seems not very usable in distributed simulations due to its high latency rates, though it is still supported by SISO.)
+
+The full APIs defined are available at SISO. For example, a function in the API for a Java version of the [HLA API](https://www.sisostds.org/DesktopModules/Bring2mind/DMX/Download.aspx?Command=Core_Download&EntryId=42469&PortalId=0&TabId=105) looks like this:
 
 ~~~
 virtual void discoverObjectInstance (
@@ -52,37 +58,30 @@ throw (
  CouldNotDiscover,
  ObjectClassNotKnown,
  FederateInternalError) = 0;
- ~~~
- 
-There also exists a C++ API that performs the same operation. These function calls are of course language-specific, and those who want to use other languages may run into problems. (Unless they manage to make C++/Java function calls from their own language.)
-
-The more interesting problem is how the functions are actually accomplished. The API defines the what the function calls are, but not the format the messages exchanged between are in. For example, consider a function call that updates an attribute, which in Java looks like this:
-
 ~~~
-virtual
-void requestClassAttributeValueUpdate (
- ObjectClassHandle theClass, // supplied C1
- const AttributeHandleSet& theAttributes) // supplied C4
-throw (
- ObjectClassNotDefined,
- AttributeNotDefined,
- FederateNotExecutionMember,
- ConcurrentAccessAttempted,
- SaveInProgress,
- RestoreInProgress,
- ~~~
  
- At the abstract level this is a call to change a value on multiple distributed hosts. But at the practical level the API is silent about how to accomplish this. The messages exchanged may contain data in the [big or little endian format](https://en.wikipedia.org/wiki/Endianness), for example, and there are many other things that may change between implementations of the HLA API.
+There is also a C++ API function that performs the same operation, but the syntax of that function call in C++ API element is of course compliant with the C++ language.
+
+Developers who want to use other languages, such as Python or Javascript, may run into problems if in the end a call must be made to the Java or C++ APIs for those languages to access HLA. In contrast the developer can directly decode the DIS messages in the language he prefers to use.
+
+Another interesting problem is how the HLA API function calls are actually achieved. The API defines the names of function calls and what they do, but do not define how the function works. In the end, messages must be exchanged between hosts, and HLA does not define the message format used to accomplish this. The message format to achieve the result of discoverObjectInstance is determined by the vendor that implements the HLA API.
+
+At the abstract level the function above is a call to search for an object instance. But at the practical level the API is silent about how to accomplish discoverObjectInstance(). The messages exchanged between hosts may contain data in the [big or little endian format](https://en.wikipedia.org/wiki/Endianness), and there may be several messages passed between simulation hosts. Since HLA defines the API, but not the nature of messages necessary to implement the API, in practice every implementation of HLA has different binary messages issued on the network. 
  
-Because the same versions of HLA require identical APIs, this can mean that for a single applicaton changing the HLA vendor is probably easy. Developers can simply replace one HLA library vendor with another, often without even recompiling the applicaton. This is a useful feature.
+The lack of a network standard can make multiple applications working together difficult. Imagine two HLA applications that use exactly the same HLA Federation Object Model (FOM). The simulation's FOM is a configuration component that defines the simulation's entities and the entity attributes they have. TankApp uses a vendor of HLA that sells a product called SuperHLA, while the application we want it to workk with, called AircraftApp, uses an HLA implementation product named AwesomeHLA. The two vendors use exactly the same API, but the format of messages they put on the network are different from each other, unknown, and incompatible. SuperHLA cannot receive messages sent by AwesomeHLA, and AwesomeHLA cannot receive messages sent by SuperHLA. Perhaps the programmers for SuperHLA decided to use little endian messages, while AwesomeHLA developers chose to use big endian formats. The HLA implementations have no idea about how they should decode the binary messages of the other HLA implementation.
 
-At the same time, the lack of a network standard can make multiple applications working together difficult. Imagine two HLA applications using exactly the same Federation Object Model (FOM), a simulation component that defines the entities and the attributes they have. TankApp uses an HLA vendor named SuperHLA, while AircraftApp uses an HLA vendor named AwesomeHLA. The two vendors use exactly the same API, but the format of messages they put on the network are different and incompatible. 
+If the two appliations are to interoperate one option is to use the same HLA implementation, either SuperHLA or AwesomeHLA, in both applications. HLA adopted a strong interoperability standard, and it should be possible to point the application at a different HLA library and run it without error or recompiling. In the case of the TankApp and AircraftApp simulations we should be able to pick one of the HLA implementation libraries, use it in both applications, and start the applications again without recompilation. (In practice there seems to be some reluctance by program managers to do this without a good deal of testing.)
 
-If the two appliations are to interoperate one option is to use the same HLA implementation, from either SuperHLA or AwesomeHLA, in both applications. 
+Another option is for each application to share its data in DIS format. In addition to using HLA internally the application may issue a feed to the network about entity movement in DIS format. Perhaps the other application that can then receive the DIS feed and share it into its own HLA implementation. The TankApp uses SuperHLA and also issues DIS traffic; AircraftApp uses software to read the DIS issued by TankApp and feed the information into AwesomeHLA.
 
-Another option is for each application to share its data in DIS format. In addition to using HLA internally it may issue a feed regarding entity movement in DIS. There are applications that can then read this DIS feed and share it to a separate HLA vendor application. The TankApp uses SuperHLA to issue DIS traffic; AircraftApp uses AwesomeHLA to read this DIS and make calls to the API. 
+The DIS solution becomes more practical as the two applicatons start becoming more differing. For example imagine TankApp has a slightly different FOM than AircraftApp. After that four other applications are added to the interaction pool with the intention of all six applications working with each other. The applications use slightly different FOMs, and three differnet versions of HLA by default. For a situation such as that described above, DIS can be a useful tool. Examples of this include that of Interservice/Industry Training, Simulation and Education Conference [I/ITSEC](http://exhibits.iitsec.org/2016//custom/Playbook_OBW_NTSAfinal1110.pdf), called Operation Blended Warrior.
 
-The DIS component is harder to implement in the situaton described above, but at the same time there can be significant managerial resistance to changing HLA vendors even for two nearly identical simulations. The DIS solution becomes more practical as the two applicatons start becoming more different. For example imagine TankApp has a slightly different FOM than AircraftApp. Then four other applications are added to the pool, each with the intention of all six applications working with each other. There are slightly different FOMs, and three differnet versions of HLA. For a situation such as that described above, DIS can be a useful tool. 
+### Conclusion
+
+HLA provides a number of advances over DIS, but also has some language-based restrictions. 
+
+There are several guides to HLA that are better than what I could write. You should read them.
+
 
 
  
