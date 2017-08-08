@@ -16,21 +16,7 @@ The problem space of DIS is common in many ways to those that appear in the comm
 
 There are several other features of DIS that will be assessed as well. From an practical or even academic stanpoint the number of questions raised throough DIS can be enormous. It's therefore helpful to have specialists cooperate on this tutorial DIS project. The tutorial project's structure is, one hopes, helpful in allowing experts on a topic to supply their answers while not causing issues with other sections of the tutorial.
 
-### History of DIS
-
-### Bibliography
-
-
-
-
-
-Other
-
-, along with High Level Architecture (HLA) and Test and Training Enabling Architecture (TENA), one of the three main standards for military simulations. This document is intended to help you understand DIS's implementation and how to use it. Many of the concepts used in DIS are re-used in HLA and TENA applications, so understanding how DIS works also helps you understand other simulation applications. It can even be useful if you want to understand what commercial entertainment games do.
-
-DIS and its concepts are widely used, but not necessarily explained well in a single document or book provided to programmers and users. DIS is approved as an IEEE standard. That standards document is available (as IEEE-1278.1), but it is focused on defining the format of DIS network messages rather than explaining to those implementing simulations how to use DIS. The theories of use for some DIS features may be scattered across many documents at many locations. The Simulation Interoperability Standards Organization (SISO) document archive is a good source, but the papers are numerous and spread out. Some aspects of DIS are known to practioners only on the basis of group experience and lore. 
-
-There's no centralized place to learn about DIS and its use in applications. This document is intended to be an open source and community maintained introduction to and manual for DIS--both its supporting theory, and the practical implementation and configuration choices made by programmers who write simulations and technicians who run simulations.
+## DIS Tutorial Purpose
 
 Often the people who need to learn something about DIS are programmers who are thrown head-first into the problem. They're given some vague instructions, usually summed up as "Hey, we need to implement DIS in our application. Go make it work." Sometimes the programmers don't have prior experience with distributed simulations or virutal worlds. They often work on the project for a few weeks before moving on to something else, so they need to learn about the subject quickly. They're OK with coding, and often with network programming, but using DIS often involves a problem domain that is not clear to newcomers. For example, one would think that it is easy to direct an object in a virtual world to move one meter northwest. This is tricker than it may seem at first glance. What coordinate system is being used, and is that using metric or imperial units? How does one uniquely select an object so that it and it alone moves? Learning about each of these tasks can take a programmer days to unravel if he must rely on only the IEEE standard.
 
@@ -57,25 +43,8 @@ espdu.setLoc(newLocation);
 ~~~
 Those who implement the DIS standard can use any API they choose. The code in this document primarily uses the open-dis implementation, which is available at https://github.com/open-dis. There are implementations for several languages, including Java, Javascript, C++, C#, Objective-C, and Python. There are other implementations of DIS, both open source and commercial. There are also many home-grown implementations of the standard that were created by simulation implementors. They just wrote their own DIS implementation, or the portions of the DIS standard they needed. This means that the code-writers out there are likely see differences in the source code of two applications that do the same thing. But if they understand DIS, the objective of this document, they should be able to overcome the implementation issues.
 
-## DIS History
 
-DIS arose from a Defense Advanced Research Agency (DARPA) project in the 1980's called SIMNET. At the time TCP/IP and high speed networks were just getting their legs, computers and networks were becoming powerful enough to do the computational operations needed, and 3D graphics was in its infancy. 
-
-A screen capture from an early SIMNET application is shown below:
-
-<img src="images/SimnetDisplay.jpg"/>
-
-Each participant is in a simulator that controls one tank, and each simulator views the shared virutal battlefield. All the vehicles interact in the same shared enviroment. If one simulator causes the tank it controls to move, the other partipants see the movement, in real time. 
-
-The simulators of the era sometimes had displays that replicated a soldier's view of the battlefield, but the host running the simulation wasn't networked with other hosts. Each simulator worked in isolation, and an aircraft simulator couldn't see a tank controlled by another simulator. The idea of SIMNET--quite advanced for the time--was to create a virtual, shared battlefield in which all participants on multiple computers could see and interact with each other. SIMNET's major accomplishment--it was arguably one of the first large real-time distirubted virtual world--was to serve as a basis for the research that allowed DIS to happen. 
-
-DARPA projects were intended to transition out of the incubator research phase and into useful actual implementations. The SIMNET project worked out many of the state information exchange issues that were needed. Once that was done it needed to be standardized and refined outside of DARPA. The group that would eventually do this was Simulation Interoperability Standards Group (SISO) that took over development of the network protocol portion of the project, which they renamed to DIS. SISO developed DIS in a series of workshops held from 1989 to 1996. Once the protocol was developed they took the relevant documents to the IEEE standards group and achieved DIS standard approval.
-
-In today's commercial game world games like "Call of Duty" or "World of Tanks" do shared environments between hosts routinely. The companies that own these games make a lot of money selling such applications to the public. At the time of SIMNET the concept of a shared, networked environment was revolutionary.
-
-## Architecture Background
-
-There are several parts to the concepts that go along with distributed (multiple host) simulations: networking, the semantics and format of the messages being exchanged, and graphics or operations that occur at each simulation.
+[move graphics to distributed simulation terms section]
 
 ### Graphics
 
@@ -84,6 +53,8 @@ To take the last topic first, the graphics portion of the shared virtual world i
 The choices about what graphics to include in a DIS application depend entirely on the DoD's training objectives. An implementor may be able to use Google Maps or Open Street Maps, for example, or implement their own map-based requirements. Alternatively some applications can use 3D graphics in a manner reminiscent of modern commercial FPS games. There are many ways to draw the 3D images we see on the screen, from OpenGL and Direct3D to higher level scene graphs, such as OpenInventor or X3D. At an even higher level of abstraction objects can be rendered with the aid of a 3D game engine such as Lumberyard or Unity. A DIS application may have rudimentary 3D graphics instead of photorealistic 3D graphics, depending on the training use. Again, the audience being trained may benefit from high quality graphics, or still be well trained by a graphics system that is simple but effective in accomplishing the training objective.
 
 Computer graphics is a large and complex subject, and instruction or examples often depend on the graphics standard chosen to describe the environment. We will discuss some graphics implementations for both for 2D maps and 3D applications. In some understandings, graphics use in simulations can be distinguished as being separate from DIS networking. The reality is that graphics are often used in simulations that use DIS, and from a practical standpoint a DIS tutorial has to at least mention how to use it.
+
+
 
 ### Formats and Semantics
 
