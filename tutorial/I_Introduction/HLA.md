@@ -2,15 +2,13 @@
 
 ## High Level Architecture
 
-DIS was the first standard for distributed simulations. Near adoptation it was believed that it could be improved upon with different technology and approaches than had been used in the 80's, when DIS was invented.
+DIS was the first standard for distributed simulations. Some time later it was believed that it could be improved upon by using different approaches than had been used in the 80's, when DIS was created. This resulted in High Level Architecture (HLA).
 
-There are some important differences between DIS and HLA, but they sometimes share important features as well, particularly when describing combat operations. 
-
-The extent to which HLA is used in applications compared to DIS is a bit unknown, but it is popular. 
+There are some important differences between DIS and HLA, but they sometimes share important features as well, particularly when describing combat operations. The HLA architecture can cover a wider range of problems in addition to that addressed by DIS.
 
 ### Off-Site Tutorials
 
-There are several interesting tutorials about HLA already present. Rather than attempting to supply yet another, the main approach is to link to the existing HLA tutorials. 
+There are several interesting tutorials about HLA already present. Rather than attempting to supply yet another, the approach in this section is to simply link to the existing HLA tutorials. 
 
 Here's a list of some online HLA tutorials:
 
@@ -27,7 +25,17 @@ Here's a list of some online HLA tutorials:
 [How to become an HLA
 guru in a short(er) time](http://www.cit.dk/COT/reports/reports/Case6/06/cot-6-06.pdf)
 
-### Compatibility
+### Compatibility and DIS
+
+#### Capacity
+
+HLA can almost always create simulations that handle more entities than DIS-based applications.
+
+Distributed simulations are transmitting attribute values between hosts. For example, this may include position, orientation, describe the entity type, and the entity's speed. As we shall see later in descriptions of DIS's entity state PDU, DIS will transmit all of these attribute values every few seconds even if they do not change. This drives up the simulation's bandwidth and frequency of use on the network, and tends to drive down the number of entities that can be supported in a simulation.
+
+In contrast HLA can update the same attrbutes only when they change. This drives down network
+
+#### Network Formats
 
 HLA took some fundamentally different technical approaches when compared to those of DIS. DIS made the choice to standardize the syntax and semantics of a few dozen messages sent on the network. All programming languages that can address binary data issues are capable of decoding the messages. This includes C, C++, Java, Javascript, Objective-C, Python, and dozens of others. For some devotees of particular languages or those developing in a language-specific framework that used a somewhat rare language, this could be a useful feature. 
 
