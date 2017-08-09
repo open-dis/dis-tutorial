@@ -31,6 +31,49 @@ guru in a short(er) time](http://www.cit.dk/COT/reports/reports/Case6/06/cot-6-0
 
 ### HLA and DIS
 
+#### RPR-FOM
+
+HLA was designed and built to be more general than DIS, but at the same time it was very useful to have HLA configurations that did many of the same things. Readers of the tutorials above know something about Federation Object Modules (FOMs). The FOMs define the objects and attributes in an HLA federation. 
+
+SISO realized that it would be useful to define a FOM similar to that of DIS, and that's exactly what they did. The Real-time Platform Reference
+Federation Object Model [(RPR-FOM)](https://www.sisostds.org/DesktopModules/Bring2mind/DMX/Download.aspx?Command=Core_Download&EntryId=30823&PortalId=0&TabId=105) defines a FOM that copies many DIS concepts. RPR-FOM makes it easier to work with DIS appliations.
+
+Consider the location of a simulation entity. In an application RPR-FOM object we can define an object attribute:
+
+~~~
+<field>
+    <name>WorldLocation</name>
+    <dataType>WorldLocationStruct</dataType>
+    <semantics>-NULL-</semantics>
+ </field>
+~~~
+
+The simulated object includes an attribute defining its location in the world. The format of this attribute is identical to that used by DIS. As we will see, the WorldLocationStruct defined in the RPR-FOM is exactly the same as that used in DIS.  
+
+~~~
+<fixedRecordData>
+                <name>WorldLocationStruct</name>
+                <encoding>HLAfixedRecord</encoding>
+                <semantics>Location of the origin of the entity's coordinate system shall be specified by a set of three coordinates: X, Y, and Z. The shape of the earth shall be specified using DMA TR 8350.2, 1987. The origin of the world coordinate system shall be the centroid of the earth, with the X-axis passing through the prime meridian at the equator, the Y-axis passing through 90 degrees east longitude at the equator, and the Z-axis passing through the north pole. These coordinates shall represent meters from the centroid of the earth.</semantics>
+                <field>
+                    <name>X</name>
+                    <dataType>WorldLocationOffset</dataType>
+                    <semantics>-NULL-</semantics>
+                </field>
+                <field>
+                    <name>Y</name>
+                    <dataType>WorldLocationOffset</dataType>
+                    <semantics>-NULL-</semantics>
+                </field>
+                <field>
+                    <name>Z</name>
+                    <dataType>WorldLocationOffset</dataType>
+                    <semantics>-NULL-</semantics>
+                </field>
+~~~
+
+The closeness of RPR-FOM to DIS is quite useful for many applicatons.
+
 #### Simulation Size
 
 HLA can almost always create simulations that can include more entities than DIS-based applications.
@@ -45,7 +88,7 @@ HLA took some fundamentally different technical approaches when compared to thos
 
 HLA took a different approach. Rather than define the format of messages, it uses standardized Application Protocol Interface (API) for a limited set of languages. The list of APIs for HLA is at [SISO](https://www.sisostds.org/APIs.aspx). Every API is, by definition, specific to a programming language. 
 
-The API defines a set of function calls, and the function calls must be language-specific. The primary APIs for HLA are C++ and Java. (There's also a rarely used API called "Web Services." Web services refers to a technology that seems not very usable in distributed simulations due to its high latency rates, though it is still supported by SISO.)
+The API defines a set of function calls, and the function calls must be language-specific. The primary APIs for HLA are C++ and Java. (There's also a rarely used API called "Web Services." Web services refers to a technology that seems not very usable in distributed simulations due to its high latency rates, though it is still supported by SISO. There are today better performing web technologies which will be discussed.)
 
 The full APIs defined are available at SISO. For example, a function in the API for a Java version of the [HLA API](https://www.sisostds.org/DesktopModules/Bring2mind/DMX/Download.aspx?Command=Core_Download&EntryId=42469&PortalId=0&TabId=105) looks like this:
 
