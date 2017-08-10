@@ -66,9 +66,9 @@ As is inevitable with these things, the standard has to be maintained and update
 
 ### Networking
 
-Sending the messages defined by DIS involves using, almost always, the TCP/IP networking system. That's simply because TCP/IP has become so widespread. Once upon a time there were other software networking standards, such as DECnet, IBM Systems Network Architecture (SNA), Open Systems Interconnection (OSI), or AppleTalk. Those are simply not in use to much of an extent these days. In the case of DIS, can be exceptions to the use of TCP/IP in some radio applications, but this is somewhat rare.
+Sending the messages defined by DIS involves using, almost always, the TCP/IP networking system. That's simply because TCP/IP has become so widespread. Once upon a time there were other software networking standards, such as DECnet, IBM Systems Network Architecture (SNA), Open Systems Interconnection (OSI), or AppleTalk. Those high level network protocols are simply not in use to much of an extent these days. In the case of DIS, can be exceptions to the use of TCP/IP in radio alert applications, but this is somewhat rare.
 
-Using TCP/IP to send DIS messages is not terribly bad. It is simple enough to use TCP, UDP, broadcast, and multicast. For the most part in this document the objective is to be as simple as possible when discussing the subject. Network programming is intended to stay at the highest levels possible, excluding, to the extent possible, such topics as the IP or lower levels.
+Using TCP/IP to send DIS messages is useful. It is simple enough to use TCP, UDP, broadcast, and multicast. For the most part in this document the objective is to be as simple as possible when discussing the subject. Network programming is intended to stay at the highest levels possible, excluding, to the extent possible, such topics as the IP or lower levels.
 
 ## Simulation Terminology
 

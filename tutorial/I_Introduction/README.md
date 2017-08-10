@@ -1,18 +1,14 @@
 Introduction
 
-. DIS Background
-	a. Distributed Interactive Simulation
-	b. History
-	c. What the objective of this document is
-	d. Example application screen caps and video
-	e. Some implementors (open-dis, etc)
+. Distributed Interactive Simulation
+	a. [DIS Background](./DIS_Background.md)
+	b. [DIS History](DIS_History.md)
+	c. [DIS Examples](./DIS_Examples.md)
 	f (reference section)
-2. DoD Simulation Standards
-   a. DIS
-   b. HLA
-   c. TENA
-   c. Web-LVC
-   b. (Reference section)
+2. [Other DoD Simulation Standards](./Simulation_Standards.md)
+   a. [HLA](./HLA.md)
+   b. [TENA](./TENA.md)
+   c. [WebLVC](./WebLVC.md)
 3. 	Distributed Simulation Terms
    a. Reality-virtuality continuum https://en.wikipedia.org/wiki/Reality%E2%80%93virtuality_continuum
 	a. Virtual Reality (maybe only one host)
