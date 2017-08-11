@@ -1,21 +1,23 @@
-DIS: The Hidden Handbook
+# DIS: The Hidden Handbook
 
-I Introduction
+## I: Introduction
 
-1. DIS Background
-	a. What DIS is
-	b. History
+### DIS Background
+   #### [DIS Background](./I_Introduction/DIS_Background.md)
+   
+	[DIS History](./I_Introduction/DIS_Background.md)
+	
 	c. What the objective of this document is
 	d. Example application screen caps and video
-	e. Some implementors (open-dis, etc)
-	f (reference section)
-2. DoD Simulation Standards
+	e. (reference section)
+	
+### 2. DoD Simulation Standards
    a. DIS
    b. [HLA](./I_Introduction/HLA.md)
    c. TENA
    c. Web-LVC
    b. (Reference section)
-3. 	Distributed Simulation Terms
+### 3. 	Distributed Simulation Terms
    a. Reality-virtuality continuum https://en.wikipedia.org/wiki/Reality%E2%80%93virtuality_continuum
 	a. Virtual Reality (maybe only one host)
 	b. Networked Virtual Environments (communicating hosts)
@@ -28,7 +30,7 @@ I Introduction
 	i. Extended reality https://en.wikipedia.org/wiki/Extended_reality
 	j. (Reference section)
    	 	
- II. Networking
+ ### II. Networking
     1. Networking
       a. TCP
       b. UDP
