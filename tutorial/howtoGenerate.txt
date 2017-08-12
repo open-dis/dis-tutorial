@@ -1,0 +1,16 @@
+This uses pandoc to convert .md into other formats, including .epub
+format (for eBooks) or HTML. The basic idea is to write sections of
+the tutorial in .md files, then combine many .md files into an ebook,
+an html web site, a pdf file, and other formats.
+
+Pandoc is at https://pandoc.org/
+
+Pandoc can work with multiple .md files. The idea is to supply an 
+in-order list of the .md files; pandoc effectively concatenates them
+and then does a conversion. This final result as an in-order list
+of .md files as defined in pandoc_MD_order.txt. The file runPandoc.sh then 
+gets the in-order list and supplies it to pandoc. 
+
+You can also generate formats such as PDF and HTML. Generating
+PDF requires that you have TeX installed (on the mac http://www.tug.org/mactex/mactex-download.html).
+ 
