@@ -4,7 +4,7 @@ DIS arose from a Defense Advanced Research Agency (DARPA) project in the 1980's 
 
 A screen capture from an early SIMNET application is shown below:
 
-<img src="images/SimnetDisplay.jpg"/>
+<img src="I_Introduction/images/SimnetDisplay.jpg"/>
 
 Each participant is in a SIMNET application controlled a tank, and each simulator views the shared virutal battlefield. All the vehicles interacted in the same shared enviroment. If one simulator causes the tank it controls to move, the other partipants see that movement, in real time. 
 

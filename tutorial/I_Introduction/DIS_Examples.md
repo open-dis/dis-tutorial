@@ -13,9 +13,9 @@ The company MetaVR has created an application that uses DIS called the Virtual R
 
 http://www.metavr.com/products/vrsg/vrsgstandalone.html
 
-![Alt text](images/disApplications/vrsgHelo.jpg)
-![Alt text](images/disApplications/IranianAircraftModels.jpg)
-![Alt text](images/disApplications/Hormuz.jpg)
+![Alt text](I_Introduction/images/disApplications/vrsgHelo.jpg)
+![Alt text](I_Introduction/images/disApplications/IranianAircraftModels.jpg)
+![Alt text](I_Introduction/images/disApplications/Hormuz.jpg)
 
 ## Battlespace Simulations and Modern Air Combat Environment
 
@@ -23,7 +23,7 @@ This application is put out by Battlespace Simulations, Inc. Their web site is a
 
 >MACE is a physics-based, many-on-many simulation and threat environment with a large order of battle, ideally suited for both standalone mission rehearsal and distributed mission simulation. MACE provides computer generated forces (CGF), sometimes called semi-autonomous forces (SAF), as well as scenario creation, management and IOS features. Using MACE, you can quickly and easily extend your distributed simulation framework. MACE supports the Distributed Interactive Simulation (DIS) architecture including simulation management, entity state, fire, detonate and emissions PDUs.
 
-![Alt text](images/disApplications/Mace.jpg)
+![Alt text](I_Introduction/images/disApplications/Mace.jpg)
 
 ## ACM
 
@@ -43,7 +43,7 @@ According to the site, this is
 > * Several aircraft models implemented, both civil and military.
 > * Two scenes provided, with many runways and radio stations.
 
-![Alt text](images/disApplications/debian.png)
+![Alt text](I_Introduction/images/disApplications/debian.png)
 
 ## DISWebGateway
 
@@ -54,7 +54,7 @@ DISWebGateway is a small open-dis project. The application reads native DIS traf
 
 This can be quite interesting. The server allows access to a huge range of capabilities, including remote web-based data The screen capture below shows an entity mapped by the Google Maps utility. OpenStreetMap is also supported.
 
-![Alt text](images/disApplications/WebBasedApp.tiff)
+![Alt text](I_Introduction/images/disApplications/WebBasedApp.tiff)
 
 
 

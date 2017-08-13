@@ -2,7 +2,7 @@ I_Introduction/DIS_Background.md
 I_Introduction/DIS_History.md
 I_Introduction/DIS_Examples.md
 I_Introduction/Simulation_Standards.md
-I_Introduction/HLA.md
-I_Introduction/TENA.md
-I_Introduction/WebLVC.md
+  I_Introduction/HLA.md
+  I_Introduction/TENA.md
+  I_Introduction/WebLVC.md
 
