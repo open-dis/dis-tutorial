@@ -20,5 +20,5 @@ In the end, WebLVC helps define the network messages normally sent by HLA or DIS
 
 WebLVC is interesting, but remember that it also possible to send standard DIS messages to Javascript running inside the web page. The open-dis implementation of Javascript DIS can decode the binary PDU and turn it into a Javascript object. WebLVC in some ways resembles HLA messages, however, and can send out only the attributes of objects that have changed. This means that it can often use less bandwidth in a simulation, despite using text for the message format. JSON is also highly optimized; a lot of attention is paid to it.
 
-See [jsperf](https://jsperf.com/javascript-dis-native-vs-json/2) for an interesting comparison in performance between binary messages and JSON. Still, on a laptop running a web browser it is claimed that over 50K messages per second can be decoded. That's more than can be used in a simulation. Also, note the extend to which different web browsers achieve different results.
+See [jsperf](https://jsperf.com/javascript-dis-native-vs-json/2) for an interesting comparison in performance between binary messages and JSON. Still, on a laptop running a web browser it is claimed that over 50K messages per second can be decoded. That's more than can be used in a simulation. Also, note the extend to which different webbrowsers achieve different results.
 
