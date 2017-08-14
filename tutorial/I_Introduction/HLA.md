@@ -1,5 +1,3 @@
-# Simulation Standards
-
 ## High Level Architecture
 
 DIS was the first standard for distributed simulations. Some time later it was believed that it could be improved upon by using different approaches than those of the 80's, when DIS was created. This resulted in High Level Architecture (HLA).

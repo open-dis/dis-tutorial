@@ -107,7 +107,6 @@
 <h2 id="simulation-standards">Simulation Standards</h2>
 <p>DIS is not the only standard used by contributors to the Department of Defense or other the defense departments of other nations. The other standards include High Level Architecture (HLA), Test and Training Enabling Architecture (TENA), and WebLVC. They all perform many of the same operations as DIS, and in fact copy some of the ideas of DIS.</p>
 <p>Each of these protocols is discussed in their own section.</p>
-<h1 id="simulation-standards-1">Simulation Standards</h1>
 <h2 id="high-level-architecture">High Level Architecture</h2>
 <p>DIS was the first standard for distributed simulations. Some time later it was believed that it could be improved upon by using different approaches than those of the 80’s, when DIS was created. This resulted in High Level Architecture (HLA).</p>
 <p>There are some important differences between DIS and HLA, but they often share important features as well, particularly when describing combat operations. The HLA architecture can cover a wider range of problems in addition to those addressed by DIS.</p>
@@ -181,7 +180,6 @@ throw (
 <h3 id="conclusion">Conclusion</h3>
 <p>HLA provides a number of advances over DIS, but also has some language-based restrictions.</p>
 <p>There are several guides to HLA that are better than what I could write. You should read them.</p>
-<h1 id="simulation-standards-2">Simulation Standards</h1>
 <h2 id="test-and-training-enabling-architecture-tena">Test and Training Enabling Architecture (TENA)</h2>
 <p>Test and Training Enabling Architecture (TENA) is another simulation standard. It’s a very interesting and powerful technology.</p>
 <p>TENA was developed by the US Department of Defense, and was intended to include test and training systems on the range.</p>
@@ -199,7 +197,6 @@ throw (
 <p><a href="images/TENA.tiff">TENA</a></p>
 <h3 id="tena-networking">TENA Networking</h3>
 <p>In addition to the TENA software the DoD supports network implementations at many training and evaluaton sites. This is called Joint Mission Environment Test Capability JMETC. Documents explaining JMETC are available at the TENA web site.</p>
-<h1 id="simulation-standards-3">Simulation Standards</h1>
 <h2 id="weblvc">WebLVC</h2>
 <p>Web-based technology has become highly compelling in the last few years. Readers can confirm this by noting the degree to which the applications they use themselves today are web-based rather than compiled desktop applications. Vendors often make services available via the web rather than compiled, downloaded applications. Web applications often work across multiple operating systems and hosts with little extra work.</p>
 <p>SISO runs a <a href="https://www.sisostds.org/StandardsActivities/DevelopmentGroups/WebLVCPDG.aspx">WebLVC development group</a>.</p>
@@ -225,8 +222,8 @@ throw (
 <h3 id="the-terminology-range">The Terminology Range</h3>
 <p>The image below shows something about how graphics are used in simulation applications, for what purpose. This primarily is related to whether 3D grahics that try to create real world appearances are generated, by how many simulation hosts.</p>
 <div class="figure">
-<img src="I_Introduction/images/VirtualGraphicsSpread.jpg" alt="Problem Graphics" />
-<p class="caption">Problem Graphics</p>
+<img src="I_Introduction/images/VirtualGraphicsSpread.jpg" alt="Problem Graphics: I_Introduction/images/VirtualGraphicsSpread.jpg" />
+<p class="caption">Problem Graphics: I_Introduction/images/VirtualGraphicsSpread.jpg</p>
 </div>
 <p>This is primarily an attempt to define the terminology used (at least by some) when related to grahics.</p>
 <h4 id="analytical-no-display-single-host">Analytical, No Display, Single Host</h4>
@@ -238,34 +235,34 @@ throw (
 <p>This is where it starts to become interestng. The simulation is presenting graphical results to users, but those graphics are not an attempt to create realistic displays. Instead the simulation graphics requirements may be met through displays of object or unit locations. The simulation users are satisfied if they can know the position of objects and units. Instead of a realistic display of a tank, the simulation requirements are satisified if there is a map-based display that shows the position of all the tanks in a unit, or the positions of several units. The objective is not to convince the user he is on the battlefield, but to show what the battlefield is up to.</p>
 <p>An very simple display of the concept that uses the web-based Open Street Maps Javascript library is shown below. DIS messages are received from the network, and the web page shows unit locations. There is no attempt to make the unit look realistic, only make its location realistic.</p>
 <div class="figure">
-<img src="I_Introduction/images/MapDisDisplay.jpg" alt="Map Display" />
-<p class="caption">Map Display</p>
+<img src="I_Introduction/images/MapDisDisplay.jpg" alt="Problem Graphics: _Introduction/images/MapDisDisplay.jpg" />
+<p class="caption">Problem Graphics: _Introduction/images/MapDisDisplay.jpg</p>
 </div>
 <h4 id="virtual-single-host">Virtual, Single Host</h4>
 <p>This is where the application is beginning to create graphics that are, in principle or objective, similar to a live video feed. Back in the early 90’s there was an game called “DOOM”; it had a mode in which a single application showed a 3D graphics display to the user, similar to the scene shown below.</p>
 <div class="figure">
-<img src="I_Introduction/images/doom-ii.jpg" alt="Single Host Graphics Picture" />
-<p class="caption">Single Host Graphics Picture</p>
+<img src="I_Introduction/images/doom-ii.jpg" alt="Problem Graphics: (I_Introduction/images/doom-ii.jpg" />
+<p class="caption">Problem Graphics: (I_Introduction/images/doom-ii.jpg</p>
 </div>
 <p>This shows a chainsaw attack on a monster by the player. (DOOM used it’s own, message format, not DIS.) There need be no other host in the simulation. How realistic is it? For the early 90’s, not that bad! There are definitions of “virtual” in software development that include “not physically existing as such but made by software to appear to do so.” In this case DOOM was creating, for the 90’s, virtual grahical content, generated by a single host. Users were placed in graphics environments that were emotionally realistic for the era.</p>
 <h4 id="networked-virtual-environment">Networked Virtual Environment</h4>
 <p>This is often the environment in which DIS use crops up. While the game DOOM was often running on a single host, DIS often runs on multiple hosts. The situation can be described by the term “Networked Virtual Environment.” Any simulation may have several processes on several hosts running, some of which use 3D graphics to display a virtual world. One better than that available to DOOM in 1993. Examples of the use of Networked Virtual Environment (NVE) include the book title of Mike Zyda and Sandeep Singhal’s book, “Networked Virtual Environments: Design and Implementation.” The term is widely used in academic papers.</p>
 <p>An example of a NVE (not necessarily using DIS) is below. This is an example from VR-Engage from the company <a href="https://www.mak.com/">MaK</a>.</p>
 <div class="figure">
-<img src="I_Introduction/images/VREngage_mak.jpg" alt="NVE Display" />
-<p class="caption">NVE Display</p>
+<img src="I_Introduction/images/VREngage_mak.jpg" alt="Problem Grahics: I_Introduction/images/VREngage_mak.jpg" />
+<p class="caption">Problem Grahics: I_Introduction/images/VREngage_mak.jpg</p>
 </div>
 <p>Note that the 3D display is a bit more realistic than that of DOOM.</p>
 <h4 id="augmented-reality">Augmented Reality</h4>
-<p>Augmented Reality newly developing software, at least in the commercial implementation sense. Augmented reality started in research years ago, but is not on the verge of widespread commercial deployment. At this time the augmented reality applications may include offerings from Facebook or Microsoft’s HoloLens. There is also rumored future augmented reality technology to be offered from the company Magic Leap, and the company Apple. Phones and other mobile devices are rumored.</p>
-<p>The aspect of augmented reality that’s different is that it combines a live video feed with a computer-generated 3D display. A good example of the technology is, oddly enough, the game Pokemon running on an Apple iPhone. Examples are shown below:</p>
+<p>Augmented Reality newly developing software, at least in the commercial implementation sense. Augmented reality started in research years ago, but is not on the verge of widespread commercial deployment. At this time the augmented reality applications may include offerings from Facebook or Microsoft’s HoloLens. There is also future augmented reality technology rumored to be offered from the companies Magic Leap and Apple, as well as future advances from existing vendors. Phones and other mobile devices are likely to be the platforms addressed.</p>
+<p>The aspect of augmented reality that is different from virutal reality or NVEs is that it combines a live video feed with a computer-generated 3D display. A good example of the technology is, oddly enough, the game Pokemon running on an Apple iPhone. Examples are shown below:</p>
 <div class="figure">
-<img src="I_Introduction/images/pokemanCapture.jpg" alt="Pokemon Augmented Reality Example" />
-<p class="caption">Pokemon Augmented Reality Example</p>
+<img src="I_Introduction/images/pokemanCapture.jpg" alt="Problem Graphics: I_Introduction/images/pokemanCapture.jpg" />
+<p class="caption">Problem Graphics: I_Introduction/images/pokemanCapture.jpg</p>
 </div>
-<p>Note that the three Pokemon captures shown combine a live video feed from the iPhone, and a 3D model from the pokemon game inserted into that video feed. The 3D model is used as a target for capture.</p>
-<p>For DoD applications one can easily imagine the 3D model of an enemy combatant that may be used as a target by an augmented reality user.</p>
+<p>In the Pokemon game this scene involved capture of the creature through interaction with the 3D model as it was dispalyed on the live video feed. The game proved so popular there were crowds of hundreds in popular “monster” areas. The 3D model is used as a target for capture.</p>
+<p>For DoD applications one can easily imagine the 3D model of an enemy combatant that may be addressed somehow by an augmented reality application user. DoD developers are likely to supply some sort of products performing roughly this task.</p>
 <h4 id="live-video">Live Video</h4>
 <p>The simulation gets a live video feed. There is no input into the feed, though the source of the feed may be selected by simulation or live data.</p>
 <h4 id="summary">Summary</h4>
-<p>The most common term in the DIS world is “Networked Virual Environment (NVE).” The objective is to have a 3D display presented to the simulation user that is virtually correct; a 3D world that is in principle identical to the real world, a virtually correct world. But at the same time one can’t assume DIS is unique to that. It can easily be used in an analytic simulation, or perhaps shortly, an augmented reality class simulation.</p>
+<p>The most common application term in the DIS world is “Networked Virual Environment (NVE).” The objective of DIS is very often to have a 3D display presented to the simulation user that is virtually correct; a 3D world that is in principle identical to the real world, a <em>virtually correct</em> world. But at the same time one can’t assume DIS is unique to that. It can easily be used in an analytic simulation, or perhaps, not very long from now as the commercial market matures, a useful tool in an augmented reality simulation.</p>
