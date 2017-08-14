@@ -5,4 +5,5 @@ I_Introduction/Simulation_Standards.md
   I_Introduction/HLA.md
   I_Introduction/TENA.md
   I_Introduction/WebLVC.md
+I_Introduction/Simulation_Terminology.md
 
