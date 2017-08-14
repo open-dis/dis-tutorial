@@ -1,4 +1,3 @@
-# Simulation Standards
 
 ## Test and Training Enabling Architecture (TENA) 
 
