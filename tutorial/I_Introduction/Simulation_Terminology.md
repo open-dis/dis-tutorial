@@ -4,7 +4,7 @@ There are a number of terms floating around in the simulation world, and that's 
 
 Over time it was realized that DIS could be used to achieve other goals. Everything from purely analytical applications of DIS, which assume that there is no graphical result intended at all, to augmented reality, which has some mix between live video and DIS-related graphics. Furthermore the simulations could include either a single user or a great many networked application elements.
 
-### The Terminology Range
+### Implementation Range
 
 The image below shows something about how graphics are used in simulation applications, for what purpose. This primarily is related to whether 3D grahics that try to create real world appearances are generated, by how many simulation hosts.
 
@@ -17,7 +17,7 @@ Imagine a single host that creates a description of a combat operation. The simu
 
 This can be thought of as the most simple simulaton example possible. The single application generates simulation operatin data, saves each message to a database, and later can play back the simulation contents. There's no attempt to show the simulation to the users in a realistic graphics display. Instead there is perhaps some classic operations research that later assesses the saved data.  
 
-#### Anaylytic, Multiple Hosts
+#### Anaylytical, Multiple Hosts
 
 Very similar to a single analytical simulation generation host, but instead of one, the simulation may use several.  DIS is more valuable in this scenario; multiple applications working together was an important feature from the start. As with other analytical operations, there is no attempt to use the traffic of the multiple simulation hosts to show anything graphical to the user. The simulation generally uses data operations to write messages to a database, and later reads the data back textually to analyze the simulation.
 
@@ -59,11 +59,11 @@ In the Pokemon game this scene involved capture of the creature through interact
 
 For DoD applications one can easily imagine the 3D model of an enemy combatant that may be addressed somehow by an augmented reality application user. DoD developers are likely to supply some sort of products performing roughly this task.
 
-#### Live Video
+#### Video
 
 The simulation gets a live video feed. There is no input into the feed, though the source of the  feed may be selected by simulation or live data.
 
-#### Summary
+### Summary
 
 The most common application term in the DIS world is "Networked Virual Environment (NVE)." The objective of DIS is very often to have a 3D display presented to the simulation user that is virtually correct; a 3D world that is in principle identical to the real world, a *virtually correct* world. But at the same time one can't assume DIS is unique to that. It can easily be used in an analytic simulation, or perhaps, not very long from now as the commercial market matures, a useful tool in an augmented reality simulation.  
 

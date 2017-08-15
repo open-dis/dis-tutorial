@@ -1,4 +1,4 @@
-# DIS History
+## DIS History
 
 DIS arose from a Defense Advanced Research Agency (DARPA) project in the 1980's called SIMNET. At the time TCP/IP and high speed networks were just getting their legs, computers and networks were becoming powerful enough to do the computational operations needed, and 3D graphics was in its infancy. 
 
