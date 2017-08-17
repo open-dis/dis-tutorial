@@ -1,10 +1,10 @@
-### High Level Architecture
+### b. High Level Architecture
 
 DIS was the first standard for distributed simulations. Some time later it was believed that it could be improved upon by using different approaches than those of the 80's, when DIS was created. This resulted in High Level Architecture (HLA).
 
 There are some important differences between DIS and HLA, but they often share important features as well, particularly when describing combat operations. The HLA architecture can cover a wider range of problems in addition to those addressed by DIS.
 
-#### Off-Site Tutorials
+#### i. Off-Site Tutorials
 
 There are several interesting tutorials about HLA already present. Rather than attempting to supply yet another, the approach in this section is to simply link to the existing HLA tutorials. 
 
@@ -27,7 +27,7 @@ guru in a short(er) time](http://www.cit.dk/COT/reports/reports/Case6/06/cot-6-0
 
 [The High Level Architecture: Introduction](http://www.acm-sigsim-mskr.org/Courseware/Fujimoto/Slides/FujimotoSlides-20-HighLevelArchitectureIntro.pdf)
 
-#### HLA and DIS
+#### ii. HLA and DIS
 
 ##### RPR-FOM
 
@@ -72,7 +72,7 @@ The simulated object includes an attribute defining its location in the world. T
 
 The closeness of RPR-FOM to DIS is quite useful for many applicatons.
 
-#### Simulation Size
+#### iii. HLA and Simulation Size
 
 HLA can almost always create simulations that can include more entities than DIS-based applications.
 
@@ -80,7 +80,7 @@ Distributed simulations transmit simulation entity attribute values between host
 
 In contrast HLA can send updates oof the same attributes to other hosts only when they are changed. A parked truck does not change its position or orientation, and its speed and acceleration remain at zero while parked. HLA can send no updates at all to the other participants in the simulation. This drives down network use by letting HLA applications use less bandwidth. In the end, HLA can suppport more simulated entities because it reduces network use for each simulated entites.
 
-##### Network Message Formats
+##### iv. Network Message Formats
 
 HLA took some fundamentally different technical approaches when compared to those of DIS. DIS made the choice to standardize the syntax and semantics of a few dozen messages sent on the network. All programming languages that can read and send binary data messages are capable of decoding and sending DIS messages. This includes C, C++, Java, Javascript, Objective-C, Python, and dozens of others. Sometimes simulation application programmers like to use specific languages for various reasons. Python and Javascript have been interesting and powerful programming languages of late. 
 
@@ -117,7 +117,7 @@ Another option is for each application to share its data in DIS format. In addit
 
 The DIS solution becomes more practical as the two applicatons start becoming more differing. For example imagine TankApp has a slightly different FOM than AircraftApp. After that four other applications are added to the interaction pool with the intention of all six applications working with each other. The applications use slightly different FOMs, and three differnet versions of HLA by default. For a situation such as that described above, DIS can be a useful tool. Examples of this include that of Interservice/Industry Training, Simulation and Education Conference [I/ITSEC](http://exhibits.iitsec.org/2016//custom/Playbook_OBW_NTSAfinal1110.pdf), called Operation Blended Warrior.
 
-#### Conclusion
+#### v.  Conclusions
 
 HLA provides a number of advances over DIS, but also has some language-based restrictions. 
 

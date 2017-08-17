@@ -13,7 +13,17 @@ I Introduction
 3. DoD Simulation Standards
    a. DIS
    b. HLA
+     i. Off-Site Tutorials
+     ii. HLA and DIS
+     iii. HLA and Simulation Size
+     iv. Network Message Formats
+     v. Conclusions
    c. TENA
+     i. TENA Web Site
+     ii. TENA License
+     iii. Access
+     iv. TENA Tutorial
+     v. TENA Networking
    c. Web-LVC
    b. (Reference section)
 3. 	Distributed Simulation Terms
