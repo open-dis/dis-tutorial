@@ -102,7 +102,13 @@ Multicast is even more powerful because it is not limited to the local network. 
 
 Multicast is the preferred solution over broadcast. Both broadcast and multicast are usually the preferred solutions over using single host addresses.
 
+## Summary
 
+This section has described some of the capabilities and problems inherent in TCP and UDP sockets, and the nature of Broadcast and Multicast approaches. Broadcast and Multicast are very useful in the DIS world. But at the same time no code of actual implementations was presented. The basic problem is that the code is language-specific. C++ code does not appear the same way that Java or Python or Javascript does. While this section can describe the general behavior, it does not provide specific code. 
+
+But that sort of provision is useful, and seeing actual networking programs can save a lot of time. It can also take up unreasonable amounts of disk space for users that are not immediately interested in source code, even if they eventually are. This gets even worse when you think of example projects for several languages that are inherent to an overall tutorial that is not limited to a single language.
+
+Instead, the section provides a section of links to additional source code control sites. For example, a Java project using Multicast, or a Javascript project that uses web technology, or a C++ example. The repositories linked to are not directly part of this project, but can be downloaded. Read on to find links to networking implementations. 
 
 
 
