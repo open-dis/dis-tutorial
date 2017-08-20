@@ -92,6 +92,18 @@ So long as all the simulation participants are present on same network, using br
 
 Broadcast was used from early on, but in the mid-90's a technology called multicast started to be used. Multicast is more powerful and flexible than using broadcast addressing.
 
+Multicast uses UDP sockets that have been specially configured, and that use a special set of IP numbers. Any IP number in the range 224.0.0.0 to 239.255.255.255 is a "multicast address," or group number. 
+
+Lets pick the multicast number 239.1.2.3, which is within the range mentioned above. We can (with a properly configured UDP socket) have a group of hosts subscribe to this address, while the rest of the hosts do not. With broadcast, *every* host on the network would be subscribed to messages sent to that address. In a network with 100 hosts, we might make only 20 subscribe to the address 239.1.2.3 for messages.
+
+In our simulation application we may want to send out updates for the position of ships to other ships, and tanks to other tanks. We can set up ship applications to be subscribed to the multicast ship addres, 239.1.2.3. Any message sent to that address will be handled by hosts that have chosen to be subscribed. Likewide the tank appliations at the multicast address 239.1.2.4 will receive messages sent for tanks. The administrative application which wants to receive both tank and ship messages can subscribe to both 239.1.2.3 and 239.1.2.4.
+
+Multicast is even more powerful because it is not limited to the local network. Broadcast required all the hosts to be on a single, local network. Multicat can, if configured correctly, include more than one network. For simulations, multicast networking can be used in a network that ranges across continents. 
+
+Multicast is the preferred solution over broadcast. Both broadcast and multicast are usually the preferred solutions over using single host addresses.
+
+
+
 
 
 
