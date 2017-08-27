@@ -322,14 +322,16 @@ throw (
 <h5 id="java-code-examples">Java Code Examples</h5>
 <p><a href="II_Networking/Java_Networking_Source_Code.md">Java Networking Source Code Examples</a></p>
 <h5 id="c-code-examples">C++ Code Examples</h5>
+<p><a href="II_Networking/CPP_Networking_Source_Code.md">CPP Networking Source Code Examples</a></p>
 <h5 id="javascript-code-examples">Javascript Code Examples</h5>
+<p><a href="II_Networking/Javascript_Networking_Source_Code.md">Javascript Networking Source Code Examples</a></p>
 <h2 id="summary-1">Summary</h2>
 <p>This section has described some of the capabilities and problems inherent in TCP and UDP sockets, and the nature of Broadcast and Multicast approaches. Broadcast and Multicast are very useful in the DIS world. But at the same time no code of actual implementations was presented. The basic problem is that the code is language-specific. C++ code does not appear the same way that Java or Python or Javascript does. While this section can describe the general behavior, it does not provide specific code.</p>
 <p>But that sort of provision is useful, and seeing actual networking programs can save a lot of time. It can also take up unreasonable amounts of disk space for users that are not immediately interested in source code, even if they eventually are. This gets even worse when you think of example projects for several languages that are inherent to an overall tutorial that is not limited to a single language.</p>
 <p>Instead, the section provides a section of links to additional source code control sites. For example, a Java project using Multicast, or a Javascript project that uses web technology, or a C++ example. The repositories linked to are not directly part of this project, but can be downloaded. Read on to find links to networking implementations.</p>
-<h1 id="java-networking-source-code-examples">Java Networking Source Code Examples</h1>
+<h5 id="java-networking-source-code-examples">Java Networking Source Code Examples</h5>
 <p>This contains links to any source code examples for networking done in Java. Each example typically contains a link to a .md file with an explanation of what the example shows, and a link to a source code control system for the example. This lets users download detailed, well-documented, but potentially large projects for each language the reader is interested in.</p>
-<h2 id="multicast-networking">Multicast Networking</h2>
+<h6 id="multicast-networking">Multicast Networking</h6>
 <p><a href="II_Networking/Java/Java_Multicast_Networking.md">Java Networking Source Code Examples</a></p>
 <h1 id="java-multicast-networking">Java Multicast Networking</h1>
 <p>This is an example of using Java at a lower API level to send and receive binary data. The example code presented here uses NetBeans, a free development system available at http://netbeans.org.</p>
@@ -338,4 +340,11 @@ throw (
 <p>If the same application is run on two different hosts each will receive the messages of the other. Running on a single host the host will receive all the messages sent by that host.</p>
 <p>The multicast socket can subscribe to more than one multicast address. As it stands now, it will not read messages sent to the destination address “239.1.2.100”. It could if the multicast socket performed a “joinGroup” for that address.</p>
 <p>Download source code from this URL:</p>
-<p><a href="https://github.com/mcgredonps/DIS_Tutorial_Multicast_Example">Source Code for Java Multicast Example</a></p>
+<p><a href="https://github.com/mcgredonps/DIS_Tutorial_Multicast_Example">Source Code for Java Multicast Example</a> ##### CPP Networking Source Code Examples</p>
+<p>This contains links to any source code examples for networking done in CPP. Each example typically contains a link to a .md file with an explanation of what the example shows, and a link to a source code control system for the example. This lets users download detailed, well-documented, but potentially large projects for each language the reader is interested in.</p>
+<h6 id="multicast-networking-1">Multicast Networking</h6>
+<p><a href="II_Networking/CPP/CPP__Multicast_Networking.md">CPP Networking Source Code Examples</a></p>
+<h5 id="javascript-networking-source-code-examples">Javascript Networking Source Code Examples</h5>
+<p>This contains links to any source code examples for networking done in Javascript. Each example typically contains a link to a .md file with an explanation of what the example shows, and a link to a source code control system for the example. This lets users download detailed, well-documented, but potentially large projects for each language the reader is interested in.</p>
+<h6 id="multicast-networking-2">Multicast Networking</h6>
+<p><a href="II_Networking/Javascript/Javascript_Multicast_Networking.md">Javascript Networking Source Code Examples</a></p>
