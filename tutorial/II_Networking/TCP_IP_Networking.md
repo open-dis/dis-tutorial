@@ -16,7 +16,7 @@ TCP/IP can be a complex topic, but this tutorial will attempt to be as simple as
 
 The illustration below shows the essentials of a four-layer interpretaton of the TCP/IP protocol.
 
-![IMAGE TCP/IP](images/networking.jpg)
+![IMAGE TCP/IP](II_Networking/images/networking.jpg)
 
 The top layer, the Application Layer, is code simulation programmers write. It  includes both code for sending and receiving DIS messages and the simulation program itself. 
 
@@ -76,7 +76,7 @@ UDP is useful, but as with TCP sockets the initial solution is to send one messa
 
 Using broadcast uses conventional UDP sockets, but with a special approach to picking the message destination. Every host has an Internet Protocol number assigned to it. The below shows the values for a host:
 
-![IMAGE TCP/IP](images/IPDisplay.jpg)
+![IMAGE TCP/IP](II_Networking/images/IPDisplay.jpg)
 
 As you can see, the host has an IP number of 10.0.0.158. There are no other hosts on the network with that IP. When we create a message to send to that host, we set a destination address of 10.0.0.158 in the message. If we want to send to another host, we'd have to send a new message with a different IP, such as 10.0.0.42. (Yes, you can also use a name if you are willing to convert a name to an IP, wich is usually easy to do.) If you wanted to send to 99 hosts you'd have to do this 99 times. But what if you wanted to send only one message, and have that received by everyone on that network that was interested? We can use something called broadcast addressing to do that.
 
@@ -102,6 +102,34 @@ Multicast is even more powerful because it is not limited to the local network. 
 
 Multicast is the preferred solution over broadcast. Both broadcast and multicast are usually the preferred solutions over using single host addresses.
 
+#### Web-Based technology
+
+This term seems a little strange, and it is. In the last few years state updates have started to be sent across web technologies. The state updates are sent across web servers. How does this happen?
+
+In practice, the web servers are using TCP and UDP sockets, and the DoD applications are accessing the sockets via a higher level API. In effect this is an example of using a higher level API to access the same lower level TCP and UDP APIs. You can think of it as a supporting library, but with the added benefit of also being an officially approved international standard.
+
+#### Supporting Libraries
+
+There are in practice of lot of other APIs for accessing TCP and UDP sockets--socket creation, message transmission, message receipt, and more. There are dozens of C++ libraries. The same is true for many other languages, such as Java and Javascrpt. In practice they may hide the direct APIs presented by the operating system or TCP/IP. The libraries may occur at multiple levels of complexity, and hide the sockets discussed above at multiple levels. They may occur at someone low levels. Others may be at much higher levels, such as game engines. 
+
+Still, the issue is often recognizing the inherent issues among TCP. UDP, Broadcast, and Multicast sockets, not the specific programming API. Understanding the advantages and limitations of each type of underlying socket is important.
+
+#### Language-Specific implementations
+
+Some example code that demonstates actual use of sockets is provided here. This is inherently programming language-specific--C++ code is not the same as Java code, which is not the same as Javascript code. The problem is that each language will have it's own project code, and its own source code control site or download site. The DIS Tutorial you are reading is also maintained as a git repository, and it's impractical to keep all the discussed data as well as all the example code in one repository--the download size alone would be impractical. In addition it wold be difficult to let multiple users add content to multiple sections. 
+
+Instead the tutorial maintains links to supporting source project repositories. For example, there may be dozens of example repositories for Java source code examples in projects that show use of sockets, DIS updates, or dead reckoning. There can be matching implementations in C++ or C# in different repositories.
+
+That's how the code that shows examples of how networking is used are presented here. Sections that have links to example implementations for specific languages are below.
+
+##### Java Code Examples
+ [Java Networking Source Code Examples](II_Networking/Java_Networking_Source_Code.md)
+
+
+##### C++ Code Examples
+
+##### Javascript Code Examples
+
 ## Summary
 
 This section has described some of the capabilities and problems inherent in TCP and UDP sockets, and the nature of Broadcast and Multicast approaches. Broadcast and Multicast are very useful in the DIS world. But at the same time no code of actual implementations was presented. The basic problem is that the code is language-specific. C++ code does not appear the same way that Java or Python or Javascript does. While this section can describe the general behavior, it does not provide specific code. 
@@ -109,23 +137,3 @@ This section has described some of the capabilities and problems inherent in TCP
 But that sort of provision is useful, and seeing actual networking programs can save a lot of time. It can also take up unreasonable amounts of disk space for users that are not immediately interested in source code, even if they eventually are. This gets even worse when you think of example projects for several languages that are inherent to an overall tutorial that is not limited to a single language.
 
 Instead, the section provides a section of links to additional source code control sites. For example, a Java project using Multicast, or a Javascript project that uses web technology, or a C++ example. The repositories linked to are not directly part of this project, but can be downloaded. Read on to find links to networking implementations. 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### UDP
-
-#### Broadcast
-#### Multicast
-
