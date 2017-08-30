@@ -1,0 +1,127 @@
+{
+ "name": "DIS 2012 PDU Structure",
+ "children": [
+ {
+   "name": "Entity Information Family",
+   "children": [
+        {"name": "Entity State PDU"},
+        {"name": "Collision PDU"},
+        {"name": "Collision-Elastic PDU"},
+        {"name": "Entity State Update PDU"},
+        {"name": "Attribute PDU"}
+   ]
+  },
+  
+  {
+   "name": "Warfare Protocol Family",
+   "children": [
+     {"name": "Firing PDU"},
+     {"name": "Detonation PDU"},
+     {"name": "Directed Energy (DE) Fire PDU"},
+     {"name": "Entity Damage Status PDU"}
+   ]
+  },
+  
+ {
+   "name": "Logistics PDU Family",
+   "children": [
+     {"name": "Service Request PDU"},
+     {"name": "Resupply Offer PDU"},
+     {"name": "Resupply Received PDU"},
+     {"name": "Resupply Cancel PDU"},
+     {"name": "Repair Complete PDU"},
+     {"name": "Repair response PDU"}
+   ]
+  },
+  
+  {
+   "name": "Simulation Management PDU Family",
+   "children": [
+     {"name": "Create Entity PDU"},
+     {"name": "Remove Entity PDU"},
+     {"name": "Start/Resume PDU"},
+     {"name": "Stop/Freeze PDU"},
+     {"name": "Acknowledge PDU"},
+     {"name": "Action Request PDU"},
+     {"name": "Action Response PDU"},
+     {"name": "Data Query PDU"},
+     {"name": "Set Data PDU"},
+     {"name": "Data PDU"},
+     {"name": "Event Report PDU"},
+     {"name": "Comment PDU"}
+   ]
+  },
+  
+  {
+   "name": "Distributed Emission Regeneration PDU Family",
+   "children": [
+     {"name": "Electromagnetic Emission (EE) PDU"},
+     {"name": "Designator PDU"},
+     {"name": "Underwater Acoustic (UA) PDU"},
+     {"name": "Identification Friend or Foe (IFF) PDU"},
+     {"name": "Supplemental Emission/Entity State (SEES) PDU"}     
+   ]
+  },
+  
+  {
+   "name": "Entity Management PDU Family",
+   "children": [
+     {"name": "Aggregate State PDU"},
+     {"name": "IsGroupOf PDU"},
+     {"name": "Transfer Ownership (TO) PDU"},
+     {"name": "IsPartOf PDU"}   ]
+  },
+  
+  {
+   "name": "Minefield PDU Family",
+   "children": [
+     {"name": "Minefield State PDU"},
+     {"name": "Minefield Query PDU"},
+     {"name": "Minefield Data PDU"},
+     {"name": "Minefield Response Negative Acknowledgment (NACK) PDU"}   ]
+  },
+  
+  {
+   "name": "Synthetic Environment PDU Family",
+   "children": [
+     {"name": "Environmental Process PDU"},
+     {"name": "Gridded Data PDU"},
+     {"name": "Point Object State PDU"},
+     {"name": "Linear Object State PDU"},
+     {"name": "Areal Object State PDU"}
+ ]
+  },
+  
+  {
+   "name": "Simulation Management with Reliability PDU Family",
+   "children": [
+     {"name": "Create Entity-R PDU"},
+     {"name": "Remove Entity-R PDU"},
+     {"name": "Start/Resume-R PDU"},
+     {"name": "Stop/Freeze-R PDU"},
+     {"name": "Acknowledge-R PDU"},
+     {"name": "Action Request-R PDU"},
+     {"name": "Data Query-R PDU"},
+     {"name": "Set Data-R PDU"},
+     {"name": "Data-R PDU"},
+     {"name": "Event Report-R PDU"},
+     {"name": "Comment-R PDU"},
+     {"name": "Record Query-R PDU"},
+     {"name": "Set Record-R PDU"},
+     {"name": "Record-R PDU"}
+     
+ ]
+  },
+  
+  {
+   "name": "Information Operations PDU Family",
+   "children": [
+     {"name": "IO Action PDU"},
+     {"name": "Information Operations (IO) Report PDU"}
+ ]
+  }
+  
+  
+ ]
+}
+

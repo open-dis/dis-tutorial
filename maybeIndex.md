@@ -44,11 +44,12 @@ I Introduction
       c. Broadcast
       d. Multicast
       e. Web-based technology
-      f. Language-specific implementations
-      	 (1) Java
-      	 (2) C++
-      	 (3) Javascript
-      g. (Reference section)
+      f. Supporting Libraries
+      g. Language-specific implementations
+      	 (1) Java Code Examples
+      	 (2) C++ Code Examples
+      	 (3) Javascript Code Examples
+      h. (Reference section)
       
  III. DIS Messages	
    0. DIS implementors (open-dis, MaK, kValue, etc)
