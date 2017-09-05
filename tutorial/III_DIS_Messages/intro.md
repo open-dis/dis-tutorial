@@ -120,3 +120,31 @@ The PDU header was originally sent with 16 bits of unused space. This was intend
 
 
 Remember, all PDUs start with the same set of fields listed above. There is a free utility called WireShark (https://www.wireshark.org/) that can be used to capture network traffic and decode the PDU fields, including the PDU header fields. 
+
+
+## Entity Families
+
+### Entity Informatin Family
+The Entity Information Family is a group of PDUs that are related to that of the position and other information about entties. They describe the location of entities, and sometimes their collision.
+
+
+#### Entity State PDU
+The entity state PDU is one of the most widely used PDUs in DIS. It includes the unique ID of the entity described, numeric values that describe the type of entity, and its position, orientation, velocity, acceleration, and the dead reckoning algorithm that should be used between the receipt of other position PDUs.
+
+#### Collision PDU
+
+#### collision-Elastic PDU
+
+#### Entity State Update PDU
+
+#### Attribute PDU
+
+### Warfare Protocol Family
+
+#### Firing PDU
+
+#### Detonation PDUD
+
+#### Directed Energy PDU
+
+#### Entity Damage Status PDU
