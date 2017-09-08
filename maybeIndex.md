@@ -52,7 +52,6 @@ I Introduction
       h. (Reference section)
       
  III. DIS Messages	
-   -1. Languages
    0. DIS implementors (open-dis, MaK, kValue, etc)
 	1. PDU byte order; syntax and semantics
 	2. PDU Header

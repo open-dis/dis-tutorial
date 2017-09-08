@@ -27,7 +27,7 @@ There are other problems. In an LVC environment, we're trying to pull together i
 
 Imagine a virtual vehicle driving through a town. The vehicle is being rendered in a game engine that's using a conventional Cartestian coordinate system that is flat and rectilinear. We're using the web as a source of position data for real items in the world, and as anyone who has used Google Maps can attest those positions are almost always described in terms of latitude, longitude, and altitude. We want to be able to look up while inside the game and see the position of a constructively simulated satellite overhead, and the position of that satellite's orbit may be described using Keplerian orbital elements. We also want to arrive at a destination that's specified in MGRS. At the same time we are shot at by a simulated artillery fire system that's 30 KM away, so the curvature of the earth can't be ignored.
 
-We're trying to integrate positions of entities that are described by multiple coordinate systems and the organizations that describe the position of things in the world don't know or care what our simulation is using as a coordinate system. The system World of Warcraft uses--a flat, rectilinear coordinate system for their entire game world--falls apart when it's integrated with data that comes from an ellipsoid-shaped world. (At least if you're not a member of the <a href="https://theflatearthsociety.org/home/">Flat Earth Society</a>.)
+We're trying to integrate positions of entities that are described by multiple coordinate systems and the organizations that describe the position of things in the world don't know or care what our simulation is using as a coordinate system. The system World of Warcraft uses--a flat, rectilinear coordinate system for their entire game world--falls apart when it is integrated with data that comes from an ellipsoid-shaped world. (At least if you're not a member of the <a href="https://theflatearthsociety.org/home/">Flat Earth Society</a>.)
 
 So what coordinate system should be used by simulations to integrate all these data sources, while also making game graphics workable?
 
@@ -43,11 +43,9 @@ It seems like an odd choice at first glance. The geocentric coordinate system is
 
 The advantage of using a geocentric coordinate system is that, with some math, we can convert it to and from other popular coordinate systems. There are equations to convert from a position described with latitude, longitude, and altitude to the geocentric coordinate system and back again. The same for the DIS coordinate system and MGRS. The approach DIS uses to to allow simulations to use any coordinate system they like internally--whatever that simulation feels is convenient--but when transmitting state information on the network, convert from that coordinate system to the DIS geocentric coordinate system. Likewise, when we receive a state update that describes the location of an entity, we have to convert from the geocentric coordinate system to whatever coordinate system we use internally. What is needed to pull this off is the math to convert between the coordinate system of convenience and the DIS geocentric coordinate system.
 
-
 #### Datums
 
 This is where it starts to get really tricky, at least for me. The geocentric coordinate system is OK, but where is the surface of the earth? The geocentric coordinate system by itself doesn't describe that. We also need a mathematical model for what the shape of the earth is. Modeling the earth as a perfectly round sphere will run into problems. 
-
 
 ### Position
 
@@ -66,7 +64,6 @@ Many simulations use a East, North, Up (ENU) mapping convention for the local co
 In this example the position of a tank entity is described in several different coordinate systems. In the local coordinate system--the coordinate system used for most physics and graphics--it's at (10, 10, 4), and that local coordinate system has its origin at latitude 43.21, longitude 78.12, at an altitude 120 meters above the geoid described by WGS-84. In geodetic coordinates the tank is at latitude 43.21, longitude 78.12 (plus a little for both, to reflect the offset from the origin) and altitude 124. In UTM it's zone 44N, 266061E, 44788172N, 124m. In DIS coordinates it's at (958506, 455637, 4344627). Each of the positions describes the same point in space using different coordinate systems, and we can (with enough math) translate between them.
 
 DIS simulations usually do all their local physics calculations and graphics displays in a local coordinate system which has been picked for the programmer's convenience. When the ESPDU is being prepared to be sent the position of the entity in the local coordinate system is transformed to the DIS global coordinate system, and then set in the ESPDU. When received by the simulation on the other side, that simulation translates from the global coordinate system to whatever its own local coordinate system is.
-
 
 ### Coordinate System Standards Problems
 
@@ -150,7 +147,6 @@ First of all, we need the postion of the entity as expressed in DIS (aka ECEF) g
 ### Tangent Planes
 
 Set up a local tanget plane
-
 
 ### Entity Local Coordinate Systems
 In addition to the global coordinate system, which are used to position entities in the real world, DIS sometimes uses a local coordinate system to describe items relative to the entity in question. A local coordinate system has its origin at the center of the entity's _bounding volume_. A bounding volume is a closed volume that completely contains the entity. If there's a tank with a complex shape, then a bounding volume might be a box large enough to completely contain the tank. It's useful for creating a computationally efficient algorithms that discover things like entity collisions, and for certain graphics calculations relating to view frustums. In the context of DIS the local coordinate system can be used to describe where, specificaly, a munition impacted on an entity.

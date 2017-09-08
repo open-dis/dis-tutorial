@@ -130,8 +130,6 @@ Remember, all PDUs start with the same set of fields listed above. There is a fr
 
 ## Entity Families
 
-
-
 ### Entity Information Family
 
 The Entity Information Family is a group of PDUs that are related to that of the position and other information about entties. They describe the location of entities, and sometimes their collision. An image of the PDUs in the family is below.
@@ -151,6 +149,8 @@ Every ESPDU starts with the PDU header, just as does every other PDU.
 
 ##### Enity ID
 Every entity handled by DIS--every vehicle, every person whose position is described, every ship, every aircraft--must have an ID to uniquely identify it. This is what the entity ID is. It is described later, butiIt consists of a triplet of three numeric values: {Site, Application, Entity}. The triplet, together, must be unique. Arriving ESPDUs decode the entity ID and use it to update the position  and orientation of the entity it is tracking.
+
+Entity ID is discussed in greater depth in Section IV: [Enity Identifiers](../IV_DIS_Issues/EntityIdentifiers.md)
 
 ##### Force ID
 
@@ -196,11 +196,9 @@ The EBV document includes SISO-defined collections of entity types. For example,
 
 This information was defined in the EBV SISO document, and is an agreed-upon, compact, and exact vocabulary for defining entity types. 
 
-
 ##### Alternate Entity Type
 
 This is exactly like an Entity Type field. However, some simulation applications also want to allow simulations to use deceptive appearances to other simulations. If an aircraft issues deceptive electronic signatures to make a fighter aircraft appear to be a civilian airliner, that is possible. The alternate entity type field holds a description of what airliner that entity is, and other simulations may present an airliner in the 3D display, rather than an F-16.
-
 
 ##### Entity Linear Velocity
 
@@ -211,6 +209,8 @@ The coordinate system used in the field varies. It could be global, with a coord
 ##### Entity Location
 
 The entity location is interesting. It uses a three-value record, X, Y, and Z, that measures the distance from the center of earth. These values can be converted to latitude, longitude, and altitude with some mathematical work, or to MGRS coordinates, or to a local coordinate system placed with its origin at a known location. It is described further in a later section.
+
+Entity Location is dicussed in more detail at [Entity Location](../IV_DIS_Issues/CoordinateSystems.md)
 
 ##### Entity orientation
 This determines which way the entity is pointing. It's a little mysterious; what defines the "front" or "up" of an entity? Still, it can often be defned. As with the location, this is described elsewhere, but is done with what are called "euler angless."
