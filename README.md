@@ -1,6 +1,9 @@
 # Distributed Interactive Simulation: The Missing Handbook
 
-Work in progress. Full of typos, not yet to first draft status, footnotes are a mess, prose is lousy, etc. 
+Work in progress. Looking at the use of the Wiki in this github; to check it out in git, do a checkout on https://github.com/open-dis/DISTutorial.wiki.git. 
+
+
+Full of typos, not yet to first draft status, footnotes are a mess, prose is lousy, etc. 
 
 by Don McGregor
 
