@@ -52,29 +52,35 @@ I Introduction
       h. (Reference section)
       
  III. DIS Messages	
-   0. DIS implementors (open-dis, MaK, kValue, etc)
 	1. PDU byte order; syntax and semantics
 	2. PDU Header
 	2. Full list of messages
 	3. discussion of each group
 	 a. Discussion of each PDU in a group
-	4. (Reference section)
+	4. DIS implementors (open-dis, MaK, kValue, etc)
+	5. (Reference section)
 
-  IV. DIS Aspects
-    Entity interaction group: ESPDU, collision, etc
-    1. ESPDU 
-    	a. Position
-    		(1) Java code
-    		(2) Javascript code
-    	b. Orientation
-    	   (1) Java code
-    		(2) Javascript code
-    		(3) C++ code
-    	c. Entity type
-    	d. Traffic minimization
-    	e. Discovery
+  IV.  DIS PDU Segment Topics
+    
+    1. SISO EBV Document
+    
+    2. Entity Header
+       a. Timestamps
+       b. PDU Family Type
+       c. PDU Type
+       
+    
+    
+    3. Entity Information
+       a. Entity Identifiers
+       b. Entity Types
+       c. Coordinate Systems 
+       d. Orientation
+       e. Dead Reckoning 
+    	f. 
+       g. Traffic minimization, bussed PDUs
+    	e. Discovery of Entities
     	f. Exit of entity
-    	g. Cabinet vs single PDU per packet
     	
     	
     2. Combat: fire and detonation

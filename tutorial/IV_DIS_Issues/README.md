@@ -6,4 +6,6 @@ The prior section gave you an idea of what was contained in a PDU, but not how t
 
 ### Entity ID
 ### Position
+### Entity Type
+### Entity State PDU example
 
