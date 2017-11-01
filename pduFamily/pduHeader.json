@@ -1,0 +1,19 @@
+{
+ "name": "PDU Header",
+ "children": [
+ {
+   "name": "Entity Information Family",
+   "children": [
+        {"name": "Protocol Version"},
+        {"name": "Excercise ID"},
+        {"name": "PDU Type"},
+        {"name": "Protocol Family"},
+        {"name": "Timestamp"},
+        {"name": "Length"},
+        {"name": "PDU Status"},
+        {"name": "Padding"}  
+   ]
+  }
+ ]
+}
+
