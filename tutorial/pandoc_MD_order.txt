@@ -15,3 +15,4 @@ III_DIS_Messages/intro.md
 IV_DIS_Issues/README.md
   IV_DIS_Issues/EntityIdentifiers.md
   IV_DIS_Issues/CoordinateSystems.md
+  IV_DIS_Issues/EntityStatePdus.md
