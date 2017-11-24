@@ -7,8 +7,9 @@ I Introduction
 	b. DIS Tutorial Purpose
 	c. Graphics
 	d. Formats and Semantics
-	e. Networking
-	f. Parting Thoughts
+	e. Networking (1278.2)
+	f. Planning and Management (1278.3)
+	g. Parting Thoughts
 2. DIS History
 3. DoD Simulation Standards
    a. DIS
