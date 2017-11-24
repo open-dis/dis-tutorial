@@ -6,7 +6,7 @@ I Introduction
 	a. DIS Background
 	b. DIS Tutorial Purpose
 	c. Graphics
-	d. Formats and Semantics
+	d. Formats and Semantics (1278.1)
 	e. Networking (1278.2)
 	f. Planning and Management (1278.3)
 	g. Parting Thoughts
