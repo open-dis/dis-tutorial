@@ -9,8 +9,13 @@ I Introduction
 	d. Formats and Semantics (1278.1)
 	e. Networking (1278.2)
 	f. Planning and Management (1278.3)
+	g. Verification, Validation, and Accreditation (VV&A), (1278.4)
 	g. Parting Thoughts
 2. DIS History
+ 	a. Formats and Semantics (1278.1)
+	b. Networking (1278.2)
+	c. Planning and Management (1278.3)
+	d. Verification, Validation, and Accreditation (VV&A), (1278.4)
 3. DoD Simulation Standards
    a. DIS
    b. HLA
