@@ -1,19 +1,18 @@
 # Distributed Interactive Simulation: The Missing Handbook
 
-Work in progress (active someday again, we hope).
-Looking at the use of the Wiki in this github; to check it out in git, do a checkout on https://github.com/open-dis/DISTutorial.wiki.git.
-Or to just read it, click on the "wiki" link at the top of the main or most other DISTutorial pages.
+## Disclaimers
 
-Everything is uncertain at this point. I'm not sure what will work and what will not. 
-The objective is to get content that can be updated by many experts, and a document structure that can help pull that off.
+1. Work in progress (active someday again, we hope). Everything is uncertain at this point. I'm not sure what will work and what will not. Full of typos, not yet to first draft status, footnotes are a mess, prose is lousy, etc. 
+1. The objective is to get content that can be updated by many experts, and a document structure that can help pull that off.
+1. Note that we are comparing the use of GitHub Wiki and GitHub Pages technologies for this tutorial. Both are in use and not in sync.
+	1. The tutorial pages kept in the Wiki can be checked out with git (do a checkout on https://github.com/open-dis/DISTutorial.wiki.git) or to just read it, click on the "Wiki" link at the top of this project.
+	1. The tutorial pages kept in the code repository are published with GitHub Pages and available to read at this address: https://open-dis.github.io/dis-tutorial/
 
-Full of typos, not yet to first draft status, footnotes are a mess, prose is lousy, etc. 
-
-by Don McGregor
+## Contents
 
 1. <a href="DIS_Background">Intro</a>
-   - DIS Background
-   - DIS History
+   	- DIS Background
+   	- DIS History
 2. <a href="DoDModelingAndSimulationStandards">DOD Modeling and Simulation Standards</a>
 	- DIS
 	- HLA
@@ -21,11 +20,11 @@ by Don McGregor
 	- What is standardized?
 	- Philosophy: partial implementations of DIS abound
 3. <a href="LiveVirtualConstructive">Live, Virtual, Constructive (LVC)</a>
-   - Example DIS applications
-      - Situational awareness: maps
-      - Simulation interoperability
-      - Virtual Worlds
-      - Analysis: Recording and Playback
+   	- Example DIS applications
+   		- Situational awareness: maps
+		- Simulation interoperability
+		- Virtual Worlds
+		- Analysis: Recording and Playback
 4. <a href="VirtualWorldIssues">Virtual World Issues</a>
    	- <a href="CoordinateSystems">Coordinate Systems</a>
    	- <A href="EntityIdentifiers">Identifiers</a>
@@ -42,16 +41,17 @@ by Don McGregor
 	- <A href="UDPSockets">UDP Socket Programming</a>
 	- <a href="EntityStatePDUs">Sending State Updates with Entity State PDUs</a>
 	- <a href="ReceivingPDUs">Receiving PDUs</a>
-   - <a href="Combat">Combat: Fire and Detonation PDUs</a>
-   - Intercom: Voice Communications
-   - Electronic Warfare
-   - <a ref="PDUBundling">Bundled PDUs</a>
+	- <a href="Combat">Combat: Fire and Detonation PDUs</a>
+	- Intercom: Voice Communications
+	- Electronic Warfare
+	- <a ref="PDUBundling">Bundled PDUs</a>
 7. A Minimal DIS Networking Example
 8. Technology
-   - Web
-      - Websockets
-      - X3D
-      - Unity
-      - WebRTC
+	- Web
+	- Websockets
+	- X3D
+	- Unity
+	- WebRTC
 9. TODO
 10. Credits
+	- Initially authored Don McGregor
