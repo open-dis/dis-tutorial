@@ -1,12 +1,11 @@
 # Distributed Interactive Simulation: The Missing Handbook
 
-Work in progress (active someday again, we hope). Looking at the use of the Wiki in this github; to check it out in git, do a checkout on https://github.com/open-dis/DISTutorial.wiki.git. Or to just read it, click on the "wiki" link at the top
-of the main or most other DISTutorial pages.
+Work in progress (active someday again, we hope).
+Looking at the use of the Wiki in this github; to check it out in git, do a checkout on https://github.com/open-dis/DISTutorial.wiki.git.
+Or to just read it, click on the "wiki" link at the top of the main or most other DISTutorial pages.
 
-Everything is uncertain at this point. I'm not sure what will work and what will not. The objective
-is to get content that can be updated by many experts, and a document structure that can help
-pull that off.
-
+Everything is uncertain at this point. I'm not sure what will work and what will not. 
+The objective is to get content that can be updated by many experts, and a document structure that can help pull that off.
 
 Full of typos, not yet to first draft status, footnotes are a mess, prose is lousy, etc. 
 
