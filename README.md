@@ -11,41 +11,41 @@ Full of typos, not yet to first draft status, footnotes are a mess, prose is lou
 
 by Don McGregor
 
-1. <a href="DIS_Background.md">Intro</a>
+1. <a href="DIS_Background">Intro</a>
    - DIS Background
    - DIS History
-2. <a href="DoDModelingAndSimulationStandards.md">DOD Modeling and Simulation Standards</a>
+2. <a href="DoDModelingAndSimulationStandards">DOD Modeling and Simulation Standards</a>
 	- DIS
 	- HLA
 	- TENA
 	- What is standardized?
 	- Philosophy: partial implementations of DIS abound
-3. <a href="LiveVirtualConstructive.md">Live, Virtual, Constructive (LVC)</a>
+3. <a href="LiveVirtualConstructive">Live, Virtual, Constructive (LVC)</a>
    - Example DIS applications
       - Situational awareness: maps
       - Simulation interoperability
       - Virtual Worlds
       - Analysis: Recording and Playback
-4. <a href="VirtualWorldIssues.md">Virtual World Issues</a>
-   	- <a href="CoordinateSystems.md">Coordinate Systems</a>
-   	- <A href="EntityIdentifiers.md">Identifiers</a>
-   	- <a href="Networks.md">Networks</a>
-   	- <a href="Timestamps.md">Timestamps</a>
-   	- <A href="DeadReckoningStateUpdate.md">Dead Reckoning: State Update Frequency</a>
-   	- <a href="DeadReckoningLatency.md">Dead Reckoning: Latency</a>
-   	- <A href="EntityType.md">Semantics (Entity Type, etc)</a>
-   	- <a href="EntityDiscovery.md">Entity Discovery</a>
-   	- <a href="Scalability.md">Scalablity</a>  
-   	- <A href="Gateways.md">Gateways</a>
-5. <a href="DISImplementations.md">DIS Implementations</a>
-6. <a href="ExchangingStateInformation.md">PDUs: Exchanging State Information</a>
-	- <A href="UDPSockets.md">UDP Socket Programming</a>
-	- <a href="EntityStatePDUs.md">Sending State Updates with Entity State PDUs</a>
-	- <a href="ReceivingPDUs.md">Receiving PDUs</a>
-   - <a href="Combat.md">Combat: Fire and Detonation PDUs</a>
+4. <a href="VirtualWorldIssues">Virtual World Issues</a>
+   	- <a href="CoordinateSystems">Coordinate Systems</a>
+   	- <A href="EntityIdentifiers">Identifiers</a>
+   	- <a href="Networks">Networks</a>
+   	- <a href="Timestamps">Timestamps</a>
+   	- <A href="DeadReckoningStateUpdate">Dead Reckoning: State Update Frequency</a>
+   	- <a href="DeadReckoningLatency">Dead Reckoning: Latency</a>
+   	- <A href="EntityType">Semantics (Entity Type, etc)</a>
+   	- <a href="EntityDiscovery">Entity Discovery</a>
+   	- <a href="Scalability.">Scalablity</a>  
+   	- <A href="Gateways">Gateways</a>
+5. <a href="DISImplementations">DIS Implementations</a>
+6. <a href="ExchangingStateInformation">PDUs: Exchanging State Information</a>
+	- <A href="UDPSockets">UDP Socket Programming</a>
+	- <a href="EntityStatePDUs">Sending State Updates with Entity State PDUs</a>
+	- <a href="ReceivingPDUs">Receiving PDUs</a>
+   - <a href="Combat">Combat: Fire and Detonation PDUs</a>
    - Intercom: Voice Communications
    - Electronic Warfare
-   - <a ref="PDUBundling.md">Bundled PDUs</a>
+   - <a ref="PDUBundling">Bundled PDUs</a>
 7. A Minimal DIS Networking Example
 8. Technology
    - Web
