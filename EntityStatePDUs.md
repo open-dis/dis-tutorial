@@ -4,7 +4,7 @@ An entity state PDU (ESPDU) represents the state of an object at one point in ti
 
 I'll use Java in these examples, and try to keep them as stripped down as possible.
 
-#### Entity State PDUs 
+#### Entity State PDUs
 
 The Javadoc for the <a href="javadoc/edu/nps/moves/dis/EntityStatePdu.html">Entity State PDU class</a>. This is a useful reference when reading the code below. Other language implementations are quite similar, and almost always have the same instance variable field names and structure.
 
@@ -31,7 +31,7 @@ import edu.nps.moves.disutil.DisTime;               // Timestamp utility
  *
  * @author DMcG
  */
-public class SimpleSender 
+public class SimpleSender
 {
     /** How many espdus to send */
     public static final int NUMBER_TO_SEND = 5000;
