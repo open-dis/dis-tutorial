@@ -1,6 +1,6 @@
 ## DIS Implementations
 
-There are a number of DIS implementations in several languages, both open source and commercial. 
+There are a number of DIS implementations in several languages, both open source and commercial.
 
 The open source implementations are free, as in "free puppy." They may have rough edges, and have lower levels of support than commercial offerings. It usually beats writing your own, though.
 
@@ -11,7 +11,7 @@ The Open-DIS language implementations were written by using an XML document that
 
 ~~~~
 <class name="Vector3Double" inheritsFrom="root" comment="Three double precision floating point values, x, y, and z. Used for world coordinates Section 6.2.97.">
-  
+
   <attribute name="x" comment = "X value">
     <primitive type="double"/>
   </attribute>
@@ -34,11 +34,11 @@ KDIS is an open source C++ implementation of DIS in C++. It's available from sou
 
 ### RedSim
 
-<a href="http://www.redsim.com/">RedSim</a> is a commercial company that sells DIS tools. 
+<a href="http://www.redsim.com/">RedSim</a> is a commercial company that sells DIS tools.
 
 ### MaK
 
-<a href="http://www.mak.com/products/link/vr-link">Måk Technologies</a> sells a "VR-Link" product that provides an API that can handle either DIS or HLA. 
+<a href="http://www.mak.com/products/link/vr-link">Måk Technologies</a> sells a "VR-Link" product that provides an API that can handle either DIS or HLA.
 
 ### Partial Implementations
 
