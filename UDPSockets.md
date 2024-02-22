@@ -10,7 +10,7 @@ Broadcast can create some issues. I'll describe a couple scenarios. The first on
 
 #### The Default Broadcast Solution
 
-In the old days Unix workstations typically had two IPv4 network interfaces:  the loopback interface, lo0 or the like, that had an IP address of 127.0.0.1 associated with it, and an ethernet interface, often en0, that had a public IP address associated with it, such as 172.20.81.4. When you created a UDP socket it "bound" to both IPs via "INADDRANY" or the special IP address 0.0.0.0, meaning the socket was associated with both the 127.0.0.1 and 172.20.81.4 IP addresses. The socket could *listen* for incoming messages on both IPs. When you *sent* a datagram to the special, reserved address "255.255.255.255" it would be sent on all IPs on which the host is bound.
+In the old days Unix workstations typically had two IPv4 network interfaces: the loopback interface, lo0 or the like, that had an IP address of 127.0.0.1 associated with it, and an ethernet interface, often en0, that had a public IP address associated with it, such as 172.20.81.4. When you created a UDP socket it "bound" to both IPs via "INADDRANY" or the special IP address 0.0.0.0, meaning the socket was associated with both the 127.0.0.1 and 172.20.81.4 IP addresses. The socket could *listen* for incoming messages on both IPs. When you *sent* a datagram to the special, reserved address "255.255.255.255" it would be sent on all IPs on which the host is bound.
 
 There's been inconsistent behavior on TCP/IP implementations, though. Often in practice the message would go out over only one interface, as determined by the routing table of the host machine. This was the default IP address, very often the last interface brought up, usually en0. Because there was only one interface, it almost always worked. This is in fact probably the approach you should start out with: create a socket on INADDR_ANY, which binds it to all IPs; send to the broadcast address 255.255.255.255, which should send it out on the default IP address. This sometimes fails, though; some smart network switch ports will disallow it for security reasons. It's better to explictly state the broadcast address to use.
 
@@ -38,10 +38,9 @@ catch(Exception e)
     System.out.println(e);
     System.exit(-1);
 }
-
 ~~~~
 
-This creates a datagram socket (in Java, multicast sockets are subclasses of datagram sockets), then creates an entity state PDU with default field values, marshals it to DIS format. The resulting data is placed into a datagram with a destination address of 255.255.255.255 and a destination port of 3000, then sent.  The hosts' routing tables will pick the network interface the message goes out on; it will be the default route, typically the IP associated with en0. Network programming geeks will frown at the use of 255.255.255.255, and the network switch port the host is plugged into may disallow the packet in some instances, but odds are it will work. The advantage is that you don't have to customize or configure this code to work at a specific site's network configuration settings.
+This creates a datagram socket (in Java, multicast sockets are subclasses of datagram sockets), then creates an entity state PDU with default field values, marshals it to DIS format. The resulting data is placed into a datagram with a destination address of 255.255.255.255 and a destination port of 3000, then sent. The hosts' routing tables will pick the network interface the message goes out on; it will be the default route, typically the IP associated with en0. Network programming geeks will frown at the use of 255.255.255.255, and the network switch port the host is plugged into may disallow the packet in some instances, but odds are it will work. The advantage is that you don't have to customize or configure this code to work at a specific site's network configuration settings.
 
 #### Pick a Broadcast Address
 
@@ -51,40 +50,40 @@ On modern hosts there are often many interfaces: loopback, a wired interface, a 
 mcgredo:> ifconfig
 lo0: flags=8049<UP,LOOPBACK,RUNNING,MULTICAST> mtu 16384
 	options=3<RXCSUM,TXCSUM>
-	inet6 ::1 prefixlen 128 
-	inet 127.0.0.1 netmask 0xff000000 
-	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1 
+	inet6 ::1 prefixlen 128
+	inet 127.0.0.1 netmask 0xff000000
+	inet6 fe80::1%lo0 prefixlen 64 scopeid 0x1
 	nd6 options=1<PERFORMNUD>
 gif0: flags=8010<POINTOPOINT,MULTICAST> mtu 1280
 stf0: flags=0<> mtu 1280
 en0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
-	ether c8:e0:eb:18:e0:bb 
+	ether c8:e0:eb:18:e0:bb
 	inet 172.20.144.41 netmask 0xfffff000 broadcast 172.20.159.255
 	media: autoselect
 	status: active
 en1: flags=963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX> mtu 1500
 	options=60<TSO4,TSO6>
-	ether 32:00:1b:af:22:c0 
+	ether 32:00:1b:af:22:c0
 	media: autoselect <full-duplex>
 	status: inactive
 en2: flags=963<UP,BROADCAST,SMART,RUNNING,PROMISC,SIMPLEX> mtu 1500
 	options=60<TSO4,TSO6>
-	ether 32:00:1b:af:22:c1 
+	ether 32:00:1b:af:22:c1
 	media: autoselect <full-duplex>
 	status: inactive
 p2p0: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 2304
-	ether 0a:e0:eb:18:e0:bb 
+	ether 0a:e0:eb:18:e0:bb
 	media: autoselect
 	status: inactive
 awdl0: flags=8943<UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST> mtu 1484
-	ether 8a:7e:8b:1f:f9:12 
-	inet6 fe80::887e:8bff:fe1f:f912%awdl0 prefixlen 64 scopeid 0x8 
+	ether 8a:7e:8b:1f:f9:12
+	inet6 fe80::887e:8bff:fe1f:f912%awdl0 prefixlen 64 scopeid 0x8
 	nd6 options=1<PERFORMNUD>
 	media: autoselect
 	status: active
 bridge0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 	options=63<RXCSUM,TXCSUM,TSO4,TSO6>
-	ether ca:e0:eb:81:b5:00 
+	ether ca:e0:eb:81:b5:00
 	Configuration:
 		id 0:0:0:0:0:0 priority 0 hellotime 0 fwddelay 0
 		maxage 0 holdcnt 0 proto stp maxaddr 100 timeout 1200
@@ -98,13 +97,13 @@ bridge0: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 	media: <unknown type>
 	status: inactive
 utun0: flags=8051<UP,POINTOPOINT,RUNNING,MULTICAST> mtu 1500
-	inet6 fe80::6cd0:cfdd:802e:b598%utun0 prefixlen 64 scopeid 0xa 
+	inet6 fe80::6cd0:cfdd:802e:b598%utun0 prefixlen 64 scopeid 0xa
 	nd6 options=1<PERFORMNUD>
 vmnet1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
-	ether 00:50:56:c0:00:01 
+	ether 00:50:56:c0:00:01
 	inet 192.168.214.1 netmask 0xffffff00 broadcast 192.168.214.255
 vmnet8: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
-	ether 00:50:56:c0:00:08 
+	ether 00:50:56:c0:00:08
 	inet 192.168.60.1 netmask 0xffffff00 broadcast 192.168.60.255
 ~~~~
 
@@ -155,7 +154,7 @@ while(interfaces.hasMoreElements()
   if(anInterface.isLoopback())
     continue;
 
-  // Each interface may have several IPv4 addresses. Walk each of those, 
+  // Each interface may have several IPv4 addresses. Walk each of those,
   // determining the bcast address for each
   for(InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses() )
   {
