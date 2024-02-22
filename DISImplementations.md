@@ -12,7 +12,7 @@ The Open-DIS language implementations were written by using an XML document that
 ~~~~
 <class name="Vector3Double" inheritsFrom="root" comment="Three double precision floating point values, x, y, and z. Used for world coordinates Section 6.2.97.">
 
-  <attribute name="x" comment = "X value">
+  <attribute name="x" comment="X value">
     <primitive type="double"/>
   </attribute>
 
@@ -42,5 +42,5 @@ KDIS is an open source C++ implementation of DIS in C++. It's available from sou
 
 ### Partial Implementations
 
-There's a long history in DIS of providing implementatations of only the PDUs one actually makes use of, often home-grown. It's not that difficult to write five or so PDUs, so you often see someone just write it and include it as an element of their project.
+There's a long history in DIS of providing implementations of only the PDUs one actually makes use of, often home-grown. It's not that difficult to write five or so PDUs, so you often see someone just write it and include it as an element of their project.
 
