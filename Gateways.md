@@ -9,7 +9,7 @@ On the other hand if the simulations depend on some intrinsic value of the tanks
 
 Considerable work has been done on gateways. See Lutz & Co.  Some popular gateways include Joint Simulation Bus (JBUS) and AIME from NAVAIR. AIME is only somewhat incidentally a gateway. It's intent is to be a common API that hides the type of protocol being used, be it DIS or HLA. It just happens that it can be repurposed into a gateway.
 
-###Further Reading
+### Further Reading
 
 The John Hopkins site with an archive of gateway papers: <a href="https://msenterprise.jhuapl.edu/drupal/?q=node/39">JHU</a>
 
