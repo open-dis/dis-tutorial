@@ -8,56 +8,56 @@ import edu.nps.moves.disutil.*;
 import edu.nps.moves.dis.*;
 
 /**
- * Receives DIS PDUs and converts them to Java objects. 
+ * Receives DIS PDUs and converts them to Java objects.
  *
  * @author DMcG
  */
-public class SimpleReceiver 
+public class SimpleReceiver
 {
-    
+
     /** Port we listen on */
     public static final int DIS_PORT = 3000;
-    
+
     /** Broadcast Address. THIS IS SITE-SPECIFIC.  */
     public static final String BROADCAST_ADDRESS = "172.20.159.255";
-    
+
 /** Entry point */
 public static void main(String args[])
 {
     /** The PDUFactory object converts a binary DIS-format message to a Java object */
     PduFactory factory = new PduFactory();
-    
+
     // mcast sockets are subclasses of datagram sockets
     MulticastSocket socket = null;
-         
+
     // Set up a socket to receive data
     try
-    {           
+    {
         socket = new MulticastSocket(DIS_PORT);
-        
+
         while(true)
         {
            byte[] data = new byte[8000];
            packet = new DatagramPacket(data, data.length);
-           
+
            socket.receive(packet);
-           
+
            byte[] payload = packet.getData();
            Pdu aPdu = factory.createPdu(payload);
-           
+
            // This could be any type of PDU, including ESPDU, fire, detonate, etc.
            System.out.println("Got PDU of type " + aPdu.getPduType());
-           
+
            switch(aPdu.getPduType())
            {
               case 1:
                  EntityStatePdu espdu = (EntityStatePdu)aPdu;
                  break;
-                 
+
               case 2:
                   FirePdu firePdu = (FirePdu)aPdu;
                   break;
-                 
+
                // ... and so on for each PDU type
               default:
                  System.out.println("Unrecognized PDU type");

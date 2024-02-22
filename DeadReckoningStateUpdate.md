@@ -4,7 +4,7 @@ Dead reckoning is a technique that can make informed guesses about the location 
 
 Imagine an entity moving in a straight line at a constant velocity. The entity is owned by one particular simulation in a networked virtual environent. Its state--for example, its position--is changing, and we need to inform other participating simulations in the NVE about the change in dynamic state information. In addition it takes time for the state update to be sent from the application that controls the entity to our application.
 
-The entity is experiencing constant changes to its shared, dynamic state. How can we make the other participating simulations closely match the entity's state as it changes? 
+The entity is experiencing constant changes to its shared, dynamic state. How can we make the other participating simulations closely match the entity's state as it changes?
 
 ### Why
 
@@ -14,7 +14,7 @@ Notice that there are two basic problems that are addressed by dead reckoning: h
 
 A simulation participating in a NVE strives to match its visual display to the that of the simulation's other participants. The simulation that owns the entity discussed above sends out updates, but those updates occur at discrete time intervals. If they are sent once a second and we use no other measures to hide this fact on the receiving side, that means the entity's position in other applications will appear to do "hyperspace jumps" from the old position to the new position every second--if the entity's postion has changed by 10 meters in one second, the entity may appear to move in 10 meter jumps, once a second. This may or may not be significant, depending on the circumstances. Large hyperspace jumps are distracting if the application is a virtual environment, where the sine qua non is the creation of a sense of realistic, shared presence. If the entity is moving slowly and the hyperspace jumps are small the user might not even notice them. If the application is a map-based and the scale of the map is large enough the user might not be distracted by position jumps of even hundreds of meters.  In addition users of map applications have more forgiving expectations about display update changes; the hyperspace jumps on a map don't take them out of the sense of presence in the way they would if they occurred in a virtual environment. As programmers we can exploit the low expectations the users have of map displays. In the end, the significance of the simulation's display update rate depends on the training objectives of the simulation and the expectations of the users.
 
-Still, in many applications, particularly virtual environments, we want to limit the update frequency artifacts apparent to the user. For our entity moving in a straight line at a constant velocity one possiblity is for the simulation that owns the entity to simply send out more frequent updates. Instead of sending out a update for the entity's position once a second, we can send out updates once every 30th of a second, and the entity will be animated more smoothly. There are some drawbacks to this approach. 
+Still, in many applications, particularly virtual environments, we want to limit the update frequency artifacts apparent to the user. For our entity moving in a straight line at a constant velocity one possiblity is for the simulation that owns the entity to simply send out more frequent updates. Instead of sending out a update for the entity's position once a second, we can send out updates once every 30th of a second, and the entity will be animated more smoothly. There are some drawbacks to this approach.
 
 First of all, bandwidth. We have just increased the bandwidth used for updates for each entity by a factor of 30. This might not be terrible in some instances. In DIS an entity state PDU has a minimum payload of 144 bytes plus 28 bytes of network overhead, so our bandwidth use increased from 172 bytes/second to over 5K bytes/sec. This isn't so bad in a typical wired network that has 100 mbit/sec ethernet, but if a NVE has a thousand entities it starts to become a factor. It's also a factor if we are using DIS as a constructive simulation protocol for a corps-sized unit with thousands of entities.
 
@@ -24,25 +24,25 @@ Receiving a UDP packets at a high rate is a computationally time-consuming affai
 
 The brute force approach also means we have to decode more packets and do the processing associated with applying the updates to the system, and this increases CPU load. When going from one update message per second to 30 per second we now have to decode an extra 29 messages per second, which usually involves memory copies and other operations. In production virtual environments the designers often have CPU budget allocations for different aspects of the system--so much for AI, so much for graphics and physics, and a much smaller amount for network operations.  Networking will almost always get the short end of the stick in budget allocation debates because designers would rather spend the cycles on spiffy in-game physics rather than parsing network messages.
 
-For all these reasons a pure brute force approach is not realistic for anything other than small virtual environments. It can have its place, but in larger NVEs it's not a practical approach. 
+For all these reasons a pure brute force approach is not realistic for anything other than small virtual environments. It can have its place, but in larger NVEs it's not a practical approach.
 
 ### Dead Reckoning to Reduce Traffic
 
-An alternative approach for our hypothetical entity moving in a straight line is to use dead reckoning to make guesses about the location of entities. If we send state updates once a second we can, on the receiving side, interprolate the position of the entity based on its velocity. The DIS entity state PDU includes a field for entity velocity, so the most recent ESPDU received has enough information to allow us to calculate this. 
+An alternative approach for our hypothetical entity moving in a straight line is to use dead reckoning to make guesses about the location of entities. If we send state updates once a second we can, on the receiving side, interprolate the position of the entity based on its velocity. The DIS entity state PDU includes a field for entity velocity, so the most recent ESPDU received has enough information to allow us to calculate this.
 
 We receive an update at t=0 for an entity moving north at 10 m/s (a little over 20 mph). At a frequency we choose--perhaps 30 per second--we can run our dead reckoning algorithm to guess where the location of the entity is. In our case, we will move the entity 0.3 m north, about a foot, at every tick of the algorithm. The math in the DR algorithm is fairly efficient, at least more so than the other alternative, receiving and processing UDP packets.
 
-This is all fine and good. But this all assumes that the location and velocity alone provides a pretty good guess for where the entity is located between receiving state updates. What if that's not such a good guess? What if the entity is accelerating, for example? What we want is several different algorithms that can provide different approaches for making guess depending on the nature of the entity's behavior.  DIS entity state PDUs allows the owner of the entity--the applicaiton sending updates--to specify what algorithm the receiver should use. The owner of the entity usually has excellent information about what DR algorithm is reasonable, and the DeadReckoningParameters record of the Entity State PDU contains an "deadReckoningAlgorithm" enumeration field. When the application that owns the entity puts out a state update it specifies what DR algorithm recipients should  use, and includes the information needed, such as velocity and acceleration, in the PDU. 
+This is all fine and good. But this all assumes that the location and velocity alone provides a pretty good guess for where the entity is located between receiving state updates. What if that's not such a good guess? What if the entity is accelerating, for example? What we want is several different algorithms that can provide different approaches for making guess depending on the nature of the entity's behavior.  DIS entity state PDUs allows the owner of the entity--the applicaiton sending updates--to specify what algorithm the receiver should use. The owner of the entity usually has excellent information about what DR algorithm is reasonable, and the DeadReckoningParameters record of the Entity State PDU contains an "deadReckoningAlgorithm" enumeration field. When the application that owns the entity puts out a state update it specifies what DR algorithm recipients should  use, and includes the information needed, such as velocity and acceleration, in the PDU.
 
 The values in the table below map to the alogrithm to be used. For example if the PDU specifies DR algorithm 2, the recipient should use simple velocity-only DR.
 
 <img src="images/DeadReckoningAlgorithms.jpg">DeadReckoningAlgorithms.jpg</img>
 
-If the value "1" is seen in the field, the entity should not be dead reckoned at all. Dead reckoning is not computationally free, and if the entity is not moving it makes sense to tell the receiver to simply not perform the computations. 
+If the value "1" is seen in the field, the entity should not be dead reckoned at all. Dead reckoning is not computationally free, and if the entity is not moving it makes sense to tell the receiver to simply not perform the computations.
 
-Dead Reckoning algorithms 2 through 5 are mostly straight forward applications of Newtonian mechanics. 
+Dead Reckoning algorithms 2 through 5 are mostly straight forward applications of Newtonian mechanics.
 
-DR algorithm two uses only velocity to guess the location of the entity. DR algorithm three expands the kinematic information used in DR to angular velocity, which allows the receiver to guess the entity's orientation as well. DR algorithm four expands this further to linear accleration. DR algorithm five uses linear velocity and acceleration, with no angular components. 
+DR algorithm two uses only velocity to guess the location of the entity. DR algorithm three expands the kinematic information used in DR to angular velocity, which allows the receiver to guess the entity's orientation as well. DR algorithm four expands this further to linear accleration. DR algorithm five uses linear velocity and acceleration, with no angular components.
 
 ### A Perfect Circle
 
@@ -71,7 +71,7 @@ So what do we do in this case? Basically, we lie to the user. A key part of viru
 
 ## Summary
 
-Dead reckoning is a useful technique that can reduce the number of state updates sent on the network. Instead of trying to animate entity movement using only state updates, we can instead use DR. This reduces the traffic, and reduces the CPU load on the simulation participants, and may well reduce the number of UDP packets dropped by the network. 
+Dead reckoning is a useful technique that can reduce the number of state updates sent on the network. Instead of trying to animate entity movement using only state updates, we can instead use DR. This reduces the traffic, and reduces the CPU load on the simulation participants, and may well reduce the number of UDP packets dropped by the network.
 
 ###Further Reading:
 

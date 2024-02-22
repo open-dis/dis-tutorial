@@ -1,6 +1,6 @@
 ##Networks
 
-Distributed simulations must exchange state information, and almost always they will do that across a TCP/IP network. Networking, like graphics, is an academic subject unto itself. At best we can give a brief overview of the topic. 
+Distributed simulations must exchange state information, and almost always they will do that across a TCP/IP network. Networking, like graphics, is an academic subject unto itself. At best we can give a brief overview of the topic.
 
 HLA and TENA try to hide the ugly details of networking under software abstractions. DIS makes no such attempt. It is expected that programmers will be able to open TCP/IP sockets to send and receive information. Some DIS software distributions may also attempt to abstract away networking details, but this is far from guaranteed.
 
@@ -10,11 +10,11 @@ One popular block diagram to the TCP/IP stack is shown below:
 
 <img src="images/TCPIP.jpg">
 
-The application layer is where DIS implementations live. The terminology is sometimes confusing to networking newcomers. The definition of "application" is expansive in TCP/IP, and includes all the code provided by the developer, including graphics, physics, and interpreting and creating network messages. DIS clearly falls into the "application" layer. 
+The application layer is where DIS implementations live. The terminology is sometimes confusing to networking newcomers. The definition of "application" is expansive in TCP/IP, and includes all the code provided by the developer, including graphics, physics, and interpreting and creating network messages. DIS clearly falls into the "application" layer.
 
-In practice DIS is often provided as a compiled library that is linked into an application. The application's programmer may never see the code that parses or creates DIS messages. 
+In practice DIS is often provided as a compiled library that is linked into an application. The application's programmer may never see the code that parses or creates DIS messages.
 
-Everything below the application layer is usually provided by the operating system. 
+Everything below the application layer is usually provided by the operating system.
 
 There are two types of sockets portrayed in the block diagram: TCP sockets and UDP sockets. These two types of sockets optimize for different types of applications.
 
@@ -41,8 +41,8 @@ These all sound like positive qualities, but there are some hidden issues. Suppo
 
 UDP sockets also allow the transfer of arbitrary binary data between hosts, but they relax the four rules of TCP sockets discussed above. This means that messages from the network may be dropped, or arrive out of order, or be duplicates of prior messages. There is no attempt at rate-limiting, which means that without attention to detail the sender can overwhelm the receiver.
 
-UDP sockets also allow the important capabilities of broadcast and multicast. TCP sockets can transmit messages to only one host at a time. If there are ten cooperating hosts in a simulation, a single state update would have to be sent nine times, once to each of the other nine hosts. Broadcast, available only in UDP, allows a message to be sent once, and received by all other partipants. Multicast is a more sophisticated version of broadcast, which allows a message to be sent only to a specified subset of hosts rather than all of them. Both broadcast and multicast are important tools for implementing scalability. 
+UDP sockets also allow the important capabilities of broadcast and multicast. TCP sockets can transmit messages to only one host at a time. If there are ten cooperating hosts in a simulation, a single state update would have to be sent nine times, once to each of the other nine hosts. Broadcast, available only in UDP, allows a message to be sent once, and received by all other partipants. Multicast is a more sophisticated version of broadcast, which allows a message to be sent only to a specified subset of hosts rather than all of them. Both broadcast and multicast are important tools for implementing scalability.
 
 ### In DIS
 
-When DIS was developed broadcast was expected to be the typical transport mechanism, and this convention has largely been carried over. DIS applications often listen on UDP port 3000 for DIS messages. More modern applications use multicast UDP sockets. 
+When DIS was developed broadcast was expected to be the typical transport mechanism, and this convention has largely been carried over. DIS applications often listen on UDP port 3000 for DIS messages. More modern applications use multicast UDP sockets.

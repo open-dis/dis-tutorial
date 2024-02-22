@@ -3,7 +3,7 @@
 ### Entity Type
 When we receive an entity state PDU, how do we know what type of entity is being described? Is it a tank? An aircraft? How should we render it on the screen?
 
-In DIS this problem was solved by using a record that contains a number of numeric fields. The values of the fields are arbitrary, but all simulations need to agree on their meaning. SISO maintains a document, the Enumerated and Bit-Encoded Values (EBV) document that maps these arbitrary numbers to semantic meanings. 
+In DIS this problem was solved by using a record that contains a number of numeric fields. The values of the fields are arbitrary, but all simulations need to agree on their meaning. SISO maintains a document, the Enumerated and Bit-Encoded Values (EBV) document that maps these arbitrary numbers to semantic meanings.
 
 Below is an entity type record that semanticaly describes a US M1A2 tank. Whenever this collection of values is encountered, we know that the entity being referred to is an M1A2 tank.
 
@@ -59,13 +59,13 @@ SISO maintains the EBV document in an XML format. Programmers can download it, t
 
 In theory, all simulations respect the values listed in the EBV document. Reality falls short of theory.
 
-No simulation implements all the entity types and munitions listed in the EBV document. It is simply impractical for a simulation to implement every one of the thousands of vehicles and munitions listed, so application authors write code to handle only the weapons they are likely to encounter. So what should happen if an ESPDU arrives, and has an entity type field that we do not recognize? 
+No simulation implements all the entity types and munitions listed in the EBV document. It is simply impractical for a simulation to implement every one of the thousands of vehicles and munitions listed, so application authors write code to handle only the weapons they are likely to encounter. So what should happen if an ESPDU arrives, and has an entity type field that we do not recognize?
 
-It's possible that the receiving application will simply discard the ESPDU for an entity that it does not recognize. If the simulation models tanks and we receive an ESPDU that describes a ship, it may be reasonable to simply discard the ESPDU; the authors make no attempt to display ships. 
+It's possible that the receiving application will simply discard the ESPDU for an entity that it does not recognize. If the simulation models tanks and we receive an ESPDU that describes a ship, it may be reasonable to simply discard the ESPDU; the authors make no attempt to display ships.
 
 For other types of applications we may use a gateway. If we receive an ESPDU for a Russian BMP-3 IFV but can only display BMP-1 vehicles, it may make sense to set up a gateway that isolates the application from the direct network traffic of most other simulations, but also converts BMP-3 to BMP-1 ESPDUs before forwarding them to us. Obviously, this will not work unless we recognize the problem exists beforehand and configure the gateway accordingly. This may well be rational and reasonable. There are other potential problems such as when we are puzzled that the weapon we fire at the BMP-1 with has no effect. But it may still be a reasonable solution.
 
-The EBV document has also evolved over time, and military simulations have very long product life cycles. This means that a simulation written in 1998 may interact with a simulation written in 2015, and in the intervening years new weapons have been added to the EBV document. The SISO group responsible for the EBV document tries hard for backwards compatibility, but a 1998 simulation handling 2015 weapons that the newer simulation is referring to is a different matter. 
+The EBV document has also evolved over time, and military simulations have very long product life cycles. This means that a simulation written in 1998 may interact with a simulation written in 2015, and in the intervening years new weapons have been added to the EBV document. The SISO group responsible for the EBV document tries hard for backwards compatibility, but a 1998 simulation handling 2015 weapons that the newer simulation is referring to is a different matter.
 
 Sometimes simulation authors simply make up the enumerated values for entity and munition types. They expect to work only with their own simulation, and this approach works well enough at the time. A few years down the road it is discovered that they need to work with other simulations, and suddenly the semantic meaning of entity type records is no longer certain. Does the entity type that comes from a simulation with a made-up enumeration values represent an entity from the EBV document, or some private semantic meaning known only to the simulation author?
 
