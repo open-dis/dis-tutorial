@@ -34,7 +34,7 @@
 	- <a href="DeadReckoningLatency">Dead Reckoning: Latency</a>
 	- <A href="EntityType">Semantics (Entity Type, etc)</a>
 	- <a href="EntityDiscovery">Entity Discovery</a>
-	- <a href="Scalability.">Scalablity</a>  
+	- <a href="Scalability">Scalablity</a>  
 	- <A href="Gateways">Gateways</a>
 1. <a href="DISImplementations">DIS Implementations</a>
 1. <a href="ExchangingStateInformation">PDUs: Exchanging State Information</a>
