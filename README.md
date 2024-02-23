@@ -2,7 +2,7 @@
 
 ## Disclaimers
 
-1. Work in progress (active someday again, we hope). Everything is uncertain at this point. I'm not sure what will work and what will not. Full of typos, not yet to first draft status, footnotes are a mess, prose is lousy, etc. 
+1. Work in progress (active someday again, we hope). Everything is uncertain at this point. I'm not sure what will work and what will not. Full of typos, not yet to first draft status, footnotes are a mess, prose is lousy, etc.
 1. The objective is to get content that can be updated by many experts, and a document structure that can help pull that off.
 1. Note that we are comparing the use of GitHub Wiki and GitHub Pages technologies for this tutorial. Both are in use and not in sync.
 	1. The tutorial pages kept in the Wiki can be checked out with git (do a checkout on https://github.com/open-dis/DISTutorial.wiki.git) or to just read it, click on the "Wiki" link at the top of this project.
@@ -34,7 +34,7 @@
 	- <a href="DeadReckoningLatency">Dead Reckoning: Latency</a>
 	- <A href="EntityType">Semantics (Entity Type, etc)</a>
 	- <a href="EntityDiscovery">Entity Discovery</a>
-	- <a href="Scalability.">Scalablity</a>  
+	- <a href="Scalability">Scalablity</a>
 	- <A href="Gateways">Gateways</a>
 1. <a href="DISImplementations">DIS Implementations</a>
 1. <a href="ExchangingStateInformation">PDUs: Exchanging State Information</a>

@@ -56,7 +56,7 @@ I Introduction
       	 (2) C++ Code Examples
       	 (3) Javascript Code Examples
       h. (Reference section)
-      
+
  III. DIS Messages	
 	1. PDU byte order; syntax and semantics
 	2. PDU Header
@@ -67,23 +67,23 @@ I Introduction
 	5. (Reference section)
 
   IV.  DIS PDU Segment Topics
-    
+
     1. SISO EBV Document
-    
+
     2. Entity Header
        a. Timestamps
        b. PDU Family Type
        c. PDU Type
-       
-    
-    
+
+
+
     3. Entity Information
        a. Entity Identifiers
        b. Entity Types
-       c. Coordinate Systems 
+       c. Coordinate Systems
        d. Orientation
-       e. Dead Reckoning 
-    	f. 
+       e. Dead Reckoning
+    	f.
        g. Traffic minimization, bussed PDUs
     	e. Discovery of Entities
     	f. Exit of entity

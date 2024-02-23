@@ -1,6 +1,6 @@
-##Scalablity
+## Scalablity
 
-How many participants can we have in a DIS simulation? Two or three entities is useful for teaching applications. As soon as we can get a small NVE to work we immediately start to think about just how large of a virtual world we can handle. 
+How many participants can we have in a DIS simulation? Two or three entities is useful for teaching applications. As soon as we can get a small NVE to work we immediately start to think about just how large of a virtual world we can handle.
 
 Scalability can be important for some military applications, though not all. If we're trying to train for indirect fire procedures then being able to handle only a few participants at the same time may be fine. Often virtual simulations such as flight simulators or vehicle trainers don't need large numbers of participants because the usefulness of the virtual aspect is limited to those entities that can be directly viewed by a person. We don't necessarily need the virtual simulation to simultaneously display 10,000 entities in a user's field of view. Even if the entire virtual world is large, a single user might have to interact with a few dozen entities at any given moment.
 
@@ -8,49 +8,49 @@ A US Army combat brigade may have thousands of vehicles, and we can usefully dis
 
 Entity-based corps or theater level simulations can have tens or hundreds of thousands of entities. What is the practical limit for the size of an entity-based, distributed simulation?
 
-###Massively Multiplayer Games
+### Massively Multiplayer Games
 
-There are some analogs to large military simulations in the entertainment industry, namely Massively Multiplayer Online Games (MMOGs) such as World of Warcraft, EVE Online, or No Man's Sky. MMOGs and games in general use many of the same technolgies as distributed military simulations. In fact, the line between games and training simulations is blurred in the category called "serious games." The main aspect that distinguishes games from simualation is the intent of the application; the technolgies used, including distributed virtual environments, use almost exactly the same underlying technologies. 
+There are some analogs to large military simulations in the entertainment industry, namely Massively Multiplayer Online Games (MMOGs) such as World of Warcraft, EVE Online, or No Man's Sky. MMOGs and games in general use many of the same technolgies as distributed military simulations. In fact, the line between games and training simulations is blurred in the category called "serious games." The main aspect that distinguishes games from simualation is the intent of the application; the technolgies used, including distributed virtual environments, use almost exactly the same underlying technologies.
 
 MMOGs are an interesting topic but out of scope for this discussion. DoD is effectively restricted to using established military standards, and strives to _not_ use clever but non-standard commercial approaches. The commercial world is notorious for game engines and software frameworks that lose their support after a few years as developers move on to the newer, shinier bauble. Interoperability and stability of the code base over a period of decades is usually more important to DoD than sheer scalability. The good news is that the entertainment industry has shown NVEs can scale to large size; the bad news is that the longevity and amenability to standards agreements is questionable. We simply can't have simulations that are one-offs in  which the technology becomes obsolete in five years.
 
-Still, MMOG's are clearly the technology leader in the market segment, and game companies spend more than a large military simulation program does to develop a class A title. Rolling out a new and large MMOG game like World of Warcraft may cost hundreds of millions of dollars in game artwork, programming, and servers, and they are quite good at it. 
+Still, MMOG's are clearly the technology leader in the market segment, and game companies spend more than a large military simulation program does to develop a class A title. Rolling out a new and large MMOG game like World of Warcraft may cost hundreds of millions of dollars in game artwork, programming, and servers, and they are quite good at it.
 
-See the "Further Reading" section for some details on the technologies the entertainment companies are using. 
+See the "Further Reading" section for some details on the technologies the entertainment companies are using.
 
-####Networking
+#### Networking
 
 One of the central problems to solve in a large NVE is keeping state updates down to a reasonable level. If too many state updates are sent we can flood the network or overwhelm the ability of a host to receive, parse, and process state updates.
 
-####Unicast
+#### Unicast
 
-Unicast socket state updates--in which a message containing a state update is sent to a single host--is the least scalable way to distribute state across hosts. 
+Unicast socket state updates--in which a message containing a state update is sent to a single host--is the least scalable way to distribute state across hosts.
 
-Start with a NVE that has three participating hosts, each controlling a single entity. A state update for the entity each host owns needs to be sent twice. Each of the other hosts needs to do the same thing, so total traffic on the network is M(3-1) * 3, where M is the message size. As we increase the number of hosts the traffic goes up accordingly, generalized for the network as a whole as M(N-1) * N. You'll notice that if you simplify this there's an N^2 term, meaning the bandwidth use goes up with the square of the number of participants. That's a bad outcome. As N starts getting bigger the product of our equation starts getting bigger very fast. 
+Start with a NVE that has three participating hosts, each controlling a single entity. A state update for the entity each host owns needs to be sent twice. Each of the other hosts needs to do the same thing, so total traffic on the network is M(3-1) * 3, where M is the message size. As we increase the number of hosts the traffic goes up accordingly, generalized for the network as a whole as M(N-1) * N. You'll notice that if you simplify this there's an N^2 term, meaning the bandwidth use goes up with the square of the number of participants. That's a bad outcome. As N starts getting bigger the product of our equation starts getting bigger very fast.
 
-####Broadcast
+#### Broadcast
 
-Broadcast is way to avoid the N^2 term that crops up in unicast. UDP broadcast allows a host to send a single message that will be received by every host on the network. Instead of sending N-1 state updates, we only have to send one. 
+Broadcast is way to avoid the N^2 term that crops up in unicast. UDP broadcast allows a host to send a single message that will be received by every host on the network. Instead of sending N-1 state updates, we only have to send one.
 
-Broadcast has some limitations. Broadcast messages don't travel off the network the host is on; routers should drop a broadcast packet and not forward it off-network. This means broadcast is useful primarily in a lab environment in which the hosts are co-located, and not so much in a geographically distributed simulation. 
+Broadcast has some limitations. Broadcast messages don't travel off the network the host is on; routers should drop a broadcast packet and not forward it off-network. This means broadcast is useful primarily in a lab environment in which the hosts are co-located, and not so much in a geographically distributed simulation.
 
 As with most things network-related there are ways to get around these broadcast limitations, but just don't. It's not worth it.
 
 Broadcast is the most widely used method to send DIS PDUs. It's traditional to use broadcast UDP port 3000 for DIS.
 
-####Multicast
+#### Multicast
 
-Multicast is a more sophisticated extension of broadcast. Like broadcast, it can send a single message to every host on a network. Multicast can also send a message to only those hosts that have subscribed to a "multicast group." 
+Multicast is a more sophisticated extension of broadcast. Like broadcast, it can send a single message to every host on a network. Multicast can also send a message to only those hosts that have subscribed to a "multicast group."
 
 Multicast is a superior option to broadcast. The research into and implementation of multicast was done in the mid-90's, a little after DIS was standardized, and as a result DIS has for historical and installed base reasons usually settled for broadcast, despite its inferiority. If you have a choice you should always pick multicat over broadcast. The only reason to continue using broadcast is historical inertia and interoperability with applications that are pre-configured to use broadcast.
 
 Why is it better? Several reasons.
 
-One thing multicast gives us is the ability to traverse routers. Broadcast is limited to a single network, while multicast can traverse network boundaries if the routers connecting networks are configured to allow this. Multicast configuration of the routers is not a given. 
+One thing multicast gives us is the ability to traverse routers. Broadcast is limited to a single network, while multicast can traverse network boundaries if the routers connecting networks are configured to allow this. Multicast configuration of the routers is not a given.
 
 This document is trying to avoid becoming a networking tutorial.  You can read more about multicast at <a href="http://www.cisco.com/c/dam/en/us/products/collateral/ios-nx-os-software/ip-multicast/prod_presentation0900aecd80310883.pdf">http://www.cisco.com/c/dam/en/us/products/collateral/ios-nx-os-software/ip-multicast/prod_presentation0900aecd80310883.pdf</a> But understanding some of the multicast implementation details helps you understand its usefulness in NVE scalability.
 
-You don't have to configure anything to use multicast within a single network. There is no extra configuration above and beyond that of broadcast. If the design requires that state updates traverse networks then the network can be configured to do multicast routing. This realistically cannot be done with broadcast. Multicast does everything broadcast does, and has the capacity to be more capable. TCP/IP stacks nearly universally support multicast, even severely limited devices such as cell phones (Android and IOS), Raspberry Pi, and many Arduino devices. 
+You don't have to configure anything to use multicast within a single network. There is no extra configuration above and beyond that of broadcast. If the design requires that state updates traverse networks then the network can be configured to do multicast routing. This realistically cannot be done with broadcast. Multicast does everything broadcast does, and has the capacity to be more capable. TCP/IP stacks nearly universally support multicast, even severely limited devices such as cell phones (Android and IOS), Raspberry Pi, and many Arduino devices.
 
 In classical networking terms, at the ethernet level multicast is essentially identical to broadcast. In more modern, switched networking environments it can be considerably better.
 
@@ -72,31 +72,31 @@ The problem DDM is trying to solve is filtering out state updates that are irrel
 
 The Burke class destroyer is almost certainly not interested in state updates from the dismounted infantryman. He's too far away to affect us, or for the Burke to have an effect on him. Nonetheless in an architecture that uses a single UDP port and broadcast the Burke will receive state updates from the dismount. If we have thousands of dismounts and hundreds of vehicles the host that owns the Burke will receive the state updates from all these entities, parse them, and then throw them away once it realizes that the information is useless. This is obviously bad for performance.
 
-In contrast the Burke will be very interested indeed in the red force aircraft despite the fact that it is even further inland. 
+In contrast the Burke will be very interested indeed in the red force aircraft despite the fact that it is even further inland.
 
 Two entities of the same type may not be interested in each other. Our AK-47 armed insurgents may be 5K away from each other and unable to influence each other. For best performance they shouldn't be receive state updates from each other, either.
 
 There's another case that's somewhat more subtle: if the state update is so old, due to latency or some other reason, it may no longer be of use to us. If we received it an parsed it we would throw it away once we realized how old it was.
 
-In Macedonia's telling, NVEs can do DDM based on spatial, temporal, and functional criteria. The Burke simulator in the example above can use functional DDM to filter out all the dismounted infantry and tanks while still receiving state updates from aircraft. Or we could use spatial DDM to ensure that infantry more than 5K apart don't receive state updates from each other, or ignore state updates if they are more than 500 ms old. 
+In Macedonia's telling, NVEs can do DDM based on spatial, temporal, and functional criteria. The Burke simulator in the example above can use functional DDM to filter out all the dismounted infantry and tanks while still receiving state updates from aircraft. Or we could use spatial DDM to ensure that infantry more than 5K apart don't receive state updates from each other, or ignore state updates if they are more than 500 ms old.
 
 The central concept of DDM is to segregate and limit the dynamic state updates to only those hosts to which it would be of value. A key requirement is that the traffic be filtered _before_ it arrives at the simulation application. It's impractical to receive, parse, and process all the traffic in a large NVE if we then discard all but the small quantity of state updates we are interested in.
 
-DIS, is as a standard, silent on the subject of DDM. 
+DIS, is as a standard, silent on the subject of DDM.
 
-Multicast is a popular technology for implementing this requirements. 
-
-
-
-
-
- 
- 
+Multicast is a popular technology for implementing this requirements.
 
 
 
 
-###Further Reading
+
+
+
+
+
+
+
+### Further Reading
 EVE Online Scaling: http://www.talkunafraid.co.uk/2010/01/eve-scalability-explained/
 
 More EVE Online scaling, from EVE engineers: http://www.ics.uci.edu/~avaladar/papers/brandt.pdf
