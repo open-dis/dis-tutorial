@@ -40,7 +40,7 @@ In practice, applications accept the reality that the shared states of the appli
 
 ### How Bad is Latency?
 
-Suppose our application is an interactive map that receives DIS ESPDUs and plots their position. A battlefield map may not be adverely affected at all if the entities are one second out of sync with the publishing application because the inconsistencies in the map display are trivial compared to the accuracy the application needs. Virtual simulations are much more sensitive to latency issues, and are the more challenging application to get right.
+Suppose our application is an interactive map that receives DIS ESPDUs and plots their position. A battlefield map may not be adversely affected at all if the entities are one second out of sync with the publishing application because the inconsistencies in the map display are trivial compared to the accuracy the application needs. Virtual simulations are much more sensitive to latency issues, and are the more challenging application to get right.
 
 The entertainment industry has many first person shooter (FPS) games that demand attention to latency details. FPS games like DOOM, Call of Duty, and Counterstrike are popular, and players in a single game may be scattered across a continent. They have very tight, "twitch" interactions between entities, usually involving player avatars shooting at each other, and this requires low latency and high precision. Games with entities that move in a more stately manner, perhaps a naval ship combat game, may have game play that allows slower reaction times. The military training world is often closer to the later game type. Training often stresses teamwork and procedures, even in virtual worlds, rather than tasks that require fast reaction time.
 
