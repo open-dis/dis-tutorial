@@ -49,7 +49,7 @@ Just as the EBV document lists all the possible types of vehicles (in principle)
 | Specific | 4 |
 | Extra | 0 |
 
-Other muntions have records with analogous values. When we encounter a munition type to assess the results of combat, we can use damage tables (defined outside of DIS--that's the responsiblity of the simulator) to determine the results.
+Other munitions have records with analogous values. When we encounter a munition type to assess the results of combat, we can use damage tables (defined outside of DIS--that's the responsiblity of the simulator) to determine the results.
 
 ### EBV Document
 
